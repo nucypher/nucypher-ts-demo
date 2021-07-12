@@ -1,1 +1,6 @@
-module.exports = require('../../.prettierrc.json')
+module.exports = {
+  semi: false,
+  singleQuote: true,
+  printWidth: 120,
+  bracketSpacing: true,
+}

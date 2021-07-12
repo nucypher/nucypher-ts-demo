@@ -1,48 +1,20 @@
-# New Project
+# nucypher-ts-demo
 
-> ✨ Example useDApp application.
+Based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example). See `README.old.md` for details.
 
-# Useage
+## Notes:
 
-```
-yarn
-yarn start
-```
-or with `npm`
-```
-npm install
-npm start
-```
-Runs the app in the development mode.
-Open http://localhost:8080 to view it in the browser.
+Fixing `yarn` not recognizing local dependencies
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
 
-## Builds
+First, we use a copy of `nucypher-ts` so that ill-resolved dependencies that point to location of original `nucypher-ts` can be resolved locally.
 
+Then, after `yarn install` we fix a broken link to `nucypher-ts`:
+```$bash
+$ la node_modules/nucypher-ts
+# link is broken, remove it
+$ rm -rf node_modules/nucypher-ts
+# replace is with a correct link
+$ ln -s /some/path/nucypher-ts  node_modules/nucypher-ts
+# ln -s /home/piotr/Documents/projects/nucypher/nucypher-ts-demo/packages/nucypher-ts node_modules/nucypher-ts
 ```
-yarn run build
-```
-or 
-```
-npm run build
-```
-
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
-
-**For the best production performance:** Add a build bundler plugin like "@snowpack/plugin-webpack" to your `snowpack.config.js` config file.
-
-## Testing
-
-```
-yarn test
-```
-or
-```
-npm test
-```
-
-Launches the application test runner.
-Run with the `--watch` flag (`npm test -- --watch`) to run in interactive watch mode.

@@ -11,6 +11,7 @@ import { Tokens } from './pages/Tokens'
 import { Transactions } from './pages/Transactions'
 import { SendEtherPage } from './pages/SendEtherPage'
 import { NotificationsList } from './components/Transactions/History'
+import { Alice } from './pages/Alice'
 
 export function App() {
   return (
@@ -19,13 +20,14 @@ export function App() {
       <BrowserRouter>
         <TopBar />
         <Switch>
+          <Route exact path="/alice" component={Alice} />
           <Route exact path="/balance" component={Balance} />
           <Route exact path="/prices" component={Prices} />
           <Route exact path="/block" component={Block} />
           <Route exact path="/tokens" component={Tokens} />
           <Route exact path="/send" component={SendEtherPage} />
           <Route exact path="/transactions" component={Transactions} />
-          <Redirect exact from="/" to="/balance" />
+          <Redirect exact from="/" to="/alice" />
         </Switch>
       </BrowserRouter>
       <NotificationsList />

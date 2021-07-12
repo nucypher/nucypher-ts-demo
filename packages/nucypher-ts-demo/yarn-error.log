@@ -1,0 +1,77 @@
+Arguments: 
+  /home/piotr/.nvm/versions/node/v12.22.0/bin/node /usr/share/yarn/bin/yarn.js
+
+PATH: 
+  /home/piotr/.nvm/versions/node/v12.22.0/bin:/home/piotr/.cargo/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.npm-packages/bin:/home/piotr/Android/Sdk/emulator:/home/piotr/Android/Sdk/tools:/home/piotr/Android/Sdk/tools/bin:/home/piotr/Android/Sdk/platform-tools:/home/piotr/go/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.npm-packages/bin:/home/piotr/Android/Sdk/emulator:/home/piotr/Android/Sdk/tools:/home/piotr/Android/Sdk/tools/bin:/home/piotr/Android/Sdk/platform-tools:/home/piotr/go/bin
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  12.22.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, scandir '/home/piotr/Documents/projects/nucypher/nucypher-ts-demo/packages/nucypher-ts-demo/node_modules/nucypher-ts'
+
+npm manifest: 
+  {
+    "name": "@usedapp/example",
+    "version": "0.2.7",
+    "private": true,
+    "scripts": {
+      "start": "webpack serve --mode development",
+      "build": "tsc --noEmit && rimraf build && webpack --mode production --progress",
+      "lint": "yarn lint:prettier --check && yarn lint:eslint",
+      "lint:fix": "yarn lint:prettier --write && yarn lint:eslint --fix",
+      "lint:eslint": "eslint './{src, test}/**/*.{ts,tsx}'",
+      "lint:prettier": "yarn prettier './{src, test}/**/*.{ts,tsx}'"
+    },
+    "dependencies": {
+      "@types/styled-components": "^5.1.7",
+      "@uniswap/default-token-list": "^2.0.0",
+      "@usedapp/coingecko": "^0.3.22",
+      "@usedapp/core": "^0.4.0",
+      "file-loader": "^6.2.0",
+      "framer-motion": "^4.1.5",
+      "nucypher-ts": "file:../nucypher-ts",
+      "react": "^17.0.0",
+      "react-dom": "^17.0.0",
+      "react-router-dom": "^5.2.0",
+      "styled-components": "^5.2.1"
+    },
+    "devDependencies": {
+      "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+      "@testing-library/react": "^11.0.0",
+      "@types/react": "^17.0.0",
+      "@types/react-dom": "^17.0.0",
+      "@types/react-router-dom": "^5.1.7",
+      "@typescript-eslint/eslint-plugin": "^4.28.2",
+      "@typescript-eslint/parser": "^4.28.2",
+      "buffer": "^6.0.3",
+      "copy-webpack-plugin": "^6.2.1",
+      "esbuild-loader": "^2.11.0",
+      "eslint": "^7.30.0",
+      "html-webpack-plugin": "^4.5.0",
+      "prettier": "^2.0.5",
+      "process": "^0.11.10",
+      "react-refresh": "^0.10.0",
+      "rimraf": "^3.0.2",
+      "speed-measure-webpack-plugin": "^1.5.0",
+      "stream-browserify": "^3.0.0",
+      "ts-loader": "^8.0.7",
+      "typescript": "^4.0.0",
+      "webpack": "^5.44.0",
+      "webpack-bundle-analyzer": "^4.4.2",
+      "webpack-cli": "^4.7.2",
+      "webpack-dev-server": "^3.11.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
