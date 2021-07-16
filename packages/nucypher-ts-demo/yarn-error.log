@@ -1,8 +1,8 @@
 Arguments: 
-  /home/piotr/.nvm/versions/node/v12.22.0/bin/node /usr/share/yarn/bin/yarn.js
+  /home/piotr/.nvm/versions/node/v12.22.0/bin/node /usr/share/yarn/bin/yarn.js install
 
 PATH: 
-  /home/piotr/.nvm/versions/node/v12.22.0/bin:/home/piotr/.cargo/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.npm-packages/bin:/home/piotr/Android/Sdk/emulator:/home/piotr/Android/Sdk/tools:/home/piotr/Android/Sdk/tools/bin:/home/piotr/Android/Sdk/platform-tools:/home/piotr/go/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.npm-packages/bin:/home/piotr/Android/Sdk/emulator:/home/piotr/Android/Sdk/tools:/home/piotr/Android/Sdk/tools/bin:/home/piotr/Android/Sdk/platform-tools:/home/piotr/go/bin
+  /home/piotr/.nvm/versions/node/v12.22.0/bin:/home/piotr/.cargo/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/piotr/.local/bin:/home/piotr/bin:/home/piotr/.npm-packages/bin:/home/piotr/Android/Sdk/emulator:/home/piotr/Android/Sdk/tools:/home/piotr/Android/Sdk/tools/bin:/home/piotr/Android/Sdk/platform-tools:/home/piotr/go/bin:/opt/edgelessrt/bin
 
 Yarn version: 
   1.22.5

@@ -16,25 +16,13 @@ export function TopBar() {
             </ToMainBottom>
           </ToMain>
           <HeaderNavLinks>
-            <HeaderLink activeClassName="active-page" to="/balance">
+            <HeaderLink activeClassName="active-page" to="/alice">
               {' '}
-              Balance{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/prices">
-              {' '}
-              Prices{' '}
-            </HeaderLink>
+              Alice{' '}
+            </HeaderLink>            
             <HeaderLink activeClassName="active-page" to="/block">
               {' '}
               Block{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/tokens">
-              {' '}
-              Tokens{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/send">
-              {' '}
-              Send Ether{' '}
             </HeaderLink>
             <HeaderLink activeClassName="active-page" to="/transactions">
               {' '}

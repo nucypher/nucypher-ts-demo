@@ -4,10 +4,14 @@ import React from 'react'
 import type ethers from 'ethers'
 import { Button } from '../base/Button'
 
+const config = {
+  porterUri: "http://127.0.0.1:80"
+}
+
 const mockAlice = (provider: ethers.providers.Provider): Alice => {
   const aliceKeyringSeed = Buffer.from('fake-keyring-seed-32-bytes-alice')
   const aliceKeyring = new NucypherKeyring(aliceKeyringSeed)
-  const alice = Alice.fromKeyring(aliceKeyring)
+  const alice = Alice.fromKeyring(config, aliceKeyring)
   alice.connect(provider)
   return alice
 }
@@ -15,12 +19,12 @@ const mockAlice = (provider: ethers.providers.Provider): Alice => {
 const mockBob = (): Bob => {
   const bobKeyringSeed = Buffer.from('fake-keyring-seed-32-bytes-bob-x')
   const bobKeyring = new NucypherKeyring(bobKeyringSeed)
-  return Bob.fromKeyring(bobKeyring)
+  return Bob.fromKeyring(config, bobKeyring)
 }
 
 const mockRemoteBob = (): Bob => {
   const bob = mockBob()
-  return Bob.fromPublicKeys(bob.signer.verifyingKey(), bob.encryptingPublicKey)
+  return Bob.fromPublicKeys(config, bob.signer.verifyingKey(), bob.encryptingPublicKey)
 }
 
 const runDemo = async (provider?: ethers.providers.Provider) => {
