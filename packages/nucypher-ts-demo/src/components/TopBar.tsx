@@ -10,9 +10,9 @@ export function TopBar() {
       <HeaderContainer>
         <HeaderNav>
           <ToMain href="/">
-            <span>useDapp</span>
+            <span>nucypher-ts</span>
             <ToMainBottom>
-              Ethereum <Handshaking>🤝</Handshaking> React
+              Porter<Handshaking>🤝</Handshaking>Browser
             </ToMainBottom>
           </ToMain>
           <HeaderNavLinks>

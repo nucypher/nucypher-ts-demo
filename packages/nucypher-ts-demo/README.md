@@ -2,7 +2,22 @@
 
 Based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example). See `README.old.md` for details.
 
-## Notes:
+## Installation
+
+Make sure `umbral-pre` is built:
+```bash
+cd ../nucypher-ts && yarn build
+```
+
+Install deps and run:
+```bash
+cd ../nucypher-ts-demo 
+./link-local.sh # workaround for webpack not resolving symbolic links
+yarn
+yarn start
+```
+
+## Notes
 
 Fixing `yarn` not recognizing local dependencies:
 
