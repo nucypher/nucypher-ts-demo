@@ -1,7 +1,9 @@
 {
-  "name": "@usedapp/example",
-  "version": "0.2.7",
-  "private": true,
+  "name": "nucypher-ts-demo",
+  "author": "Piotr Roslaniec <p.roslaniec@gmail.com>",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "tsc --noEmit && rimraf build && webpack --mode production --progress",

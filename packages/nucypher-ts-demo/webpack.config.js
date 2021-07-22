@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { ESBuildMinifyPlugin } = require('esbuild-loader')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const webpack = require('webpack');
+const webpack = require('webpack')
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
@@ -24,8 +25,8 @@ module.exports = {
       ],
     }),
     new webpack.ProvidePlugin({
-          Buffer: ['buffer', 'Buffer'],
-          process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+      process: 'process/browser',
     }),
   ].filter(Boolean),
   module: {
@@ -48,9 +49,9 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     fallback: {
-       "stream": require.resolve("stream-browserify"),
-       "buffer": require.resolve("buffer/")
-    }
+      stream: require.resolve('stream-browserify'),
+      buffer: require.resolve('buffer/'),
+    },
   },
   output: {
     filename: '[name].[contenthash].js',
