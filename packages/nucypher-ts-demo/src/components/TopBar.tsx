@@ -19,7 +19,7 @@ export function TopBar() {
             <HeaderLink activeClassName="active-page" to="/alice">
               {' '}
               Alice{' '}
-            </HeaderLink>            
+            </HeaderLink>
             <HeaderLink activeClassName="active-page" to="/block">
               {' '}
               Block{' '}

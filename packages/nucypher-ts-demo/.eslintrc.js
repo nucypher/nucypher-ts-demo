@@ -18,8 +18,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'prefer-const': ['error', { destructuring: 'all' }],
     semi: ['error', 'never'],
-    'no-extra-semi': 'off',
-    '@typescript-eslint/no-extra-semi': 'off',
   },
   overrides: [
     {
