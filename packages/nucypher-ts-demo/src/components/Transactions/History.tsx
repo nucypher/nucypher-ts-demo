@@ -21,7 +21,7 @@ import {
   WalletIcon,
   WrapIcon,
   SpinnerIcon,
-} from './Icons'
+} from '../Icons'
 import { Colors, Shadows } from '../../global/styles'
 import { AnimatePresence, motion } from 'framer-motion'
 import { formatEther } from '@ethersproject/units'

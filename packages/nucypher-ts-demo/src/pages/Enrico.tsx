@@ -1,22 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { DepositEth, WithdrawEth } from '../components/Transactions/Forms'
 import { Title } from '../typography/Title'
+import { EnricoEncrypts } from '../components/Enrico/EnricoEncrypts'
 
-export function Transactions() {
+export const Enrico = () => {
   return (
     <MainContent>
       <Container>
         <Section>
           <SectionRow>
-            <Title>Transactions</Title>
-            <AccountButton />
+            <Title>Enrico</Title>
           </SectionRow>
           <TableGrid>
-            <DepositEth />
-            <WithdrawEth />
+            <EnricoEncrypts />
           </TableGrid>
         </Section>
       </Container>

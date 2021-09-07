@@ -20,14 +20,14 @@ export function TopBar() {
               {' '}
               Alice{' '}
             </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/block">
+            {/* <HeaderLink activeClassName="active-page" to="/enrico">
               {' '}
-              Block{' '}
+              Enrico{' '}
             </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/transactions">
+            <HeaderLink activeClassName="active-page" to="/bob">
               {' '}
-              Transactions{' '}
-            </HeaderLink>
+              Bob{' '}
+            </HeaderLink> */}
           </HeaderNavLinks>
         </HeaderNav>
       </HeaderContainer>

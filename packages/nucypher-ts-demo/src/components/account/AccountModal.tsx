@@ -5,7 +5,7 @@ import { TransactionsList } from '../Transactions/History'
 import { formatEther } from '@ethersproject/units'
 import { BigNumber } from 'ethers'
 import { Colors, Shadows, Transitions } from '../../global/styles'
-import { ShareIcon } from '../Transactions/Icons'
+import { ShareIcon } from '../Icons'
 import { motion } from 'framer-motion'
 import { Link } from '../base/Link'
 

@@ -1,21 +1,19 @@
 import React from 'react'
+import { BobReceives } from '../components/Bob/BobReceives'
 import styled from 'styled-components'
-import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { AliceGrants } from '../components/Alice/AliceGrants'
 import { Title } from '../typography/Title'
 
-export const Alice = () => {
+export const Bob = () => {
   return (
     <MainContent>
       <Container>
         <Section>
           <SectionRow>
-            <Title>Alice</Title>
-            <AccountButton />
+            <Title>Bob</Title>
           </SectionRow>
           <TableGrid>
-            <AliceGrants />
+            <BobReceives />
           </TableGrid>
         </Section>
       </Container>

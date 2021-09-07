@@ -7,7 +7,7 @@ import { ContentBlock } from '../base/base'
 import { Button } from '../base/Button'
 import { BorderRad, Colors } from '../../global/styles'
 import { BigNumber } from 'ethers'
-import { SpinnerIcon, CheckIcon, ExclamationIcon } from './Icons'
+import { SpinnerIcon, CheckIcon, ExclamationIcon } from '../Icons'
 
 import { AnimatePresence, motion } from 'framer-motion'
 

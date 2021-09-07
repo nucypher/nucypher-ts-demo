@@ -66,10 +66,13 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    host: '0.0.0.0',
+    host: '127.0.0.1',
     stats: 'errors-only',
     overlay: true,
     hot: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
   },
   experiments: {
     asyncWebAssembly: true,
