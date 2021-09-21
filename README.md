@@ -9,4 +9,6 @@ Init submodules:
 git submodule update --init --recursive
 ```
 
-See `packages/nucypher-ts-demo/README.md` for instructions.
+Follow instructions for [`nucypher-ts`](packages/nucypher-ts/README.md]).
+
+Follow instructions for [`nucypher-ts-demo`](packages/nucypher-ts-demo/README.md).
