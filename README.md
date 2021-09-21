@@ -9,4 +9,4 @@ Init submodules:
 git submodule update --init --recursive
 ```
 
-See `packages/nucypher-ts/README.md` for instructions.
+See `packages/nucypher-ts-demo/README.md` for instructions.
