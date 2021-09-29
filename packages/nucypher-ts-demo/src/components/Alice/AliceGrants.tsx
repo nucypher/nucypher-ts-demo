@@ -18,7 +18,7 @@ export const AliceGrants = () => {
   const threshold = 1
   const shares = 1
   const paymentPeriods = 3
-  const rate = 500000000000 + 1 // call `getMinFeeRate` for each ursula when creating a policy
+  const rate = 50000000000000 + 1 // call `getMinFeeRate` for each ursula when creating a policy
   const intialParams: BlockchainPolicyParameters = { bob, label, threshold, shares, paymentPeriods, rate } // TODO: Do not use this struct outside `nucypher-ts`
 
   // Create policy vars
@@ -35,7 +35,6 @@ export const AliceGrants = () => {
   // Decrypt message vars
   const [decryptedMessage, setDecryptedMessage] = useState('')
 
-
   // Alice, Enrico and Bob are supposed to have their own subpages eventually (see: "TopBar.tsx")
   // Currently, for conveniance sake all, all their functions are cobbled together in this component
 
@@ -48,11 +47,13 @@ export const AliceGrants = () => {
     setPolicyFormEnabled(false)
 
     const alice = mockAlice(provider)
-    const policyEncryptingKey = await alice.getPolicyEncryptingKeyFromLabel('label')
-    const policy = await alice.grant(policyParams)
+    const includeUrsulas: string[] = []
+    const excludeUrsulas: string[] = []
+    const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
+    console.log({ publicKey: policy.publicKey })
     setAliceVeryfingKey(alice.verifyingKey)
-    setPolicyEncryptingKey(policyEncryptingKey)
+    setPolicyEncryptingKey(PublicKey.fromBytes(policy.publicKey))
     setPolicy(policy)
     setPolicyFormEnabled(true)
 
@@ -119,7 +120,7 @@ export const AliceGrants = () => {
       {decryptedMessage ? (
         <>
           <h2>Decrypted message:</h2>
-          <h3>{decryptedMessage}:</h3>
+          <h3>{decryptedMessage}</h3>
         </>
       ) : (
         <></>

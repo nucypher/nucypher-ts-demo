@@ -38,8 +38,6 @@ export const BobReceives = () => {
     fileReader.onload = (e) => {
       const policyJson = e!.target!.result as string
       const { encryptedMessage, senderVerifyingKey } = JSON.parse(policyJson)
-      console.log({ encryptedMessage, senderVerifyingKey })
-      // TODO: Test
       setEncryptedMessage(encryptedMessage)
       setSenderVerifyingKey(senderVerifyingKey)
     }
@@ -50,11 +48,10 @@ export const BobReceives = () => {
       return
     }
 
-    const bob = mockBob()
-    const enrico = new Enrico(policyEncryptingKey, senderVerifyingKey)
-    const retrievedMessage = await bob.retrieveAndDecrypt([encryptedMessage], aliceVerifyingKey, label, enrico)
-    // const bobPlaintext = fromBytes(retrievedMessage[0])
-    console.log({ retrievedMessage })
+    // TODO: Update
+    // const bob = mockBob()
+    // const retrievedMessage = await bob.retrieveAndDecrypt(policyEncryptingKey, aliceVerifyingKey, [encryptedMessage], policy.treasureMap)
+    // console.log({retrievedMessage})
   }
 
   return (
@@ -70,3 +67,4 @@ export const BobReceives = () => {
     </div>
   )
 }
+

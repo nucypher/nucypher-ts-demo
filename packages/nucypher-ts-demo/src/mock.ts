@@ -21,5 +21,5 @@ export const mockBob = (): Bob => {
 
 export const mockRemoteBob = (): Bob => {
   const bob = mockBob()
-  return Bob.fromPublicKeys(config, bob.signer.verifyingKey(), bob.decryptingKey)
+  return Bob.fromPublicKeys(config, bob.verifyingKey, bob.decryptingKey)
 }
