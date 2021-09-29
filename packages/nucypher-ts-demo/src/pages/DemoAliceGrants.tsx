@@ -1,19 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
+import { AliceGrants } from '../components/Demo/AliceGrants'
 import { Title } from '../typography/Title'
-import { EnricoEncrypts } from '../components/Enrico/EnricoEncrypts'
+import { Text } from '../typography/Text'
 
-export const Enrico = () => {
+export const DemoAliceGrants = () => {
   return (
     <MainContent>
       <Container>
         <Section>
           <SectionRow>
-            <Title>Enrico</Title>
+            <Title>Alice grants demo</Title>
+            <AccountButton />
+          </SectionRow>
+          <SectionRow>
+            <Text>Alice creates a blockchain policy and shares an encrypted message with Bob.</Text>
           </SectionRow>
           <TableGrid>
-            <EnricoEncrypts />
+            <AliceGrants />
           </TableGrid>
         </Section>
       </Container>

@@ -16,18 +16,10 @@ export function TopBar() {
             </ToMainBottom>
           </ToMain>
           <HeaderNavLinks>
-            <HeaderLink activeClassName="active-page" to="/alice">
+            <HeaderLink activeClassName="active-page" to="/alice-grants">
               {' '}
-              Alice{' '}
+              Alice Grants{' '}
             </HeaderLink>
-            {/* <HeaderLink activeClassName="active-page" to="/enrico">
-              {' '}
-              Enrico{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/bob">
-              {' '}
-              Bob{' '}
-            </HeaderLink> */}
           </HeaderNavLinks>
         </HeaderNav>
       </HeaderContainer>

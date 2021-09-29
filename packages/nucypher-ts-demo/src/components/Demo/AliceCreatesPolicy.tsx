@@ -12,14 +12,14 @@ export const FormRow = styled.div`
   margin: 32px 0 24px 58px;
 `
 
-interface PolicyFormProps {
+interface Props {
   enabled: boolean
   policyParams: BlockchainPolicyParameters
   setPolicyParams: (value: BlockchainPolicyParameters) => void
   grantToBob: () => void
 }
 
-export const PolicyForm = ({ enabled, policyParams, setPolicyParams, grantToBob }: PolicyFormProps) => {
+export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, grantToBob }: Props) => {
   const setLabel = (label: string) => setPolicyParams({ ...policyParams, label })
   const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares })
   const setThreshold = (threshold: number) => setPolicyParams({ ...policyParams, threshold })
@@ -89,7 +89,7 @@ export const PolicyForm = ({ enabled, policyParams, setPolicyParams, grantToBob 
   return (
     <ContentBlock style={{ padding: 0 }}>
       <TitleRow>
-        <CellTitle>Create a blockchain policy</CellTitle>
+        <CellTitle>Step 1 - Alice creates a blockchain policy</CellTitle>
       </TitleRow>
       {content}
     </ContentBlock>

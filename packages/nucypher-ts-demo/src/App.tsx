@@ -5,9 +5,7 @@ import { Page } from './components/base/base'
 import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
 import { NotificationsList } from './components/Transactions/History'
-import { Alice } from './pages/Alice'
-import { Bob } from './pages/Bob'
-import { Enrico } from './pages/Enrico'
+import { DemoAliceGrants } from './pages/DemoAliceGrants'
 
 export function App() {
   return (
@@ -16,10 +14,8 @@ export function App() {
       <BrowserRouter>
         <TopBar />
         <Switch>
-          <Route exact path="/alice" component={Alice} />
-          <Route exact path="/bob" component={Bob} />
-          <Route exact path="/enrico" component={Enrico} />
-          <Redirect exact from="/" to="/alice" />
+          <Route exact path="/alice-grants" component={DemoAliceGrants} />
+          <Redirect exact from="/" to="/alice-grants" />
         </Switch>
       </BrowserRouter>
       <NotificationsList />

@@ -1,25 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Enrico, PublicKey } from 'nucypher-ts'
-import { useEthers } from '@usedapp/core'
-import type { BlockchainPolicyParameters } from 'nucypher-ts'
+import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from 'nucypher-ts'
 import React, { useState } from 'react'
 import type { Provider } from '@ethersproject/providers'
 
-import { PolicyForm } from './PolicyForm'
-import { mockRemoteBob, mockAlice, mockBob } from '../../mock'
-import { EncryptInput } from '../Enrico/EncryptInput'
-import type { EnactedPolicy } from 'nucypher-ts/build/main/src/policies/policy'
-import { Button } from '../base/Button'
-import type { MessageKit } from 'nucypher-ts/build/main/src/kits/message'
+import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
+import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
+import { EnricoEncrypts } from './EnricoEncrypts'
+import { useEthers } from '@usedapp/core'
+import { BobDecrypts } from './BobDecrypts'
 
 export const AliceGrants = () => {
-  const bob = mockRemoteBob()
+  // These policy parameters will be used by Alice to create a blockchain policy
+  const remoteBob = makeRemoteBob()
   const label = `fake-data-label-${new Date().getTime()}` // Combination of `label` and `bob` must be unique
   const threshold = 1
   const shares = 1
   const paymentPeriods = 3
-  const rate = 50000000000000 + 1 // call `getMinFeeRate` for each ursula when creating a policy
-  const intialParams: BlockchainPolicyParameters = { bob, label, threshold, shares, paymentPeriods, rate } // TODO: Do not use this struct outside `nucypher-ts`
+  const rate = 50000000000000 + 1 // TODO: Make this an optional call `getMinFeeRate` for each ursula when creating a policy
+  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate } // TODO: Do not use this struct outside `nucypher-ts`
 
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
@@ -29,102 +27,72 @@ export const AliceGrants = () => {
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
   // Encrypt message vars
+  const [encryptionEnabled, setEncryptionEnabled] = useState(false)
   const [encryptedMessage, setEncryptedMessage] = useState(undefined as MessageKit | undefined)
-  const [decryptionEnabled, setDecryptionEnabled] = useState(false)
 
   // Decrypt message vars
+  const [decryptionEnabled, setDecryptionEnabled] = useState(false)
   const [decryptedMessage, setDecryptedMessage] = useState('')
 
-  // Alice, Enrico and Bob are supposed to have their own subpages eventually (see: "TopBar.tsx")
-  // Currently, for conveniance sake all, all their functions are cobbled together in this component
-
-  // This should happen in Alice's subpage
   const grantToBob = async (provider?: Provider) => {
     if (!provider) {
       return
     }
-
     setPolicyFormEnabled(false)
 
-    const alice = mockAlice(provider)
-    const includeUrsulas: string[] = []
+    const alice = makeAlice(provider)
+    const includeUrsulas: string[] = ['0xf2C45287139C6839215F0FfC0759777FFE734fAa']
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
-
-    console.log({ publicKey: policy.publicKey })
     setAliceVeryfingKey(alice.verifyingKey)
-    setPolicyEncryptingKey(PublicKey.fromBytes(policy.publicKey))
+    setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
     setPolicyFormEnabled(true)
-
-    console.log('policy ok')
+    setEncryptionEnabled(true)
   }
 
-  // This should happen in Enrico's subpage
-  const encrypt = (plaintext: string) => {
+  const encryptMessage = (plaintext: string) => {
     if (!policyEncryptingKey) {
       return
     }
 
+    // Enrico pops up here for just a second to do some work for Alice
     const enrico = new Enrico(policyEncryptingKey)
     const encryptedMessage = enrico.encryptMessage(plaintext)
-
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
-
-    console.log('encryption ok')
   }
 
-  // This should happen in Bobs's subpage
-  const receiveMessageFromAlice = async () => {
+  const decryptMessage = async () => {
     if (!(encryptedMessage && policyEncryptingKey && policy && aliceVerifyingKey)) {
       return
     }
 
     const { encryptedTreasureMap } = policy
-    const bob = mockBob()
+    const bob = makeBob()
     const retrievedMessage = await bob.retrieveAndDecrypt(
       policyEncryptingKey,
       aliceVerifyingKey,
       [encryptedMessage],
       encryptedTreasureMap
     )
-
     const dec = new TextDecoder()
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
-
-    console.log('decryption ok')
   }
 
+  // Ethers-js is our web3 provider
   const { library } = useEthers()
 
   return (
-    <div>
-      <div>
-        <PolicyForm
+    <div style={{ display: 'grid' }}>
+        <AliceCreatesPolicy
           enabled={policyFormEnabled}
           policyParams={policyParams}
           setPolicyParams={setPolicyParams}
           grantToBob={() => grantToBob(library)}
         />
-      </div>
-      <hr></hr>
-      <div>
-        <EncryptInput encrypt={encrypt} />
-      </div>
-      <hr></hr>
-      <Button onClick={receiveMessageFromAlice} disabled={!decryptionEnabled}>
-        Decrypt message
-      </Button>
-      <hr></hr>
-      {decryptedMessage ? (
-        <>
-          <h2>Decrypted message:</h2>
-          <h3>{decryptedMessage}</h3>
-        </>
-      ) : (
-        <></>
-      )}
+      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} />
+      <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
     </div>
   )
 }

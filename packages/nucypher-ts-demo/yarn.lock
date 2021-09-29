@@ -4375,7 +4375,7 @@ nth-check@^2.0.0:
     js-sha3 "^0.8.0"
     qs "^6.10.1"
     secure-random "^1.1.2"
-    umbral-pre "file:../../../../../../.cache/yarn/v6/npm-nucypher-ts-0.1.0-c3adff92-bd53-4754-bb92-d8a42a62291b-1630929474118/node_modules/nucypher-ts/rust-umbral/umbral-pre-wasm/pkg"
+    umbral-pre "^0.3.2"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
@@ -5867,8 +5867,10 @@ typescript@^4.0.0:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
 
-"umbral-pre@file:../nucypher-ts/rust-umbral/umbral-pre-wasm/pkg":
-  version "0.2.0"
+umbral-pre@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/umbral-pre/-/umbral-pre-0.3.2.tgz#0ca5b95f702c7bb9c81d1ad07111567e5919144c"
+  integrity sha512-IWeeqCngqeaM3LlNP7L1JbDKtrVaTQ6U/22BgMZ81M+25VmKbep36MoTUqYkUeWZRCeRm2EN+cbrTTT6P4MjuQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
