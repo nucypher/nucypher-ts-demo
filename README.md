@@ -1,13 +1,17 @@
 # nucypher-ts-demo
 
-**This is a work in progress.**
-
 ## Installation
 
-Init submodules:
+Inspect `./src/characters.ts` and set configuration.
+
+Install deps and run:
 
 ```bash
-git submodule update --init --recursive
+cd ../nucypher-ts-demo
+yarn
+yarn start
 ```
 
-Follow instructions for [`nucypher-ts-demo`](packages/nucypher-ts-demo/README.md).
+# Sources
+
+Based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example). See `README.old.md` for details.

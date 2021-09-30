@@ -1,3 +1,0 @@
-[submodule "packages/nucypher-ts"]
-	path = packages/nucypher-ts
-	url = https://github.com/nucypher/nucypher-ts
