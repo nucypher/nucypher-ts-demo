@@ -16,8 +16,8 @@ export const AliceGrants = () => {
   const threshold = 1
   const shares = 1
   const paymentPeriods = 3
-  const rate = 50000000000000 + 1 // TODO: Make this an optional call `getMinFeeRate` for each ursula when creating a policy
-  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate } // TODO: Do not use this struct outside `nucypher-ts`
+  const rate = 50000000000000 // TODO: Make this an optional call `getMinFeeRate` for each ursula when creating a policy
+  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate }
 
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
@@ -41,7 +41,7 @@ export const AliceGrants = () => {
     setPolicyFormEnabled(false)
 
     const alice = makeAlice(provider)
-    const includeUrsulas: string[] = ['0xf2C45287139C6839215F0FfC0759777FFE734fAa']
+    const includeUrsulas: string[] = []
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
     setAliceVeryfingKey(alice.verifyingKey)
