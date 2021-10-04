@@ -4175,7 +4175,7 @@ nth-check@^2.0.0:
   dependencies:
     boolbase "^1.0.0"
 
-nucypher-ts@v1.1.2-alpha:
+nucypher-ts@^0.1.2-alpha:
   version "0.1.2-alpha"
   resolved "https://registry.yarnpkg.com/nucypher-ts/-/nucypher-ts-0.1.2-alpha.tgz#bc4b1615a49c7307a98523d3c56b9f948cd65929"
   integrity sha512-VcOhlcBuT9pJzcEOjOkHrnDPkgsQNAqeXwuF4oallmk0EOlvdNsr6K1UtAkOKV1Qn+2IrIDCRtVxppyCmIL98A==
