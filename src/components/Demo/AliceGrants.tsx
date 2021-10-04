@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from 'nucypher-ts'
 import React, { useState } from 'react'
-import type { Provider } from '@ethersproject/providers'
+import type { Web3Provider } from '@ethersproject/providers'
+import { useEthers } from '@usedapp/core'
 
 import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
 import { EnricoEncrypts } from './EnricoEncrypts'
-import { useEthers } from '@usedapp/core'
 import { BobDecrypts } from './BobDecrypts'
 
 export const AliceGrants = () => {
@@ -16,7 +16,7 @@ export const AliceGrants = () => {
   const threshold = 1
   const shares = 1
   const paymentPeriods = 3
-  const rate = 50000000000000 // TODO: Make this an optional call `getMinFeeRate` for each ursula when creating a policy
+  const rate = 50000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
   const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate }
 
   // Create policy vars
@@ -34,7 +34,7 @@ export const AliceGrants = () => {
   const [decryptionEnabled, setDecryptionEnabled] = useState(false)
   const [decryptedMessage, setDecryptedMessage] = useState('')
 
-  const grantToBob = async (provider?: Provider) => {
+  const grantToBob = async (provider?: Web3Provider) => {
     if (!provider) {
       return
     }
@@ -44,6 +44,7 @@ export const AliceGrants = () => {
     const includeUrsulas: string[] = []
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
+    
     setAliceVeryfingKey(alice.verifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
@@ -59,6 +60,7 @@ export const AliceGrants = () => {
     // Enrico pops up here for just a second to do some work for Alice
     const enrico = new Enrico(policyEncryptingKey)
     const encryptedMessage = enrico.encryptMessage(plaintext)
+
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
   }
@@ -77,6 +79,7 @@ export const AliceGrants = () => {
       encryptedTreasureMap
     )
     const dec = new TextDecoder()
+
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
   }
 

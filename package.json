@@ -17,7 +17,7 @@
     "@usedapp/core": "^0.4.0",
     "file-loader": "^6.2.0",
     "framer-motion": "^4.1.5",
-    "nucypher-ts": "^0.1.0-alpha",
+    "nucypher-ts": "v1.1.2-alpha",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
