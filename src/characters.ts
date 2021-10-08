@@ -19,6 +19,6 @@ export const makeRemoteBob = (): RemoteBob => {
   // The difference between a "Bob" and a "remote Bob" is that we only have
   // access to public parameters in the latter, whereas in the former
   // we also have access to Bob's secret key
-  const { verifyingKey, decryptingKey } = makeBob()
-  return { verifyingKey, decryptingKey }
+  const { decryptingKey, verifyingKey } = makeBob()
+  return RemoteBob.fromKeys(decryptingKey, verifyingKey)
 }

@@ -41,7 +41,7 @@ export const AliceGrants = () => {
     setPolicyFormEnabled(false)
 
     const alice = makeAlice(provider)
-    const includeUrsulas: string[] = []
+    const includeUrsulas: string[] = ['0xf2C45287139C6839215F0FfC0759777FFE734fAa']
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
     

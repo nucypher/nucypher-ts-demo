@@ -24,7 +24,6 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares })
   const setThreshold = (threshold: number) => setPolicyParams({ ...policyParams, threshold })
   const setPaymentPeriods = (paymentPeriods: number) => setPolicyParams({ ...policyParams, paymentPeriods })
-  const setValue = (value: number) => setPolicyParams({ ...policyParams, value })
 
   const content = enabled ? (
     <div style={{ display: 'grid' }}>
@@ -62,15 +61,6 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
           type="number"
           value={policyParams.paymentPeriods}
           onChange={(e) => setPaymentPeriods(parseInt(e.currentTarget.value))}
-        />
-      </FormRow>
-      <FormRow>
-        <Label htmlFor={'paymentPeriods'}>Value (wei)</Label>
-        <Input
-          id={'value'}
-          type="number"
-          value={policyParams.value}
-          onChange={(e) => setValue(parseInt(e.currentTarget.value))}
         />
       </FormRow>
       <FormRow>
