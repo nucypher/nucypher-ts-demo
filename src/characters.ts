@@ -20,5 +20,5 @@ export const makeRemoteBob = (): RemoteBob => {
   // access to public parameters in the latter, whereas in the former
   // we also have access to Bob's secret key
   const { decryptingKey, verifyingKey } = makeBob()
-  return RemoteBob.fromKeys(decryptingKey, verifyingKey)
+  return { decryptingKey, verifyingKey }
 }
