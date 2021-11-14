@@ -2,7 +2,8 @@ import { Alice, Bob, RemoteBob } from 'nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
 const config = {
-  porterUri: 'http://127.0.0.1:9155',
+  // Public Porter endpoint on Lynx network
+  porterUri: 'https://porter-lynx.nucypher.community/',
 }
 
 export const makeAlice = (provider: Web3Provider): Alice => {
@@ -11,7 +12,7 @@ export const makeAlice = (provider: Web3Provider): Alice => {
 }
 
 export const makeBob = (): Bob => {
-  const secretKey = Buffer.from('fake-keyring-seed-32-bytes-bob-x')
+  const secretKey = Buffer.from('fake-secret-key-32-bytes-bob-xxx')
   return Bob.fromSecretKey(config, secretKey)
 }
 

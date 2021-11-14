@@ -8,6 +8,7 @@ const config = {
   readOnlyUrls: {
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/3165a249c65f4198bf57200109b8fadf',
   },
+  supportedChains: [ChainId.Goerli],
 }
 
 ReactDOM.render(
