@@ -44,7 +44,7 @@ export const AliceGrants = () => {
     const includeUrsulas: string[] = []
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
-    
+
     setAliceVeryfingKey(alice.verifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
@@ -88,12 +88,12 @@ export const AliceGrants = () => {
 
   return (
     <div style={{ display: 'grid' }}>
-        <AliceCreatesPolicy
-          enabled={policyFormEnabled}
-          policyParams={policyParams}
-          setPolicyParams={setPolicyParams}
-          grantToBob={() => grantToBob(library)}
-        />
+      <AliceCreatesPolicy
+        enabled={policyFormEnabled}
+        policyParams={policyParams}
+        setPolicyParams={setPolicyParams}
+        grantToBob={() => grantToBob(library)}
+      />
       <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
     </div>
