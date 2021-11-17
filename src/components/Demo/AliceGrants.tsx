@@ -10,15 +10,16 @@ import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
 import { AliceRevokes } from './AliceRevokes'
 
+export const getRandomLabel = () => `label-${new Date().getTime()}`
+
 export const AliceGrants = () => {
   // These policy parameters will be used by Alice to create a blockchain policy
   const remoteBob = makeRemoteBob()
-  const label = `fake-data-label-${new Date().getTime()}` // Combination of `label` and `bob` must be unique
   const threshold = 1
   const shares = 1
   const paymentPeriods = 3
   const rate = 50000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
-  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate }
+  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label: getRandomLabel(), threshold, shares, paymentPeriods, rate }
 
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
@@ -55,6 +56,8 @@ export const AliceGrants = () => {
     setPolicy(policy)
     setPolicyFormEnabled(true)
     setEncryptionEnabled(true)
+
+    setPolicyParams({ ...policyParams, label: getRandomLabel() })
   }
 
   const encryptMessage = (plaintext: string) => {
