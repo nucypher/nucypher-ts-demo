@@ -4175,10 +4175,10 @@ nth-check@^2.0.0:
   dependencies:
     boolbase "^1.0.0"
 
-nucypher-ts@^0.3.0-alpha:
-  version "0.3.0-alpha"
-  resolved "https://registry.yarnpkg.com/nucypher-ts/-/nucypher-ts-0.3.0-alpha.tgz#4ab171632c6369bc555780c3a21dddc7914e281c"
-  integrity sha512-q3QX5n3oDuYgJMjRN9ptX94NBYuVHoYyXRM5BNJHFuXpD7Q0hK3TNK0f0zeAtFrxHXJafssIs3q/KULE9Wk8oQ==
+nucypher-ts@^0.3.1-alpha:
+  version "0.3.1-alpha"
+  resolved "https://registry.yarnpkg.com/nucypher-ts/-/nucypher-ts-0.3.1-alpha.tgz#580131c38f88552c89e6e395a7a30c6d04137aa4"
+  integrity sha512-hbcVTWJnMtMwm3/Y4fn3N/JoQ+PxLlPuT9p7WRMlxg1y5gHQO+FiAo7pCTR36b2L13SW6S6mRm3yh4JVy9W3BA==
   dependencies:
     axios "^0.21.1"
     ethers "^5.4.1"

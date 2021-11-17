@@ -8,6 +8,7 @@ import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
+import { AliceRevokes } from './AliceRevokes'
 
 export const AliceGrants = () => {
   // These policy parameters will be used by Alice to create a blockchain policy
@@ -33,6 +34,10 @@ export const AliceGrants = () => {
   // Decrypt message vars
   const [decryptionEnabled, setDecryptionEnabled] = useState(false)
   const [decryptedMessage, setDecryptedMessage] = useState('')
+
+  // Revoke policy vars
+  const [revokeEnabled, setRevokeEnabled] = useState(false)
+  const [revokeInProgress, setRevokeInProgress] = useState(false)
 
   const grantToBob = async (provider?: Web3Provider) => {
     if (!provider) {
@@ -81,6 +86,24 @@ export const AliceGrants = () => {
     const dec = new TextDecoder()
 
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
+    setRevokeEnabled(true)
+  }
+
+  const revokePolicy = async (provider?: Web3Provider) => {
+    if (!provider) {
+      return
+    }
+
+    if (!(encryptedMessage && policyEncryptingKey && policy && aliceVerifyingKey)) {
+      return
+    }
+
+    setRevokeInProgress(true)
+
+    const alice = makeAlice(provider)
+    await alice.revoke(policy)
+
+    setRevokeInProgress(false)
   }
 
   // Ethers-js is our web3 provider
@@ -96,6 +119,7 @@ export const AliceGrants = () => {
       />
       <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+      <AliceRevokes enabled={revokeEnabled} inProgress={revokeInProgress} revoke={() => revokePolicy(library)} />
     </div>
   )
 }
