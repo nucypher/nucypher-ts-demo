@@ -21,9 +21,11 @@ interface Props {
 
 export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, grantToBob }: Props) => {
   const setLabel = (label: string) => setPolicyParams({ ...policyParams, label })
-  const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares })
-  const setThreshold = (threshold: number) => setPolicyParams({ ...policyParams, threshold })
-  const setPaymentPeriods = (paymentPeriods: number) => setPolicyParams({ ...policyParams, paymentPeriods })
+  const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares: shares > 0 ? shares : 1 })
+  const setThreshold = (threshold: number) =>
+    setPolicyParams({ ...policyParams, threshold: threshold > 0 ? threshold : 1 })
+  const setPaymentPeriods = (paymentPeriods: number) =>
+    setPolicyParams({ ...policyParams, paymentPeriods: paymentPeriods > 0 ? paymentPeriods : 1 })
 
   const content = enabled ? (
     <div style={{ display: 'grid' }}>
