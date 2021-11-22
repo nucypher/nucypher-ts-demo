@@ -15,11 +15,18 @@ export const getRandomLabel = () => `label-${new Date().getTime()}`
 export const AliceGrants = () => {
   // These policy parameters will be used by Alice to create a blockchain policy
   const remoteBob = makeRemoteBob()
-  const threshold = 1
-  const shares = 1
+  const threshold = 2
+  const shares = 3
   const paymentPeriods = 3
-  const rate = 50000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
-  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label: getRandomLabel(), threshold, shares, paymentPeriods, rate }
+  const rate = 500000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
+  const intialParams: BlockchainPolicyParameters = {
+    bob: remoteBob,
+    label: getRandomLabel(),
+    threshold,
+    shares,
+    paymentPeriods,
+    rate,
+  }
 
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
@@ -104,7 +111,7 @@ export const AliceGrants = () => {
     setRevokeInProgress(true)
 
     const alice = makeAlice(provider)
-    await alice.revoke(policy)
+    await alice.revoke(policy.id.toBytes())
 
     setRevokeInProgress(false)
   }
