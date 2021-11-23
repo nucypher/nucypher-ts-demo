@@ -1,24 +1,37 @@
 import React, { useState } from 'react'
+import { toBase64 } from '../../utils'
+import { ContentBlock } from '../base/base'
 
-import { InputRow, Input, SmallButton, SmallContentBlock, TitleRow, CellTitle } from '../form/form'
+import { InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
 
 interface Props {
   enabled: boolean
+  ciphertext?: Uint8Array
   encrypt: (value: string) => void
 }
 
-export const EnricoEncrypts = ({ encrypt, enabled }: Props) => {
+export const EnricoEncrypts = ({ encrypt, ciphertext, enabled }: Props) => {
   if (!enabled) {
     return <></>
   }
+
+  console.log({ ciphertext })
 
   const [plaintext, setPlaintext] = useState('test')
 
   const onClick = () => encrypt(plaintext)
 
+  const ciphertextContent = ciphertext ? (
+    <div style={{ paddingTop: '5px' }}>
+      <h3>Ciphertext (base64 encoded): {toBase64(ciphertext)}</h3>
+    </div>
+  ) : (
+    ''
+  )
+
   return (
     <div>
-      <SmallContentBlock>
+      <ContentBlock>
         <TitleRow>
           <CellTitle>Step 2 - Enrico encrypts a message</CellTitle>
         </TitleRow>
@@ -31,7 +44,8 @@ export const EnricoEncrypts = ({ encrypt, enabled }: Props) => {
           />
           <SmallButton onClick={onClick}>Encrypt</SmallButton>
         </InputRow>
-      </SmallContentBlock>
+        {ciphertextContent}
+      </ContentBlock>
     </div>
   )
 }

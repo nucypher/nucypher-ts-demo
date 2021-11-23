@@ -1,6 +1,7 @@
 import React from 'react'
+import { ContentBlock } from '../base/base'
 
-import { InputRow, Input, SmallButton, SmallContentBlock, TitleRow, CellTitle } from '../form/form'
+import { InputRow, SmallButton, TitleRow, CellTitle } from '../form/form'
 
 interface Props {
   enabled: boolean
@@ -13,17 +14,25 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
     return <></>
   }
 
+  const plaintextContent = decryptedMessage ? (
+    <div style={{ paddingTop: '5px' }}>
+      <h3>Plaintext: {decryptedMessage}</h3>
+    </div>
+  ) : (
+    ''
+  )
+
   return (
     <div>
-      <SmallContentBlock>
+      <ContentBlock>
         <TitleRow>
           <CellTitle>Step 3 - Bob decrypts encrypted message</CellTitle>
         </TitleRow>
         <InputRow>
-          <Input type="string" value={decryptedMessage} disabled={true} />
           <SmallButton onClick={decrypt}>Decrypt</SmallButton>
         </InputRow>
-      </SmallContentBlock>
+        {plaintextContent}
+      </ContentBlock>
     </div>
   )
 }

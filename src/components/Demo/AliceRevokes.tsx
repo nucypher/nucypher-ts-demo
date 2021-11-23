@@ -1,6 +1,7 @@
 import React from 'react'
+import { ContentBlock } from '../base/base'
 
-import { SmallButton, SmallContentBlock, TitleRow, CellTitle } from '../form/form'
+import { SmallButton, SmallContentBlock, TitleRow, CellTitle, InputRow } from '../form/form'
 
 interface Props {
   revoke: () => void
@@ -15,24 +16,30 @@ export const AliceRevokes = ({ revoke, enabled, inProgress }: Props) => {
 
   const content = inProgress ? (
     <>
-      <div>
+      <SmallContentBlock>
         <h2>Policy revocation in progress</h2>
         <h3>Please wait ...</h3>
-      </div>
+      </SmallContentBlock>
     </>
   ) : (
-    <SmallButton onClick={revoke}>Revoke</SmallButton>
+    <>
+    <InputRow>
+      <SmallButton onClick={revoke}>Revoke</SmallButton>
+    </InputRow>
+    <div style={{ paddingTop: '5px' }}>
+        <h3>Tip: Try encrypting and decrypting a message after revoking the policy.</h3>
+      </div>
+    </>
   )
 
   return (
     <div>
-      <SmallContentBlock>
+      <ContentBlock>
         <TitleRow>
           <CellTitle>Step 4 - Alice revokes policy</CellTitle>
-          <h3>(Try encrypting and decrypting after revoking)</h3>
         </TitleRow>
         {content}
-      </SmallContentBlock>
+      </ContentBlock>
     </div>
   )
 }

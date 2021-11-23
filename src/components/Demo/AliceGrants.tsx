@@ -120,14 +120,14 @@ export const AliceGrants = () => {
   const { library } = useEthers()
 
   return (
-    <div style={{ display: 'grid' }}>
+    <div style={{ display: 'grid', padding: '5px' }}>
       <AliceCreatesPolicy
         enabled={policyFormEnabled}
         policyParams={policyParams}
         setPolicyParams={setPolicyParams}
         grantToBob={() => grantToBob(library)}
       />
-      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} />
+      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} ciphertext={encryptedMessage?.ciphertext} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
       <AliceRevokes enabled={revokeEnabled} inProgress={revokeInProgress} revoke={() => revokePolicy(library)} />
     </div>

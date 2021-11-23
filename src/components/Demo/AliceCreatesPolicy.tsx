@@ -79,7 +79,7 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   )
 
   return (
-    <ContentBlock style={{ padding: 0 }}>
+    <ContentBlock>
       <TitleRow>
         <CellTitle>Step 1 - Alice creates a blockchain policy</CellTitle>
       </TitleRow>
