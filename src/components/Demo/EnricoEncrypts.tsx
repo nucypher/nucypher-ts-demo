@@ -15,8 +15,6 @@ export const EnricoEncrypts = ({ encrypt, ciphertext, enabled }: Props) => {
     return <></>
   }
 
-  console.log({ ciphertext })
-
   const [plaintext, setPlaintext] = useState('test')
 
   const onClick = () => encrypt(plaintext)
