@@ -17,7 +17,7 @@ export const AliceRevokes = ({ revoke, enabled, inProgress }: Props) => {
   const content = inProgress ? (
     <>
       <SmallContentBlock>
-        <h2>Policy revocation in progress</h2>
+        <h3>Policy revocation in progress</h3>
         <h3>Please wait ...</h3>
       </SmallContentBlock>
     </>

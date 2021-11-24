@@ -61,9 +61,9 @@ export const CellTitle = styled(TextBold)`
 export const InputRow = styled.div`
   display: flex;
   margin: 0 auto;
+  padding: 10px;
   color: ${Colors.Gray['600']};
   align-items: center;
-  border: ${Colors.Gray['300']} 1px solid;
   border-radius: ${BorderRad.m};
   overflow: hidden;
 `

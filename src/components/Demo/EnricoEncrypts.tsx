@@ -23,7 +23,7 @@ export const EnricoEncrypts = ({ encrypt, ciphertext, enabled }: Props) => {
 
   const ciphertextContent = ciphertext ? (
     <div style={{ paddingTop: '5px' }}>
-      <h3>Ciphertext (base64 encoded): {toBase64(ciphertext)}</h3>
+      <h3>Ciphertext (base64): {toBase64(ciphertext)}</h3>
     </div>
   ) : (
     ''

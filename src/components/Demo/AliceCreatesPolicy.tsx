@@ -72,7 +72,7 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   ) : (
     <>
       <div>
-        <h2>Policy creation in progress</h2>
+        <h3>Policy creation in progress</h3>
         <h3>Please wait ...</h3>
       </div>
     </>
