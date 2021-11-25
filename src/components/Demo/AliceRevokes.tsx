@@ -23,10 +23,10 @@ export const AliceRevokes = ({ revoke, enabled, inProgress }: Props) => {
     </>
   ) : (
     <>
-    <InputRow>
-      <SmallButton onClick={revoke}>Revoke</SmallButton>
-    </InputRow>
-    <div style={{ paddingTop: '5px' }}>
+      <InputRow>
+        <SmallButton onClick={revoke}>Revoke</SmallButton>
+      </InputRow>
+      <div style={{ paddingTop: '5px' }}>
         <h3>Tip: Try encrypting and decrypting a message after revoking the policy.</h3>
       </div>
     </>
