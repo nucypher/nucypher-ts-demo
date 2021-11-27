@@ -18,14 +18,12 @@ export const AliceGrants = () => {
   const threshold = 2
   const shares = 3
   const paymentPeriods = 3
-  const rate = 500000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
   const intialParams: BlockchainPolicyParameters = {
     bob: remoteBob,
     label: getRandomLabel(),
     threshold,
     shares,
     paymentPeriods,
-    rate,
   }
 
   // Create policy vars
