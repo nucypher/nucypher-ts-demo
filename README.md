@@ -1,5 +1,7 @@
 # nucypher-ts-demo
 
+See the demo in action [here](https://blissful-hopper-34fc59.netlify.app/alice-grants).
+
 ## Installation
 
 Inspect `./src/characters.ts` and set character configuration.
@@ -19,7 +21,7 @@ It is also recommended to change `secretKey` values for Alice and Bob characters
 
 ### Mainnet
 
-`nucypher-ts` is in alpha release. We recommend **not** using it in production _just yet_.
+`nucypher-ts` is in an early release. We recommend **not** using it in production _just yet_.
 
 ### Lynx (Görli Testnet)
 
