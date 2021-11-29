@@ -35,4 +35,4 @@ Ibex is a preferred testnet for local development when contributing to `nucypher
 
 ## References
 
-This dApp is based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example). See `README.old.md` for details.
+This dApp is based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example).
