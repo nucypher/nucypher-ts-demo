@@ -889,12 +889,18 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@usedapp/core@^0.5.6":
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/@usedapp/core/-/core-0.5.6.tgz#ece3ef3a9c6252c691cf051ed1650c390742929c"
-  integrity sha512-xUY7rzhXAMDJoY5ZkkxwDaOrEgefMeG7BqZ1imePenEogkv/JzP1tZVTb31sCSfJLOZIBRJbXZ2/+yyAOTlqSA==
+"@uniswap/token-lists@^1.0.0-beta.27":
+  version "1.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/@uniswap/token-lists/-/token-lists-1.0.0-beta.27.tgz#8b02a979b0b0024cc96f60e694a3f6db6b2ccab2"
+  integrity sha512-x5hmIniQ9TGqOBCRqfWcmZi/U5kB0qrHMDQ9igs3nMbK0wwmYLraL4owbIwXFGR/co6/lJYJC4K/Gjn4wZY5mQ==
+
+"@usedapp/core@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@usedapp/core/-/core-0.7.3.tgz#867cc57a9ad95ebc00377d80fc28beb4b2174687"
+  integrity sha512-0Jaidc5E62YdkH4GUKio6Z9cP9ZK81OTgra7UAREMGHhqYuT18EVtvUbDezHqf1jDnYB5E+hZ/J2o17XLOo63w==
   dependencies:
     "@types/react" "17.0.1"
+    "@uniswap/token-lists" "^1.0.0-beta.27"
     "@web3-react/core" "6.1.1"
     "@web3-react/injected-connector" "6.0.7"
     "@web3-react/network-connector" "6.1.5"
@@ -2480,7 +2486,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-ethers@5.5.1, ethers@^5.4.1:
+ethers@5.5.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.1.tgz#d3259a95a42557844aa543906c537106c0406fbf"
   integrity sha512-RodEvUFZI+EmFcE6bwkuJqpCYHazdzeR1nMzg+YWQSmQEsNtfl1KHGfp/FWZYl48bI/g7cgBeP2IlPthjiVngw==
@@ -4129,13 +4135,11 @@ nth-check@^2.0.0:
   dependencies:
     boolbase "^1.0.0"
 
-nucypher-ts@^0.4.3:
+nucypher-ts@../nucypher-ts:
   version "0.4.3"
-  resolved "https://registry.yarnpkg.com/nucypher-ts/-/nucypher-ts-0.4.3.tgz#5fae0185b9d96f244243b3c1f4c41ac3800a1af0"
-  integrity sha512-wwlsZl8GhhL1vHACU+tPiB9VO0Ggm+YTzpdBju1/bPyW0MjM5c5n4TsjM+DK+pHqQFGi/VjuaWafUGglmYAlEg==
   dependencies:
     axios "^0.21.1"
-    ethers "^5.4.1"
+    ethers "5.5.1"
     js-sha3 "^0.8.0"
     qs "^6.10.1"
     secure-random "^1.1.2"

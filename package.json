@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.7",
-    "@usedapp/core": "^0.5.6",
+    "@usedapp/core": "^0.7.3",
     "file-loader": "^6.2.0",
     "framer-motion": "^4.1.5",
-    "nucypher-ts": "^0.4.3",
+    "nucypher-ts": "../nucypher-ts",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
@@ -48,5 +48,8 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
+  },
+  "resolutions": {
+    "ethers": "5.5.1"
   }
 }
