@@ -17,13 +17,15 @@ export const AliceGrants = () => {
   const remoteBob = makeRemoteBob()
   const threshold = 2
   const shares = 3
-  const paymentPeriods = 3
+  const startDate = new Date()
+  const endDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // In 30 days
   const intialParams: BlockchainPolicyParameters = {
     bob: remoteBob,
     label: getRandomLabel(),
     threshold,
     shares,
-    paymentPeriods,
+    startDate,
+    endDate,
   }
 
   // Create policy vars

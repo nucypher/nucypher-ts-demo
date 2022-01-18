@@ -24,8 +24,8 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares: shares > 0 ? shares : 1 })
   const setThreshold = (threshold: number) =>
     setPolicyParams({ ...policyParams, threshold: threshold > 0 ? threshold : 1 })
-  const setPaymentPeriods = (paymentPeriods: number) =>
-    setPolicyParams({ ...policyParams, paymentPeriods: paymentPeriods > 0 ? paymentPeriods : 1 })
+  const setStartDate = (startDate: Date) => setPolicyParams({ ...policyParams, startDate })
+  const setEndDate = (endDate: Date) => setPolicyParams({ ...policyParams, endDate })
 
   const content = enabled ? (
     <div style={{ display: 'grid' }}>
@@ -57,12 +57,21 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
         />
       </FormRow>
       <FormRow>
-        <Label htmlFor={'paymentPeriods'}>Payment periods</Label>
+        <Label htmlFor={'startDate'}>Start date</Label>
         <Input
-          id={'paymentPeriods'}
-          type="number"
-          value={policyParams.paymentPeriods}
-          onChange={(e) => setPaymentPeriods(parseInt(e.currentTarget.value))}
+          id={'startDate'}
+          type="datetime-local"
+          value={policyParams.startDate?.toISOString().split('Z')[0]}
+          onChange={(e) => setStartDate(new Date(Date.parse(e.currentTarget.value)))}
+        />
+      </FormRow>
+      <FormRow>
+        <Label htmlFor={'endDate'}>End date</Label>
+        <Input
+          id={'endDate'}
+          type="datetime-local"
+          value={policyParams.endDate.toISOString().split('Z')[0]}
+          onChange={(e) => setEndDate(new Date(Date.parse(e.currentTarget.value)))}
         />
       </FormRow>
       <FormRow>

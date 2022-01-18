@@ -27,7 +27,7 @@ export const SmallButton = styled(Button)`
 
 export const Input = styled.input`
   height: 100%;
-  width: 180px;
+  width: 280px;
   padding: 0 0 0 24px;
   display: flex;
   margin: 0 auto;
