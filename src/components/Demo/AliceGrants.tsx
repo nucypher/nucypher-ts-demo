@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from 'nucypher-ts'
+import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { useEthers } from '@usedapp/core'

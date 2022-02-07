@@ -1,4 +1,4 @@
-import { Alice, Bob, RemoteBob } from 'nucypher-ts'
+import { Alice, Bob, RemoteBob } from '@nucypher/nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
 const config = {

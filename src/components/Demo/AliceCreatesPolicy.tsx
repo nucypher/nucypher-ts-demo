@@ -1,4 +1,4 @@
-import type { BlockchainPolicyParameters } from 'nucypher-ts'
+import type { BlockchainPolicyParameters } from '@nucypher/nucypher-ts'
 import React from 'react'
 import styled from 'styled-components'
 
