@@ -3,7 +3,7 @@ import type { Web3Provider } from '@ethersproject/providers'
 
 const config = {
   // Public Porter endpoint on Lynx network
-  porterUri: 'https://porter-lynx.nucypher.community/',
+  porterUri: 'https://porter-lynx.nucypher.community',
 }
 
 export const makeAlice = (provider: Web3Provider): Alice => {
