@@ -584,6 +584,11 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@nucypher/umbral-pre@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@nucypher/umbral-pre/-/umbral-pre-0.5.1.tgz#2b77bcd6939f787fcb9c8995a5215e640f67d052"
+  integrity sha512-fiIyuo7ClZLOr4aT0FPmrD2Ro8OOox0Qai+7USk44r9SG+shv0zri9lTbnfgzYR2Lkf9UC31EAnRuQBnpa8Zag==
+
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -759,6 +764,13 @@
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/secure-random@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/secure-random/-/secure-random-1.1.0.tgz#ccb93841a3d4718c62f39c6133412c0a0b0aee42"
+  integrity sha512-FVkD9qNAeuc1m53VQfWhuUdn9IWjv6griflGfLcSoF3ZexyNv1ciPlZLyrucWYcdhNjKERgDb45IJwb8a/ZKDQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -2486,7 +2498,7 @@ etag@~1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
-ethers@5.5.1:
+ethers@5.5.1, ethers@^5.4.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.1.tgz#d3259a95a42557844aa543906c537106c0406fbf"
   integrity sha512-RodEvUFZI+EmFcE6bwkuJqpCYHazdzeR1nMzg+YWQSmQEsNtfl1KHGfp/FWZYl48bI/g7cgBeP2IlPthjiVngw==
@@ -4136,14 +4148,15 @@ nth-check@^2.0.0:
     boolbase "^1.0.0"
 
 nucypher-ts@../nucypher-ts:
-  version "0.4.3"
+  version "0.5.1"
   dependencies:
+    "@nucypher/umbral-pre" "^0.5.1"
+    "@types/secure-random" "^1.1.0"
     axios "^0.21.1"
-    ethers "5.5.1"
+    ethers "^5.4.1"
     js-sha3 "^0.8.0"
     qs "^6.10.1"
     secure-random "^1.1.2"
-    umbral-pre "^0.3.2"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
@@ -5637,11 +5650,6 @@ typescript@^4.0.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
   integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
-
-umbral-pre@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/umbral-pre/-/umbral-pre-0.3.2.tgz#0ca5b95f702c7bb9c81d1ad07111567e5919144c"
-  integrity sha512-IWeeqCngqeaM3LlNP7L1JbDKtrVaTQ6U/22BgMZ81M+25VmKbep36MoTUqYkUeWZRCeRm2EN+cbrTTT6P4MjuQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
