@@ -129,7 +129,7 @@ export const AliceGrants = () => {
         setPolicyParams={setPolicyParams}
         grantToBob={() => grantToBob(library)}
       />
-      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} ciphertext={encryptedMessage?.ciphertext} />
+      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
       {/* <AliceRevokes enabled={revokeEnabled} inProgress={revokeInProgress} revoke={() => revokePolicy(library)} /> */}
     </div>

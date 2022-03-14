@@ -1,16 +1,17 @@
+import type { MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
-import { toBase64 } from '../../utils'
+
 import { ContentBlock } from '../base/base'
 
 import { InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
 
 interface Props {
   enabled: boolean
-  ciphertext?: Uint8Array
+  encryptedMessage?: MessageKit
   encrypt: (value: string) => void
 }
 
-export const EnricoEncrypts = ({ encrypt, ciphertext, enabled }: Props) => {
+export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) => {
   if (!enabled) {
     return <></>
   }
@@ -19,9 +20,9 @@ export const EnricoEncrypts = ({ encrypt, ciphertext, enabled }: Props) => {
 
   const onClick = () => encrypt(plaintext)
 
-  const ciphertextContent = ciphertext ? (
+  const ciphertextContent = encryptedMessage ? (
     <div style={{ paddingTop: '5px' }}>
-      <h3>Ciphertext (base64): {toBase64(ciphertext)}</h3>
+      <h3>Encrypted message: {JSON.stringify(encryptedMessage)}</h3>
     </div>
   ) : (
     ''
