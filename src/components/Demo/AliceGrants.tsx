@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from 'nucypher-ts'
+import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { useEthers } from '@usedapp/core'
@@ -19,6 +19,7 @@ export const AliceGrants = () => {
   const shares = 3
   const startDate = new Date()
   const endDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // In 30 days
+  console.log({ startDate, endDate })
   const intialParams: BlockchainPolicyParameters = {
     bob: remoteBob,
     label: getRandomLabel(),
