@@ -2,8 +2,8 @@ import { Alice, Bob, RemoteBob } from '@nucypher/nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
 const config = {
-  // Public Porter endpoint on Lynx network
-  porterUri: 'https://porter-lynx.nucypher.community',
+  // Public Porter endpoint on Ibex network
+  porterUri: 'https://porter-ibex.nucypher.community',
 }
 
 export const makeAlice = (provider: Web3Provider): Alice => {
