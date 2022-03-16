@@ -849,17 +849,17 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@nucypher/nucypher-core@^0.1.0-alpha":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-core/-/nucypher-core-0.1.1.tgz#2f6a268fa9fdca97cde2cd704b6d4c3b6093173d"
-  integrity sha512-r2iNsVpruTFcco7l9yeyfLmMbWz4ZK34Y4stTTAyuYAQLtpSCSvMxoGoRo8iM1jaSg9TChb2R4hNHI4C3t7Dyg==
+"@nucypher/nucypher-core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-core/-/nucypher-core-0.1.0.tgz#6a71fc079999699a3f76b9841e509b47575924c4"
+  integrity sha512-mggUpq0xKaW/LXhNKvtOm6CC5aQcujwN1YJUbXz8DrCGMhldyFa8AHDYu835PeOJ8A7F5YmhyxVJAZByrgw+Xw==
 
-"@nucypher/nucypher-ts@^0.6.0-alpha2":
-  version "0.6.0-alpha2"
-  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-ts/-/nucypher-ts-0.6.0-alpha2.tgz#749b897d3adabd1c1a0432a82dc5fb7115798e62"
-  integrity sha512-SV4hJeF4HZRLax4xtp90dSe6CkTtXBCC+oh9+jJ4T6JnbMeJQkIum7PIVEs55I5QZ5GDrQB/bfffUEPeZL9uKA==
+"@nucypher/nucypher-ts@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-ts/-/nucypher-ts-0.6.0.tgz#152f2e9eb70fa2992f960d127ed4863f979dee05"
+  integrity sha512-MUo826VWDmrWcQ5QOQwnH4xp3jmvjRB9ha2haVDZkNu50tTJjO7DkzspEQHIfthVHLrunKQGpIk8yse+LH5ksg==
   dependencies:
-    "@nucypher/nucypher-core" "^0.1.0-alpha"
+    "@nucypher/nucypher-core" "^0.1.0"
     axios "^0.21.1"
     ethers "^5.4.1"
     js-sha3 "^0.8.0"
