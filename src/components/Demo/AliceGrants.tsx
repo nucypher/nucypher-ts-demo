@@ -19,7 +19,6 @@ export const AliceGrants = () => {
   const shares = 3
   const startDate = new Date()
   const endDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // In 30 days
-  console.log({ startDate, endDate })
   const intialParams: BlockchainPolicyParameters = {
     bob: remoteBob,
     label: getRandomLabel(),
