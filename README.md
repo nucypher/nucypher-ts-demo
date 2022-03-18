@@ -1,6 +1,6 @@
 # nucypher-ts-demo
 
-See the demo in action [here](https://blissful-hopper-34fc59.netlify.app/alice-grants).
+See the demo in action [here](https://nucypher-ts-demo.netlify.app/).
 
 ## Installation
 
