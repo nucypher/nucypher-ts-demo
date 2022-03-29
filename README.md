@@ -15,25 +15,19 @@ yarn start
 
 ## Usage
 
-In order to run this demo will need a MetaMask with an account funded with enough Ethereum to fund Policy contract creation.
+In order to run this demo will need a MetaMask with an account funded with enough $MATIC to fund Policy creation.
 
 It is also recommended to change `secretKey` values for Alice and Bob characters. See `./src/characters.ts` for details.
 
 ### Mainnet
 
-`nucypher-ts` is in an early release. We recommend **not** using it in production _just yet_.
+`nucypher-ts` is in an early release. We recommend **not** using it in production _just yet_. The relevant contracts are not yet deployed on the mainnet.
 
-### Lynx (Görli Testnet)
+### Ibex - Mumbai Testnet
 
-`nucypher-ts-demo` is configured to work on Lynx network out-of-the-box. It uses public Porter instance by default. See `./src/characters.ts` for details.
+The current release of `nucypher-ts` supports Ursulas working on Ibex network and contracts deployed on Mumbai testnet.
 
-This is a recommended way to use `nucypher-ts` on a testnet.
-
-### Ibex (Rinkeby Testnet)
-
-Running `nucypher-ts-demo` on Ibex requires setting up a local [Porter](hhttps://docs.nucypher.com/en/latest/application_development/porter.html#porter-service) instance. It's also recommended to run your own instance of Ursula, and use it in as part of `includeUrsula` configuration in `Alice::grant` method.
-
-Ibex is a preferred testnet for local development when contributing to `nucypher-ts`. Because of it's instability and substantial operational overhead, it's **not** recommended for developers looking to integrate `nucypher-ts` into their applications - Please use Lynx testnet instead.
+In order to connect with the network, the demo uses a public instance of [Porter](https://docs.nucypher.com/en/latest/application_development/web_development.html#running-porter) on 'https://porter-ibex.nucypher.community'
 
 ## References
 
