@@ -8,13 +8,30 @@ import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
+import { NetworkConfig } from './NetworkConfig'
 // import { AliceRevokes } from './AliceRevokes'
+
+export interface INetworkConfig {
+  includeUrsulas: string[]
+  excludeUrsulas: string[]
+  porterUri: string
+}
 
 export const getRandomLabel = () => `label-${new Date().getTime()}`
 
 export const AliceGrants = () => {
+  const initialNetworkConfig = {
+    includeUrsulas: [],
+    excludeUrsulas: [],
+    // Public Porter endpoint on Ibex network
+    porterUri: 'https://porter-ibex.nucypher.community',
+  }
+
+  // Network config vars
+  const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
+
   // These policy parameters will be used by Alice to create a blockchain policy
-  const remoteBob = makeRemoteBob()
+  const remoteBob = makeRemoteBob(networkConfig.porterUri)
   const threshold = 2
   const shares = 3
   const startDate = new Date()
@@ -53,9 +70,8 @@ export const AliceGrants = () => {
     }
     setPolicyFormEnabled(false)
 
-    const alice = makeAlice(provider)
-    const includeUrsulas: string[] = []
-    const excludeUrsulas: string[] = []
+    const alice = makeAlice(provider, networkConfig.porterUri)
+    const { includeUrsulas, excludeUrsulas } = networkConfig
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
     setAliceVeryfingKey(alice.verifyingKey)
@@ -86,7 +102,7 @@ export const AliceGrants = () => {
     }
 
     const { encryptedTreasureMap } = policy
-    const bob = makeBob()
+    const bob = makeBob(networkConfig.porterUri)
     const retrievedMessage = await bob.retrieveAndDecrypt(
       policyEncryptingKey,
       aliceVerifyingKey,
@@ -122,6 +138,7 @@ export const AliceGrants = () => {
 
   return (
     <div style={{ display: 'grid', padding: '5px' }}>
+      <NetworkConfig networkConfig={networkConfig} setNetworkConfig={setNetworkConfig} />
       <AliceCreatesPolicy
         enabled={policyFormEnabled}
         policyParams={policyParams}

@@ -2,7 +2,6 @@ import type { MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 
 import { ContentBlock } from '../base/base'
-
 import { InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
 
 interface Props {

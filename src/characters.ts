@@ -1,25 +1,20 @@
 import { Alice, Bob, RemoteBob } from '@nucypher/nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
-const config = {
-  // Public Porter endpoint on Ibex network
-  porterUri: 'https://porter-ibex.nucypher.community',
-}
-
-export const makeAlice = (provider: Web3Provider): Alice => {
+export const makeAlice = (provider: Web3Provider, porterUri: string): Alice => {
   const secretKey = Buffer.from('fake-secret-key-32-bytes-alice-x')
-  return Alice.fromSecretKeyBytes(config, secretKey, provider)
+  return Alice.fromSecretKeyBytes({ porterUri }, secretKey, provider)
 }
 
-export const makeBob = (): Bob => {
+export const makeBob = (porterUri: string): Bob => {
   const secretKey = Buffer.from('fake-secret-key-32-bytes-bob-xxx')
-  return Bob.fromSecretKey(config, secretKey)
+  return Bob.fromSecretKey({ porterUri }, secretKey)
 }
 
-export const makeRemoteBob = (): RemoteBob => {
+export const makeRemoteBob = (porterUri: string): RemoteBob => {
   // The difference between a "Bob" and a "remote Bob" is that we only have
   // access to public parameters in the latter, whereas in the former
   // we also have access to Bob's secret key
-  const { decryptingKey, verifyingKey } = makeBob()
+  const { decryptingKey, verifyingKey } = makeBob(porterUri)
   return { decryptingKey, verifyingKey }
 }

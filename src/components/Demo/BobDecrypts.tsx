@@ -1,6 +1,6 @@
 import React from 'react'
-import { ContentBlock } from '../base/base'
 
+import { ContentBlock } from '../base/base'
 import { InputRow, SmallButton, TitleRow, CellTitle } from '../form/form'
 
 interface Props {
