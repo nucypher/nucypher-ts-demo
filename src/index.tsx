@@ -1,14 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ChainId, DAppProvider, Mumbai } from '@usedapp/core'
+import { Config as DappProviderConfig, DAppProvider, Mumbai, Polygon } from '@usedapp/core'
 import { App } from './App'
 
-const config = {
-  readOnlyChainId: ChainId.Mainnet,
-  readOnlyUrls: {
-    [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/3165a249c65f4198bf57200109b8fadf',
-  },
-  networks: [Mumbai],
+const config: DappProviderConfig = {
+  networks: [Mumbai, Polygon],
 }
 
 ReactDOM.render(

@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from '@nucypher/nucypher-ts'
-import React, { useState } from 'react'
+import {
+  BlockchainPolicyParameters,
+  Enrico,
+  PublicKey,
+  EnactedPolicy,
+  MessageKit,
+  defaultConfiguration,
+} from '@nucypher/nucypher-ts'
+import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { useEthers } from '@usedapp/core'
 
@@ -20,14 +27,16 @@ export interface INetworkConfig {
 export const getRandomLabel = () => `label-${new Date().getTime()}`
 
 export const AliceGrants = () => {
-  const initialNetworkConfig = {
-    includeUrsulas: [],
-    excludeUrsulas: [],
-    // Public Porter endpoint on Ibex network
-    porterUri: 'https://porter-ibex.nucypher.community',
-  }
+  // Ethers-js is our web3 provider
+  const { library, chainId } = useEthers()
 
   // Network config vars
+  const initialNetworkConfig = {
+    includeUrsulas: [] as string[],
+    excludeUrsulas: [] as string[],
+    porterUri: '',
+  }
+
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
 
   // These policy parameters will be used by Alice to create a blockchain policy
@@ -63,6 +72,14 @@ export const AliceGrants = () => {
   // Revoke policy vars
   // const [revokeEnabled, setRevokeEnabled] = useState(false)
   // const [revokeInProgress, setRevokeInProgress] = useState(false)
+
+  useEffect(() => {
+    // Try setting default config based on currently selected network
+    if (chainId) {
+      const config = { ...networkConfig, ...defaultConfiguration(chainId) }
+      setNetworkConfig(config)
+    }
+  }, [chainId])
 
   const grantToBob = async (provider?: Web3Provider) => {
     if (!provider) {
@@ -132,9 +149,6 @@ export const AliceGrants = () => {
 
   //   setRevokeInProgress(false)
   // }
-
-  // Ethers-js is our web3 provider
-  const { library } = useEthers()
 
   return (
     <div style={{ display: 'grid', padding: '5px' }}>

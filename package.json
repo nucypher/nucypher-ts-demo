@@ -13,7 +13,7 @@
     "lint:prettier": "yarn prettier './{src, test}/**/*.{ts,tsx}'"
   },
   "dependencies": {
-    "@nucypher/nucypher-ts": "^0.6.1",
+    "@nucypher/nucypher-ts": "file:../nucypher-ts-2",
     "@types/styled-components": "^5.1.7",
     "@usedapp/core": "^0.7.3",
     "file-loader": "^6.2.0",
