@@ -9,7 +9,7 @@ import {
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
-import { useEthers } from '@usedapp/core'
+import { ChainId, useEthers } from '@usedapp/core'
 
 import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
@@ -34,7 +34,7 @@ export const AliceGrants = () => {
   const initialNetworkConfig = {
     includeUrsulas: [] as string[],
     excludeUrsulas: [] as string[],
-    porterUri: '',
+    porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
   }
 
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
