@@ -7,6 +7,7 @@ import {
   EnactedPolicy,
   MessageKit,
   defaultConfiguration,
+  Bob,
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
@@ -63,9 +64,13 @@ export const BuildConfig = () => {
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
-  // const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
+  const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
   const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
+
+  // tDec Entities
+  const [encrypter, setEncrypter] = useState(undefined as Enrico | undefined)
+  const [decrypter, setDecrypter] = useState(undefined as Bob | undefined)
 
   // Encrypt message vars
   const [encryptionEnabled, setEncryptionEnabled] = useState(false)
@@ -100,18 +105,17 @@ export const BuildConfig = () => {
       policyParams.endDate,
       networkConfig.porterUri
     );
+    setEncrypter(encrypter)
+    setDecrypter(decrypter)
+    setPolicy(policy)
     setPolicyFormEnabled(false)
 
     // const { includeUrsulas, excludeUrsulas } = networkConfig
-    // const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
     setAliceVeryfingKey(policy.aliceVerifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
-    // setPolicy(policy)
-    // setPolicyFormEnabled(true)
-    // setEncryptionEnabled(true)
-
-    // setPolicyParams({ ...policyParams, label: getRandomLabel() })
+    setPolicyFormEnabled(true)
+    setEncryptionEnabled(true)
   }
 
   const encryptMessage = (plaintext: string) => {
