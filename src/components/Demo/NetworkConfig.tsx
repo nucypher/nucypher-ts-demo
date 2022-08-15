@@ -4,8 +4,8 @@ import { ethers } from 'ethers'
 import { ContentBlock } from '../base/base'
 import { EditableList } from '../base/EditableList'
 import { Label, Input, CellTitle, TitleRow } from '../form/form'
-import { FormRow } from './AliceCreatesPolicy'
-import type { INetworkConfig } from './AliceGrants'
+import { FormRow } from './buildEntities'
+import type { INetworkConfig } from './tDec_and_conditions_demo'
 interface Props {
   networkConfig: INetworkConfig
   setNetworkConfig: (value: INetworkConfig) => void

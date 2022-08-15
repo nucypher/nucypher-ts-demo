@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { AliceGrants } from '../components/Demo/AliceGrants'
+import { BuildConfig } from '../components/Demo/tDec_and_conditions_demo'
 import { Title } from '../typography/Title'
 import { Text } from '../typography/Text'
 
@@ -12,14 +12,14 @@ export const DemoAliceGrants = () => {
       <Container>
         <Section>
           <SectionRow>
-            <Title>Alice grants demo</Title>
+            <Title>TDec Demo</Title>
             <AccountButton />
           </SectionRow>
           <SectionRow>
-            <Text>Alice creates a blockchain policy and shares an encrypted message with Bob.</Text>
+            <Text>Define a tDec configuration and use it to encrypt and decrypt</Text>
           </SectionRow>
           <TableGrid>
-            <AliceGrants />
+            <BuildConfig />
           </TableGrid>
         </Section>
       </Container>

@@ -5,7 +5,7 @@ import { Page } from './components/base/base'
 import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
 import { NotificationsList } from './components/Transactions/History'
-import { DemoAliceGrants } from './pages/DemoAliceGrants'
+import { DemoAliceGrants } from './pages/DemoTDecConditions'
 
 export function App() {
   return (

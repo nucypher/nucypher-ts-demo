@@ -1,10 +1,11 @@
-import type { BlockchainPolicyParameters } from '@nucypher/nucypher-ts'
 import React from 'react'
 import styled from 'styled-components'
 
 import { Button } from '../base/Button'
 import { ContentBlock } from '../base/base'
 import { Input, Label, TitleRow, CellTitle } from '../form/form'
+import type { ItDecConfig } from './tDec_and_conditions_demo'
+
 
 export const FormRow = styled.div`
   display: flex;
@@ -14,8 +15,8 @@ export const FormRow = styled.div`
 
 interface Props {
   enabled: boolean
-  policyParams: BlockchainPolicyParameters
-  setPolicyParams: (value: BlockchainPolicyParameters) => void
+  policyParams: ItDecConfig
+  setPolicyParams: (value: ItDecConfig) => void
   grantToBob: () => void
 }
 
@@ -75,13 +76,13 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
         />
       </FormRow>
       <FormRow>
-        <Button onClick={grantToBob}>Create policy</Button>
+        <Button onClick={grantToBob}>Build tDec Entities</Button>
       </FormRow>
     </div>
   ) : (
     <>
       <div>
-        <h3>Policy creation in progress</h3>
+        <h3>Creation in progress</h3>
         <h3>Please wait ...</h3>
       </div>
     </>
@@ -90,7 +91,7 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   return (
     <ContentBlock>
       <TitleRow>
-        <CellTitle>Step 1 - Alice creates a blockchain policy</CellTitle>
+        <CellTitle>Step 1 - Define tDec configuration</CellTitle>
       </TitleRow>
       {content}
     </ContentBlock>

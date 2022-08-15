@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
+  generateTDecEntities,
   BlockchainPolicyParameters,
   Enrico,
   PublicKey,
@@ -11,12 +12,11 @@ import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
 
-import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
+import { AliceCreatesPolicy } from './buildEntities'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
 import { NetworkConfig } from './NetworkConfig'
-// import { AliceRevokes } from './AliceRevokes'
 
 export interface INetworkConfig {
   includeUrsulas: string[]
@@ -24,9 +24,17 @@ export interface INetworkConfig {
   porterUri: string
 }
 
+export interface ItDecConfig {
+  threshold: number,
+  shares: number,
+  label: string,
+  startDate: Date,
+  endDate: Date,
+}
+
 export const getRandomLabel = () => `label-${new Date().getTime()}`
 
-export const AliceGrants = () => {
+export const BuildConfig = () => {
   // Ethers-js is our web3 provider
   const { library, chainId } = useEthers()
 
@@ -39,14 +47,12 @@ export const AliceGrants = () => {
 
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
 
-  // These policy parameters will be used by Alice to create a blockchain policy
-  const remoteBob = makeRemoteBob(networkConfig.porterUri)
+  // Inital tDec config params
   const threshold = 2
   const shares = 3
   const startDate = new Date()
   const endDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30) // In 30 days
-  const intialParams: BlockchainPolicyParameters = {
-    bob: remoteBob,
+  const intialParams = {
     label: getRandomLabel(),
     threshold,
     shares,
@@ -57,7 +63,7 @@ export const AliceGrants = () => {
   // Create policy vars
   const [policyParams, setPolicyParams] = useState(intialParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
-  const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
+  // const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
   const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
@@ -85,19 +91,27 @@ export const AliceGrants = () => {
     if (!provider) {
       return
     }
+    const [encrypter, decrypter, policy] = await generateTDecEntities(
+      policyParams.threshold,
+      policyParams.shares,
+      provider,
+      policyParams.label,
+      policyParams.startDate,
+      policyParams.endDate,
+      networkConfig.porterUri
+    );
     setPolicyFormEnabled(false)
 
-    const alice = makeAlice(provider, networkConfig.porterUri)
-    const { includeUrsulas, excludeUrsulas } = networkConfig
-    const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
+    // const { includeUrsulas, excludeUrsulas } = networkConfig
+    // const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
-    setAliceVeryfingKey(alice.verifyingKey)
+    setAliceVeryfingKey(policy.aliceVerifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
-    setPolicy(policy)
-    setPolicyFormEnabled(true)
-    setEncryptionEnabled(true)
+    // setPolicy(policy)
+    // setPolicyFormEnabled(true)
+    // setEncryptionEnabled(true)
 
-    setPolicyParams({ ...policyParams, label: getRandomLabel() })
+    // setPolicyParams({ ...policyParams, label: getRandomLabel() })
   }
 
   const encryptMessage = (plaintext: string) => {
@@ -106,8 +120,8 @@ export const AliceGrants = () => {
     }
 
     // Enrico pops up here for just a second to do some work for Alice
-    const enrico = new Enrico(policyEncryptingKey)
-    const encryptedMessage = enrico.encryptMessage(plaintext)
+    // const enrico = new Enrico(policyEncryptingKey)
+    const encryptedMessage = encrypter.encryptMessage(plaintext)
 
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
@@ -118,37 +132,15 @@ export const AliceGrants = () => {
       return
     }
 
-    const { encryptedTreasureMap } = policy
-    const bob = makeBob(networkConfig.porterUri)
-    const retrievedMessage = await bob.retrieveAndDecrypt(
-      policyEncryptingKey,
-      aliceVerifyingKey,
-      [encryptedMessage],
-      encryptedTreasureMap
+    const { encryptedTreasureMap } = policy.encryptedTreasureMap
+    const retrievedMessage = await decrypter.retrieveAndDecrypt(
+      [encryptedMessage]
     )
     const dec = new TextDecoder()
 
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
     // setRevokeEnabled(true)
   }
-
-  // TODO: Revocation is not possible yet
-  // const revokePolicy = async (provider?: Web3Provider) => {
-  //   if (!provider) {
-  //     return
-  //   }
-
-  //   if (!(encryptedMessage && policyEncryptingKey && policy && aliceVerifyingKey)) {
-  //     return
-  //   }
-
-  //   setRevokeInProgress(true)
-
-  //   const alice = makeAlice(provider)
-  //   await alice.revoke(policy.id.toBytes())
-
-  //   setRevokeInProgress(false)
-  // }
 
   return (
     <div style={{ display: 'grid', padding: '5px' }}>
