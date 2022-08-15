@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { BuildConfig } from '../components/Demo/tDec_and_conditions_demo'
+import { AliceGrants } from '../components/Demo/tDec_and_conditions_demo'
 import { Title } from '../typography/Title'
 import { Text } from '../typography/Text'
 
-export const DemoAliceGrants = () => {
+export const DemoTDec = () => {
   return (
     <MainContent>
       <Container>
@@ -16,10 +16,10 @@ export const DemoAliceGrants = () => {
             <AccountButton />
           </SectionRow>
           <SectionRow>
-            <Text>Define a tDec configuration and use it to encrypt and decrypt</Text>
+            <Text>Fetch a tDec configuration and use it to encrypt and decrypt</Text>
           </SectionRow>
           <TableGrid>
-            <BuildConfig />
+            <AliceGrants />
           </TableGrid>
         </Section>
       </Container>

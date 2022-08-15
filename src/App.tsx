@@ -5,7 +5,7 @@ import { Page } from './components/base/base'
 import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
 import { NotificationsList } from './components/Transactions/History'
-import { DemoAliceGrants } from './pages/DemoTDecConditions'
+import { DemoTDec } from './pages/DemoTDecConditions'
 
 export function App() {
   return (
@@ -14,7 +14,7 @@ export function App() {
       <BrowserRouter>
         <TopBar />
         <Switch>
-          <Route exact path="/alice-grants" component={DemoAliceGrants} />
+          <Route exact path="/alice-grants" component={DemoTDec} />
           <Redirect exact from="/" to="/alice-grants" />
         </Switch>
       </BrowserRouter>
