@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
-  generateTDecEntities,
   makeTDecDecrypter,
   makeTDecEncrypter,
   Enrico,
@@ -89,6 +88,8 @@ export const AliceGrants = () => {
     setPolicyFormEnabled(true)
     setEncryptionEnabled(false)
     setEncryptionEnabled(true)
+    setDecryptionEnabled(false)
+    setDecryptionEnabled(true)
   }
 
   const encryptMessage = (plaintext: string) => {
@@ -101,12 +102,12 @@ export const AliceGrants = () => {
     setDecryptionEnabled(true)
   }
 
-  const decryptMessage = async () => {
+  const decryptMessage = async (cyphertext: MessageKit) => {
     if (!decrypter) {
       return
     }
     const retrievedMessage = await decrypter.retrieveAndDecrypt(
-      [encryptedMessage]
+      [cyphertext]
     )
     const dec = new TextDecoder()
 
