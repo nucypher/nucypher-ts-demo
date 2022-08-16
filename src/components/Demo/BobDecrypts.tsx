@@ -1,4 +1,4 @@
-import { MessageKit } from '@nucypher/nucypher-ts'
+import { MessageKit, ConditionsIntegrator } from '@nucypher/nucypher-ts/build/main/src/core'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ContentBlock } from '../base/base'
@@ -21,9 +21,12 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
     return <></>
   }
 
-  const [cyphertext, setCyphertext] = useState([])
+  const [cyphertext, setCyphertext] = useState('')
 
-  const onClick = () => decrypt(MessageKit.fromBytes(cyphertext))
+  const onClick = () => {
+    const b64decoded = Buffer.from(cyphertext, 'base64')
+    decrypt(MessageKit.fromBytes(b64decoded))
+  }
 
   const plaintextContent = decryptedMessage ? (
     <div style={{ paddingTop: '5px' }}>

@@ -82,8 +82,6 @@ export const AliceGrants = () => {
     const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
-    encrypter.conditions = 
-
     setEncrypter(encrypter)
     setDecrypter(decrypter)
 
