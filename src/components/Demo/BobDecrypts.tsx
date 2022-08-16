@@ -47,6 +47,7 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
             id={'decryptionInput'}
             type="Uint8Array"
             value={cyphertext}
+            placeholder="Enter encrypted message"
             onChange={(e) => setCyphertext(e.currentTarget.value)}
           />
         </InputRow>

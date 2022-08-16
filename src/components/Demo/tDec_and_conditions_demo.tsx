@@ -78,7 +78,6 @@ export const AliceGrants = () => {
       return
     }
 
-
     const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
@@ -99,7 +98,7 @@ export const AliceGrants = () => {
     if (!encrypter) {
       return
     }
-    encrypter.conditions = conditions;
+    encrypter.conditions = conditions
     const encryptedMessage = encrypter.encryptMessage(plaintext)
 
     setEncryptedMessage(encryptedMessage)
