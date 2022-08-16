@@ -21,9 +21,9 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
     return <></>
   }
 
-  const [cyphertext, setCyphertext] = useState('cypher text')
+  const [cyphertext, setCyphertext] = useState([])
 
-  const onClick = () => decrypt(MessageKit.fromBytes([cyphertext]))
+  const onClick = () => decrypt(MessageKit.fromBytes(cyphertext))
 
   const plaintextContent = decryptedMessage ? (
     <div style={{ paddingTop: '5px' }}>
@@ -42,7 +42,7 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
         <InputRow>
           <Input
             id={'decryptionInput'}
-            type="number"
+            type="Uint8Array"
             value={cyphertext}
             onChange={(e) => setCyphertext(e.currentTarget.value)}
           />

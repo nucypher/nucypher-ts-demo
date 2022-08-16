@@ -30,7 +30,7 @@ export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) =>
 
   const ciphertextContent = encryptedMessage ? (
     <div  style={{ paddingTop: '5px', width: '720px' }}>
-      <h3>Encrypted message: {encryptedMessage.toBytes()}</h3>
+      <h3>Encrypted message: {encryptedMessage.toBytes().toString()}</h3>
     </div>
   ) : (
     ''
