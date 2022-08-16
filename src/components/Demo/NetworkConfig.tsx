@@ -5,7 +5,7 @@ import { ContentBlock } from '../base/base'
 import { EditableList } from '../base/EditableList'
 import { Label, Input, CellTitle, TitleRow } from '../form/form'
 import { FormRow } from './fetchConfig'
-import type { INetworkConfig } from './tDec_and_conditions_demo'
+import type { INetworkConfig } from './tDecConditionsDemo'
 interface Props {
   networkConfig: INetworkConfig
   setNetworkConfig: (value: INetworkConfig) => void

@@ -73,7 +73,7 @@ export const AliceGrants = () => {
     }
   }, [chainId])
 
-  const grantToBob = async (provider?: Web3Provider) => {
+  const tDecDemo = async (provider?: Web3Provider) => {
     if (!provider) {
       return
     }
@@ -84,13 +84,8 @@ export const AliceGrants = () => {
     setEncrypter(encrypter)
     setDecrypter(decrypter)
 
-    setPolicyFormEnabled(false)
     setPolicyFormEnabled(true)
-    
-    setEncryptionEnabled(false)
     setEncryptionEnabled(true)
-
-    setDecryptionEnabled(false)
     setDecryptionEnabled(true)
   }
 
@@ -124,7 +119,7 @@ export const AliceGrants = () => {
         enabled={policyFormEnabled}
         tDecParams={tDecParams}
         settDecParams={settDecParams}
-        grantToBob={() => grantToBob(library)}
+        tDecDemo={() => tDecDemo(library)}
       />
       <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
