@@ -1,11 +1,18 @@
-import React from 'react'
-
+import { MessageKit } from '@nucypher/nucypher-ts'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import { ContentBlock } from '../base/base'
-import { InputRow, SmallButton, TitleRow, CellTitle } from '../form/form'
+import { InputBox, InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
+
+export const FormRow = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 32px 0 24px 58px;
+`
 
 interface Props {
   enabled: boolean
-  decrypt: () => void
+  decrypt: (cyphertext: MessageKit) => void
   decryptedMessage: string
 }
 
@@ -13,6 +20,10 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
   if (!enabled) {
     return <></>
   }
+
+  const [cyphertext, setCyphertext] = useState('cypher text')
+
+  const onClick = () => decrypt(MessageKit.fromBytes([cyphertext]))
 
   const plaintextContent = decryptedMessage ? (
     <div style={{ paddingTop: '5px' }}>
@@ -29,8 +40,16 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
           <CellTitle>Step 3 - Bob decrypts encrypted message</CellTitle>
         </TitleRow>
         <InputRow>
-          <SmallButton onClick={decrypt}>Decrypt</SmallButton>
+          <Input
+            id={'decryptionInput'}
+            type="number"
+            value={cyphertext}
+            onChange={(e) => setCyphertext(e.currentTarget.value)}
+          />
         </InputRow>
+        <FormRow>
+          <SmallButton onClick={onClick}>Decrypt</SmallButton>
+        </FormRow>
         {plaintextContent}
       </ContentBlock>
     </div>
