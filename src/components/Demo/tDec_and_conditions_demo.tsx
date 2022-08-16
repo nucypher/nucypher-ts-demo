@@ -18,6 +18,7 @@ import { AliceCreatesPolicy } from './fetchConfig'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
 import { NetworkConfig } from './NetworkConfig'
+import type { ConditionSet } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 
 export interface INetworkConfig {
   porterUri: string
@@ -81,21 +82,26 @@ export const AliceGrants = () => {
     const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
+    encrypter.conditions = 
+
     setEncrypter(encrypter)
     setDecrypter(decrypter)
 
     setPolicyFormEnabled(false)
     setPolicyFormEnabled(true)
+    
     setEncryptionEnabled(false)
     setEncryptionEnabled(true)
+
     setDecryptionEnabled(false)
     setDecryptionEnabled(true)
   }
 
-  const encryptMessage = (plaintext: string) => {
+  const encryptMessage = (plaintext: string, conditions?: ConditionSet) => {
     if (!encrypter) {
       return
     }
+    encrypter.conditions = conditions;
     const encryptedMessage = encrypter.encryptMessage(plaintext)
 
     setEncryptedMessage(encryptedMessage)

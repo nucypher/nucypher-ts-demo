@@ -98,4 +98,12 @@ export const GlobalStyle = createGlobalStyle`
   p {
     margin: 0;
   }
+
+  .encryptedMessage{
+    width: 100%;
+    overflow:auto;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: none; 
+  }
 `

@@ -1,4 +1,5 @@
-import type { MessageKit } from '@nucypher/nucypher-ts'
+import type { MessageKit } from '@nucypher/nucypher-ts/build/main/src/core'
+import { ConditionSet } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ContentBlock } from '../base/base'
@@ -15,7 +16,7 @@ export const FormRow = styled.div`
 interface Props {
   enabled: boolean
   encryptedMessage?: MessageKit
-  encrypt: (value: string, conditions: string) => void
+  encrypt: (value: string, conditions: ConditionSet) => void
 }
 
 export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) => {
@@ -26,11 +27,12 @@ export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) =>
   const [plaintext, setPlaintext] = useState('plaintext')
   const [conditions, setConditions] = useState('conditions json')
 
-  const onClick = () => encrypt(plaintext, conditions)
+  const onClick = () => encrypt(plaintext, ConditionSet.fromJSON(conditions))
 
   const ciphertextContent = encryptedMessage ? (
-    <div  style={{ paddingTop: '5px', width: '720px' }}>
-      <h3>Encrypted message: {encryptedMessage.toBytes().toString()}</h3>
+    <div style={{ paddingTop: '5px', width: '720px'}}>
+      <h3>Encrypted message: </h3>
+      <pre className="encryptedMessage">{Buffer.from(encryptedMessage.toBytes()).toString('base64')}</pre>
     </div>
   ) : (
     ''
