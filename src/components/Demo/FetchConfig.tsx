@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Button } from '../base/Button'
 import { ContentBlock } from '../base/base'
 import { Input, Label, TitleRow, CellTitle } from '../form/form'
-import type { ItDecConfig } from './tDecConditionsDemo'
+import type { ItDecConfig } from './TDecConditionsDemo'
 
 
 export const FormRow = styled.div`
@@ -20,7 +20,7 @@ interface Props {
   tDecDemo: () => void
 }
 
-export const AliceCreatesPolicy = ({ enabled, tDecParams, settDecParams, tDecDemo }: Props) => {
+export const FetchTDecConfig = ({ enabled, tDecParams, settDecParams, tDecDemo }: Props) => {
   const setLabel = (label: string) => settDecParams({ ...tDecParams, label })
 
   const content = enabled ? (

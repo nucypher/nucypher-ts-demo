@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { AliceGrants } from '../components/Demo/tDecConditionsDemo'
+import { AliceGrants } from '../components/Demo/TDecConditionsDemo'
 import { Title } from '../typography/Title'
 import { Text } from '../typography/Text'
 

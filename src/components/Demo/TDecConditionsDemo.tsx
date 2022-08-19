@@ -3,8 +3,6 @@ import {
   makeTDecDecrypter,
   makeTDecEncrypter,
   Enrico,
-  PublicKey,
-  EnactedPolicy,
   MessageKit,
   defaultConfiguration,
   tDecDecrypter,
@@ -12,13 +10,13 @@ import {
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
+import type { ConditionSet } from '@nucypher/nucypher-ts'
 
-import { AliceCreatesPolicy } from './fetchConfig'
-// import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
+import { FetchTDecConfig } from './FetchConfig'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
 import { NetworkConfig } from './NetworkConfig'
-import type { ConditionSet } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { ConditionList } from '../conditions/ConditionList'
 
 export interface INetworkConfig {
   porterUri: string
@@ -43,19 +41,18 @@ export const AliceGrants = () => {
     label: "2-of-4-ibex",
   }
 
+  // Initial config vars
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
-  const [tDecParams, settDecParams] = useState<ItDecConfig>(initialTDecConfig)
+  const [tDecParams, setTDecParams] = useState<ItDecConfig>(initialTDecConfig)
 
-
-  // // Create policy vars
-  // const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
-  // const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
-  // const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
+  // Create policy vars
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
-  // // tDec Entities
+  // tDec Entities
   const [encrypter, setEncrypter] = useState(undefined as Enrico | undefined)
   const [decrypter, setDecrypter] = useState(undefined as tDecDecrypter | undefined)
+
+  const [conditions, setConditions] = useState(undefined as ConditionSet | undefined);
 
   // // Encrypt message vars
   const [encryptionEnabled, setEncryptionEnabled] = useState(false)
@@ -115,13 +112,18 @@ export const AliceGrants = () => {
   return (
     <div style={{ display: 'grid', padding: '5px' }}>
       <NetworkConfig networkConfig={networkConfig} setNetworkConfig={setNetworkConfig} />
-      <AliceCreatesPolicy
+      <FetchTDecConfig
         enabled={policyFormEnabled}
         tDecParams={tDecParams}
-        settDecParams={settDecParams}
+        settDecParams={setTDecParams}
         tDecDemo={() => tDecDemo(library)}
       />
-      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
+      {conditions && (
+        <ConditionList
+          conditions={[conditions]}
+        />)
+      }
+      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} setConditions={setConditions} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
     </div>
   )
