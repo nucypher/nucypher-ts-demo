@@ -38,8 +38,6 @@ export const ConditionBuilder = () => {
     const RPC_METHODS = ["eth_getBalance", "balanceOf"]
     const RpcMethod = makeDropdown("RpcMethod", RPC_METHODS, true, setRpcMethod)
 
-
-
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             {LogicalOperator}
