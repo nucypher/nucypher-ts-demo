@@ -2,21 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import { AccountButton } from '../components/account/AccountButton'
 import { Container, MainContent, Section, SectionRow } from '../components/base/base'
-import { AliceGrants } from '../components/Demo/AliceGrants'
+import { AliceGrants } from '../components/Demo/tDecConditionsDemo'
 import { Title } from '../typography/Title'
 import { Text } from '../typography/Text'
 
-export const DemoAliceGrants = () => {
+export const DemoTDec = () => {
   return (
     <MainContent>
       <Container>
         <Section>
           <SectionRow>
-            <Title>Alice grants demo</Title>
+            <Title>TDec Demo</Title>
             <AccountButton />
           </SectionRow>
           <SectionRow>
-            <Text>Alice creates a blockchain policy and shares an encrypted message with Bob.</Text>
+            <Text>Fetch a tDec configuration and use it to encrypt and decrypt</Text>
           </SectionRow>
           <TableGrid>
             <AliceGrants />
