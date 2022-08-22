@@ -1,6 +1,9 @@
 import type { ConditionSet } from '@nucypher/nucypher-ts'
 import React from 'react'
+import { ContentBlock } from '../base/base'
+import { TitleRow, CellTitle } from '../form/form'
 import { Condition } from './Condition'
+import { ConditionBuilder } from './ConditionBuilder'
 
 interface Props {
     conditions: ConditionSet[];
@@ -18,8 +21,15 @@ export const ConditionList = (props: Props) => {
     }
 
     return (
-        <div>
-            {getList()}
-        </div>
+        <ContentBlock>
+            <TitleRow>
+                <CellTitle>Policy Conditions</CellTitle>
+            </TitleRow>
+            <div>
+                <ConditionBuilder />
+                {getList()}
+            </div>
+        </ContentBlock>
+
     )
 }
