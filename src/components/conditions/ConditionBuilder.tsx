@@ -1,10 +1,12 @@
+import { ConditionSet } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Button } from '../base/Button'
 
-export const ConditionBuilder = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
-    const onSubmit = (data: any) => console.log(data)
-    console.log(errors)
+interface Props {
+    addCondition: (condition: ConditionSet) => void
+}
+
+export const ConditionBuilder = ({ addCondition }: Props) => {
 
     // Defining all dictionary values for the form
     // Doing that for the conveniance of not having to use `undefined` etc., in `useState`
@@ -30,53 +32,51 @@ export const ConditionBuilder = () => {
     const [standardContractType, setStandardContractType] = useState(STANDARD_CONTRACT_TYPES[0])
     const [contractMethod, setContractMethod] = useState(METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType][0])
     const [contractMethodParameters, setContractMethodParameters] = useState(METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod][0])
-    const [returnTestValue, setReturnTestValue] = useState(0)
+    const [returnValueTest, setReturnValueTest] = useState(0)
     const [parameterValue, setParameterValue] = useState('')
     const [contractAddress, setContractAddress] = useState('')
 
     const makeDropdown = (
-        name: string,
         items: string[],
-        required = true,
         onChange = (e: any) => console.log(e)
     ) => {
         const optionItems = items.map((elem, index) => <option key={index} value={elem}>{elem}</option>)
         return (
-            <select {...register(name, { required, onChange: (e: any) => onChange(e.target.value) })}>
+            <select onChange={(e) => onChange(e.target.value)}>
                 {optionItems}
-            </select>
+            </select >
         )
     }
 
-    const LogicalOperatorDropdown = makeDropdown('logicalOperator', LOGICAL_OPERATORS, true, setLogicalOperator)
-    const ConditionTypeDropdown = makeDropdown("ConditionType", CONDITION_TYPES, true, setConditionType)
-    const ComparatorDropdown = makeDropdown("Comparator", COMPARATOR_OPERATORS, true, setComparator)
-    const RpcMethodDropdown = makeDropdown("RpcMethod", RPC_METHODS, true, setRpcMethod)
-    const StandardContractTypeDropdown = makeDropdown("StandardContractType", STANDARD_CONTRACT_TYPES, true, setStandardContractType)
-    const ContractMethodDropdown = makeDropdown("ContractMethod", METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType], true, setContractMethod)
-    const ContractMethodParametersDropdown = makeDropdown("ContractMethodParameters", METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod], true, setContractMethodParameters)
+    const LogicalOperatorDropdown = makeDropdown(LOGICAL_OPERATORS, setLogicalOperator)
+    const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, setConditionType)
+    const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
+    const RpcMethodDropdown = makeDropdown(RPC_METHODS, setRpcMethod)
+    const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, setStandardContractType)
+    const ContractMethodDropdown = makeDropdown(METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType], setContractMethod)
+    const ContractMethodParametersDropdown = makeDropdown(METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod], setContractMethodParameters)
 
     const makeInput = (name: string, type: "text" | "number", onChange = (e: any) => console.log(e)) =>
-        (<input type={type} {...register(name, { onChange: (e: any) => onChange(e.target.value) })} />)
+        (<input type={type} onChange={(e: any) => onChange(e.target.value)} />)
 
-    const ReturnTestValueInput = makeInput("ReturnTestValue", "number", setReturnTestValue)
+    const ReturnValueTestInput = makeInput("ReturnValueTest", "number", setReturnValueTest)
     const ParametersValueInput = makeInput("ParameterValue", "text", setParameterValue)
     const ContractAddressInput = makeInput("ContractAddress", "text", setContractAddress)
 
     const TimelockCondition = (
         <div style={{ display: 'grid' }}>
             <h2>Timelock Condition</h2>
-            <p>Return Value Test {ComparatorDropdown} Value {ReturnTestValueInput} </p>
-            <p><b>Timelock {comparator} {returnTestValue}</b></p>
+            <p>Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput} </p>
+            <p><b>Timelock {comparator} {returnValueTest}</b></p>
         </div>
     )
     const RpcCondition = (
         <div>
             <h2>RPC Method Condition</h2>
             <p>Method {RpcMethodDropdown}</p>
-            <p>Return Value Test {ComparatorDropdown} Value {ReturnTestValueInput}</p>
+            <p>Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput}</p>
             <p>Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}</p>
-            <p><b>RPC Method {rpcMethod}({parameterValue}) {comparator} {returnTestValue}</b></p>
+            <p><b>RPC Method {rpcMethod}({parameterValue}) {comparator} {returnValueTest}</b></p>
         </div>
     )
     const EvmCondition = (
@@ -85,13 +85,13 @@ export const ConditionBuilder = () => {
             <p>Contract Address {ContractAddressInput}</p>
             <p>Standard Contract Type {StandardContractTypeDropdown}</p>
             <p>Method {ContractMethodDropdown}</p>
-            <p>Return Value Test {ComparatorDropdown} Value {ReturnTestValueInput} </p>
+            <p>Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput} </p>
             <p>Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}</p>
-            <p><b>Contract {standardContractType}({contractAddress}) {contractMethod}({contractMethodParameters}={parameterValue}) {comparator} {returnTestValue}</b></p>
+            <p><b>Contract {standardContractType}({contractAddress}) {contractMethod}({contractMethodParameters}={parameterValue}) {comparator} {returnValueTest}</b></p>
         </div>
     )
 
-    const ComponentForConditionType = (type: string | undefined) => {
+    const ComponentForConditionType = (type: string) => {
         switch (type) {
             case "timelock":
                 return TimelockCondition
@@ -104,8 +104,52 @@ export const ConditionBuilder = () => {
         }
     }
 
+    const makeConditonForType = (type: string) => {
+        // TODO: Use schema validation implemented by nucypher-ts
+        switch (type) {
+            case "timelock":
+                return {
+                    returnValueTest: {
+                        comparator,
+                        value: returnValueTest
+                    }
+                }
+            case "rpc":
+                return {
+                    chain: "ethereum", // TODO: Get from web3 provider or from form input?
+                    method: rpcMethod,
+                    parameters: [parameterValue],
+                    returnValueTest: {
+                        comparator,
+                        value: returnValueTest
+                    }
+                }
+            case "evm":
+                return {
+                    contractAddress,
+                    chain: "ethereum", // TODO: Get from web3 provider or from form input?
+                    functionAbi: "", // TODO: Where do I get this from?
+                    method: contractMethod,
+                    parameters: [parameterValue],
+                    returnValueTest: {
+                        comparator,
+                        value: returnValueTest
+                    }
+                }
+            default:
+                throw Error(`Unrecognized condition type ${conditionType}`)
+        }
+    }
+
+    const onSubmit = (e: any) => {
+        e.preventDefault()
+        const condition = ConditionSet.fromList([makeConditonForType(conditionType)])
+        console.log({ condition })
+        addCondition(condition)
+    }
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
             {LogicalOperatorDropdown}
             <p>LogicalOperator: {logicalOperator}</p>
             <br />
@@ -117,7 +161,7 @@ export const ConditionBuilder = () => {
             {ComponentForConditionType(conditionType)}
             <br />
 
-            <input type="submit" />
+            <Button onClick={onSubmit}>Add Condition</Button>
         </form>
     )
 
