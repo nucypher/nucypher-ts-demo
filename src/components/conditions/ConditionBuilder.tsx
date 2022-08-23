@@ -145,7 +145,7 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
     const onSubmit = (e: any) => {
         e.preventDefault()
         // TODO: Condition set is already a list of stuff, how do I manage?
-        const condition = ConditionSet.fromList([makeConditonForType(conditionType)])
+        const condition = ConditionSet.fromList([makeConditonForType(conditionType)] as any) // TODO: Remove this workaround after fixing fromList() parameter type
         console.log({ condition })
         addCondition(condition)
     }
