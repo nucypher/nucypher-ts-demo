@@ -5,10 +5,5 @@ interface Props {
     condition: ConditionSet;
 }
 
-export const Condition = (props: Props) => {
-    return (
-        <div>
-            {props.condition.toJSON()}
-        </div>
-    )
-}
+export const Condition = (props: Props) =>
+    <pre><code>{JSON.stringify(JSON.parse(props.condition.toJSON()), null, 2)}</code></pre>
