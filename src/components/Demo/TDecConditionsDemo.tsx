@@ -23,7 +23,7 @@ export interface INetworkConfig {
 }
 
 export interface ItDecConfig {
-  label: string,
+  label: string
 }
 
 export const getRandomLabel = () => `label-${new Date().getTime()}`
@@ -38,7 +38,7 @@ export const AliceGrants = () => {
   }
 
   const initialTDecConfig = {
-    label: "2-of-4-ibex",
+    label: '2-of-4-ibex',
   }
 
   // Initial config vars
@@ -53,23 +53,23 @@ export const AliceGrants = () => {
   const [decrypter, setDecrypter] = useState(undefined as tDecDecrypter | undefined)
 
   // TODO: Set to undefined
-  const [conditions, setConditions] = useState(ConditionSet.fromJSON(JSON.stringify(
-    [
-      {
-        "chain": "ethereum",
-        "method": "ownerOf",
-        "parameters": [
-          3591
-        ],
-        "standardContractType": "ERC721",
-        "returnValueTest": {
-          "comparator": "==",
-          "value": "0x6b1231134930FCe469f019ea23907eBa289f8eED"
+  const [conditions, setConditions] = useState(
+    ConditionSet.fromJSON(
+      JSON.stringify([
+        {
+          chain: 'ethereum',
+          method: 'ownerOf',
+          parameters: [3591],
+          standardContractType: 'ERC721',
+          returnValueTest: {
+            comparator: '==',
+            value: '0x6b1231134930FCe469f019ea23907eBa289f8eED',
+          },
+          contractAddress: '0x1e988ba4692e52Bc50b375bcC8585b95c48AaD77',
         },
-        "contractAddress": "0x1e988ba4692e52Bc50b375bcC8585b95c48AaD77"
-      }
-    ]
-  )))
+      ])
+    )
+  )
 
   // // Encrypt message vars
   const [encryptionEnabled, setEncryptionEnabled] = useState(false)
@@ -118,9 +118,7 @@ export const AliceGrants = () => {
     if (!decrypter) {
       return
     }
-    const retrievedMessage = await decrypter.retrieveAndDecrypt(
-      [cyphertext]
-    )
+    const retrievedMessage = await decrypter.retrieveAndDecrypt([cyphertext])
     const dec = new TextDecoder()
 
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
@@ -135,12 +133,13 @@ export const AliceGrants = () => {
         settDecParams={setTDecParams}
         tDecDemo={() => tDecDemo(library)}
       />
-      {conditions && (
-        <ConditionList
-          conditions={[conditions]}
-        />)
-      }
-      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} setConditions={setConditions} />
+      {conditions && <ConditionList conditions={[conditions]} />}
+      <EnricoEncrypts
+        enabled={encryptionEnabled}
+        encrypt={encryptMessage}
+        encryptedMessage={encryptedMessage}
+        setConditions={setConditions}
+      />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
     </div>
   )

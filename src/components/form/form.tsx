@@ -68,7 +68,6 @@ export const InputRow = styled.div`
   overflow: hidden;
 `
 
-
 export const InputBox = styled.div`
   display: flex;
   margin: 0 auto;

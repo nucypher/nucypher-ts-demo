@@ -7,7 +7,6 @@ import { ContentBlock } from '../base/base'
 import { Button } from '../base/Button'
 import { InputBox, InputRow, Input, CellTitle, TitleRow } from '../form/form'
 
-
 export const FormRow = styled.div`
   display: flex;
   justify-content: space-evenly;

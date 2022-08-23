@@ -6,7 +6,6 @@ import { ContentBlock } from '../base/base'
 import { Input, Label, TitleRow, CellTitle } from '../form/form'
 import type { ItDecConfig } from './TDecConditionsDemo'
 
-
 export const FormRow = styled.div`
   display: flex;
   justify-content: space-evenly;
