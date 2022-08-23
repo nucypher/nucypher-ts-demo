@@ -10,6 +10,7 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
 
     // Defining all dictionary values for the form
     // Doing that for the conveniance of not having to use `undefined` etc., in `useState`
+    // TODO: These should be exposed by `nucypher-ts` 
     const LOGICAL_OPERATORS = ['AND', 'OR']
     const CONDITION_TYPES = ["timelock", "rpc", "evm"]
     const COMPARATOR_OPERATORS = ["==", ">", "<", ">=", "<="] // TODO: Is "!=" supported?
@@ -56,12 +57,12 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
     const ContractMethodDropdown = makeDropdown(METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType], setContractMethod)
     const ContractMethodParametersDropdown = makeDropdown(METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod], setContractMethodParameters)
 
-    const makeInput = (name: string, type: "text" | "number", onChange = (e: any) => console.log(e)) =>
+    const makeInput = (type: "text" | "number", onChange = (e: any) => console.log(e)) =>
         (<input type={type} onChange={(e: any) => onChange(e.target.value)} />)
 
-    const ReturnValueTestInput = makeInput("ReturnValueTest", "number", setReturnValueTest)
-    const ParametersValueInput = makeInput("ParameterValue", "text", setParameterValue)
-    const ContractAddressInput = makeInput("ContractAddress", "text", setContractAddress)
+    const ReturnValueTestInput = makeInput("number", setReturnValueTest)
+    const ParametersValueInput = makeInput("text", setParameterValue)
+    const ContractAddressInput = makeInput("text", setContractAddress)
 
     const TimelockCondition = (
         <div style={{ display: 'grid' }}>
@@ -143,6 +144,7 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
 
     const onSubmit = (e: any) => {
         e.preventDefault()
+        // TODO: Condition set is already a list of stuff, how do I manage?
         const condition = ConditionSet.fromList([makeConditonForType(conditionType)])
         console.log({ condition })
         addCondition(condition)
