@@ -1,12 +1,12 @@
-import type { ConditionSet } from '@nucypher/nucypher-ts'
+import type { Conditions } from '@nucypher/nucypher-ts'
 import React from 'react'
 
 interface Props {
-  condition: ConditionSet
+  conditionOrOperator: Conditions.Condition | Conditions.Operator
 }
 
-export const Condition = (props: Props) => (
+export const ConditionOrOperator = (props: Props) => (
   <pre>
-    <code>{JSON.stringify(JSON.parse(props.condition.toJSON()), null, 2)}</code>
+    <code>{JSON.stringify(JSON.parse(props.conditionOrOperator.toJSON()), null, 2)}</code>
   </pre>
 )

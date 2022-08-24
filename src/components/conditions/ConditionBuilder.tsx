@@ -1,44 +1,42 @@
-import { ConditionSet } from '@nucypher/nucypher-ts'
+import { ConditionSet, Conditions } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
+
 import { Button } from '../base/Button'
 
 interface Props {
-  addCondition: (condition: ConditionSet) => void
+  addCondition: (condition: ConditionSet) => void,
+  enableOperator: boolean
 }
 
-export const ConditionBuilder = ({ addCondition }: Props) => {
-  // Defining all dictionary values for the form
-  // Doing that for the conveniance of not having to use `undefined` etc., in `useState`
-  // TODO: These should be exposed by `nucypher-ts`
-  const LOGICAL_OPERATORS = ['AND', 'OR']
-  const CONDITION_TYPES = ['timelock', 'rpc', 'evm']
-  const COMPARATOR_OPERATORS = ['==', '>', '<', '>=', '<='] // TODO: Is "!=" supported?
-  const RPC_METHODS = ['eth_getBalance', 'balanceOf']
-  const STANDARD_CONTRACT_TYPES = ['erc20', 'erc721', 'erc115']
-  const METHOD_TYPES_PER_CONTRACT_TYPE: Record<string, string[]> = {
-    erc20: ['balanceOf'],
-    erc721: ['balanceOf'],
-    erc115: ['balanceOf'],
-  }
-  const METHOD_PARAMETERS_PER_METHOD_TYPE: Record<string, string[]> = {
-    // TODO: Defined using context interface?
-    balanceOf: ['address'],
-  }
+export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
+  const { LOGICAL_OPERATORS } = Conditions.Operator
+  const CONDITION_TYPES = [
+    Conditions.TimelockCondition.CONDITION_TYPE,
+    Conditions.ContractCondition.CONDITION_TYPE,
+    Conditions.RpcCondition.CONDITION_TYPE,
+  ]
+  const { COMPARATOR_OPERATORS } = Conditions.Condition
+  const { RPC_METHODS } = Conditions.RpcCondition
+  const {
+    STANDARD_CONTRACT_TYPES,
+    METHODS_PER_CONTRACT_TYPE,
+    PARAMETERS_PER_METHOD
+  } = Conditions.ContractCondition
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
   const [conditionType, setConditionType] = useState(CONDITION_TYPES[0])
   const [comparator, setComparator] = useState(COMPARATOR_OPERATORS[0])
   const [rpcMethod, setRpcMethod] = useState(RPC_METHODS[0])
   const [standardContractType, setStandardContractType] = useState(STANDARD_CONTRACT_TYPES[0])
-  const [contractMethod, setContractMethod] = useState(METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType][0])
+  const [contractMethod, setContractMethod] = useState(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
   const [contractMethodParameters, setContractMethodParameters] = useState(
-    METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod][0]
+    PARAMETERS_PER_METHOD[contractMethod][0]
   )
   const [returnValueTest, setReturnValueTest] = useState(0)
   const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
 
-  const makeDropdown = (items: string[], onChange = (e: any) => console.log(e)) => {
+  const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
     const optionItems = items.map((elem, index) => (
       <option key={index} value={elem}>
         {elem}
@@ -52,9 +50,9 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
   const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
   const RpcMethodDropdown = makeDropdown(RPC_METHODS, setRpcMethod)
   const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, setStandardContractType)
-  const ContractMethodDropdown = makeDropdown(METHOD_TYPES_PER_CONTRACT_TYPE[standardContractType], setContractMethod)
+  const ContractMethodDropdown = makeDropdown(METHODS_PER_CONTRACT_TYPE[standardContractType], setContractMethod)
   const ContractMethodParametersDropdown = makeDropdown(
-    METHOD_PARAMETERS_PER_METHOD_TYPE[contractMethod],
+    PARAMETERS_PER_METHOD[contractMethod],
     setContractMethodParameters
   )
 
@@ -84,10 +82,10 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
       <h2>RPC Method Condition</h2>
       <p>Method {RpcMethodDropdown}</p>
       <p>
-        Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput}
+        Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}
       </p>
       <p>
-        Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}
+        Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput}
       </p>
       <p>
         <b>
@@ -103,10 +101,10 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
       <p>Standard Contract Type {StandardContractTypeDropdown}</p>
       <p>Method {ContractMethodDropdown}</p>
       <p>
-        Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput}{' '}
+        Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}
       </p>
       <p>
-        Parameters {ContractMethodParametersDropdown} Value {ParametersValueInput}
+        Return Value Test {ComparatorDropdown} Value {ReturnValueTestInput}{' '}
       </p>
       <p>
         <b>
@@ -131,7 +129,6 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
   }
 
   const makeConditonForType = (type: string) => {
-    // TODO: Use schema validation implemented by nucypher-ts
     switch (type) {
       case 'timelock':
         return {
@@ -177,9 +174,11 @@ export const ConditionBuilder = ({ addCondition }: Props) => {
 
   return (
     <form>
-      {LogicalOperatorDropdown}
-      <p>LogicalOperator: {logicalOperator}</p>
-      <br />
+      {(enableOperator && <>
+        {LogicalOperatorDropdown}
+        <p>LogicalOperator: {logicalOperator}</p>
+        <br />
+      </>)}
 
       {ConditionTypeDropdown}
       <p>ConditionType: {conditionType}</p>
