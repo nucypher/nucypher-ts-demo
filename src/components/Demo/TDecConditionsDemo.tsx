@@ -116,14 +116,18 @@ export const AliceGrants = () => {
         settDecParams={setTDecParams}
         tDecDemo={() => tDecDemo(library)}
       />
-      <ConditionList conditionSet={conditions} />
-      <EnricoEncrypts
-        enabled={encryptionEnabled}
-        encrypt={encryptMessage}
-        encryptedMessage={encryptedMessage}
-        setConditions={setConditions}
-      />
-      <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+      <ConditionList conditions={conditions} setConditions={setConditions} />
+      {conditions && (
+        <>
+          <EnricoEncrypts
+            enabled={encryptionEnabled}
+            encrypt={encryptMessage}
+            encryptedMessage={encryptedMessage}
+            conditions={conditions}
+          />
+          <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+        </>
+      )}
     </div>
   )
 }

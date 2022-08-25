@@ -1,14 +1,14 @@
-import { ConditionSet, Conditions } from '@nucypher/nucypher-ts'
+import { Conditions } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
 
 interface Props {
-  addCondition: (condition: ConditionSet) => void,
+  addConditions: (conditions: Array<Record<string, string>>) => void
   enableOperator: boolean
 }
 
-export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
+export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const { LOGICAL_OPERATORS } = Conditions.Operator
   const CONDITION_TYPES = [
     Conditions.TimelockCondition.CONDITION_TYPE,
@@ -17,11 +17,7 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   ]
   const { COMPARATOR_OPERATORS } = Conditions.Condition
   const { RPC_METHODS } = Conditions.RpcCondition
-  const {
-    STANDARD_CONTRACT_TYPES,
-    METHODS_PER_CONTRACT_TYPE,
-    PARAMETERS_PER_METHOD
-  } = Conditions.ContractCondition
+  const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.ContractCondition
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
   const [conditionType, setConditionType] = useState(CONDITION_TYPES[0])
@@ -29,9 +25,7 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   const [rpcMethod, setRpcMethod] = useState(RPC_METHODS[0])
   const [standardContractType, setStandardContractType] = useState(STANDARD_CONTRACT_TYPES[0])
   const [contractMethod, setContractMethod] = useState(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
-  const [contractMethodParameters, setContractMethodParameters] = useState(
-    PARAMETERS_PER_METHOD[contractMethod][0]
-  )
+  const [contractMethodParameters, setContractMethodParameters] = useState(PARAMETERS_PER_METHOD[contractMethod][0])
   const [returnValueTest, setReturnValueTest] = useState(0)
   const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
@@ -128,7 +122,7 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
     }
   }
 
-  const makeConditonForType = (type: string) => {
+  const makeConditonForType = (type: string): Record<string, any> => {
     switch (type) {
       case 'timelock':
         return {
@@ -169,19 +163,21 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
     // TODO: Condition set is already a list of stuff, how do I manage?
     const conditions = []
     if (enableOperator) {
-      conditions.push({ 'operator': logicalOperator })
+      conditions.push({ operator: logicalOperator })
     }
     conditions.push(makeConditonForType(conditionType))
-    addCondition(conditions)
+    addConditions(conditions)
   }
 
   return (
     <form>
-      {(enableOperator && <>
-        {LogicalOperatorDropdown}
-        <p>LogicalOperator: {logicalOperator}</p>
-        <br />
-      </>)}
+      {enableOperator && (
+        <>
+          {LogicalOperatorDropdown}
+          <p>LogicalOperator: {logicalOperator}</p>
+          <br />
+        </>
+      )}
 
       {ConditionTypeDropdown}
       <p>ConditionType: {conditionType}</p>

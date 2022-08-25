@@ -1,11 +1,10 @@
-import type { MessageKit } from '@nucypher/nucypher-ts/build/main/src/core'
-import { ConditionSet } from '@nucypher/nucypher-ts'
+import type { MessageKit, ConditionSet } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 
 import styled from 'styled-components'
 import { ContentBlock } from '../base/base'
 import { Button } from '../base/Button'
-import { InputBox, InputRow, Input, CellTitle, TitleRow } from '../form/form'
+import { InputRow, Input, CellTitle, TitleRow } from '../form/form'
 
 export const FormRow = styled.div`
   display: flex;
@@ -17,18 +16,17 @@ interface Props {
   enabled: boolean
   encryptedMessage?: MessageKit
   encrypt: (value: string, conditions: ConditionSet) => void
-  setConditions: (value: ConditionSet) => void
+  conditions: ConditionSet
 }
 
-export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled, setConditions }: Props) => {
+export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled, conditions }: Props) => {
   if (!enabled) {
     return <></>
   }
 
   const [plaintext, setPlaintext] = useState('plaintext')
-  const [conditionsStr, setConditionsStr] = useState('conditions json')
 
-  const onClick = () => encrypt(plaintext, ConditionSet.fromJSON(conditionsStr))
+  const onClick = () => encrypt(plaintext, conditions)
 
   const ciphertextContent = encryptedMessage ? (
     <div style={{ paddingTop: '5px', width: '720px' }}>
@@ -53,17 +51,6 @@ export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled, setConditio
             onChange={(e) => setPlaintext(e.currentTarget.value)}
           />
         </InputRow>
-        <InputBox>
-          <Input
-            id={'conditionsInput'}
-            type="string"
-            value={conditionsStr}
-            onChange={(e) => {
-              setConditionsStr(e.currentTarget.value)
-              setConditions(ConditionSet.fromJSON(e.currentTarget.value))
-            }}
-          />
-        </InputBox>
         <FormRow>
           <Button onClick={onClick}>Encrypt</Button>
         </FormRow>

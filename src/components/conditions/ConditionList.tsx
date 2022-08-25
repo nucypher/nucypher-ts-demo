@@ -6,31 +6,28 @@ import { TitleRow, CellTitle } from '../form/form'
 import { ConditionBuilder } from './ConditionBuilder'
 
 interface Props {
-  conditionSet?: ConditionSet
+  conditions?: ConditionSet
+  setConditions: (value: ConditionSet) => void
 }
 
-export const ConditionList = (props: Props) => {
-  const [conditionSet, setConditionSet] = useState(props.conditionSet)
-  const enableOperator = conditionSet && conditionSet.conditions.length > 0
+export const ConditionList = ({ conditions, setConditions }: Props) => {
+  const enableOperator = (conditions && conditions.conditions.length > 0) || false
 
-  const addCondition = (conditions: Array<Record<string, string>>) => {
-    const existingConditions = conditionSet ? conditionSet.conditions : []
-    const newConditions = [...existingConditions, ...conditions] as any // TODO: Fix this type cast
-    console.log({ conditions })
-    console.log({ newConditions })
-    const newConditionSet = new ConditionSet(newConditions)
-    console.log({ newConditionSet })
-    setConditionSet(newConditionSet)
+  const addConditions = (newConditions: Array<Record<string, string>>) => {
+    const existingConditions = conditions ? conditions.conditions : []
+    const updatedConditions = [...existingConditions, ...newConditions] as any // TODO: Fix this type cast
+    setConditions(new ConditionSet(updatedConditions))
   }
 
-
-  const ConditionList = conditionSet ? (
-    <div >
+  const ConditionList = conditions ? (
+    <div>
       <pre>
-        <code>{JSON.stringify(conditionSet.conditions, null, 2)}</code>
+        <code>{JSON.stringify(conditions.conditions, null, 2)}</code>
       </pre>
     </div>
-  ): <></>
+  ) : (
+    <></>
+  )
 
   return (
     <ContentBlock>
@@ -38,7 +35,7 @@ export const ConditionList = (props: Props) => {
         <CellTitle>Policy Conditions</CellTitle>
       </TitleRow>
       <div>
-        <ConditionBuilder addCondition={addCondition} enableOperator={enableOperator} />
+        <ConditionBuilder addConditions={addConditions} enableOperator={enableOperator} />
         {ConditionList}
       </div>
     </ContentBlock>
