@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
-import { ConditionSet } from '@nucypher/nucypher-ts'
+import type { ConditionSet } from '@nucypher/nucypher-ts'
 
 import { FetchTDecConfig } from './FetchConfig'
 import { EnricoEncrypts } from './EnricoEncrypts'
@@ -116,7 +116,7 @@ export const AliceGrants = () => {
         settDecParams={setTDecParams}
         tDecDemo={() => tDecDemo(library)}
       />
-      <ConditionList conditions={conditions} />
+      <ConditionList conditionSet={conditions} />
       <EnricoEncrypts
         enabled={encryptionEnabled}
         encrypt={encryptMessage}

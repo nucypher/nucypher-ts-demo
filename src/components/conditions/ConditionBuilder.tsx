@@ -167,9 +167,12 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   const onSubmit = (e: any) => {
     e.preventDefault()
     // TODO: Condition set is already a list of stuff, how do I manage?
-    const condition = ConditionSet.fromList([makeConditonForType(conditionType)] as any) // TODO: Remove this workaround after fixing fromList() parameter type
-    console.log({ condition })
-    addCondition(condition)
+    const conditions = []
+    if (enableOperator) {
+      conditions.push({ 'operator': logicalOperator })
+    }
+    conditions.push(makeConditonForType(conditionType))
+    addCondition(conditions)
   }
 
   return (
