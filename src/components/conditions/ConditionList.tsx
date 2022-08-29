@@ -1,5 +1,5 @@
-import { ConditionSet } from '@nucypher/nucypher-ts'
-import React, { useState } from 'react'
+import { ConditionSet, Conditions } from '@nucypher/nucypher-ts'
+import React from 'react'
 
 import { ContentBlock } from '../base/base'
 import { TitleRow, CellTitle } from '../form/form'
@@ -16,13 +16,25 @@ export const ConditionList = ({ conditions, setConditions }: Props) => {
   const addConditions = (newConditions: Array<Record<string, string>>) => {
     const existingConditions = conditions ? conditions.conditions : []
     const updatedConditions = [...existingConditions, ...newConditions] as any // TODO: Fix this type cast
-    setConditions(new ConditionSet(updatedConditions))
+    console.log({ updatedConditions })
+    const updatedContitionSet = new ConditionSet(updatedConditions)
+    setConditions(updatedContitionSet)
+  }
+
+  // TODO: Use proper types instead of `unknown` once namespaces in `nucypher-ts` are fixed
+  const Condition = (cond: unknown) => {
+    if (cond instanceof Conditions.Condition) {
+      return JSON.stringify(cond.value, null, 2)
+    }
+    return JSON.stringify(cond, null, 2)
   }
 
   const ConditionList = conditions ? (
     <div>
       <pre>
-        <code>{JSON.stringify(conditions.conditions, null, 2)}</code>
+        {conditions.conditions.map((condition, index) => (
+          <div key={index}>{Condition(condition)}</div>
+        ))}
       </pre>
     </div>
   ) : (

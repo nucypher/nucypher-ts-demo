@@ -1,4 +1,5 @@
 import { Conditions } from '@nucypher/nucypher-ts'
+import { Operator } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
@@ -125,14 +126,14 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const makeConditonForType = (type: string): Record<string, any> => {
     switch (type) {
       case 'timelock':
-        return {
+        return new Conditions.TimelockCondition({
           returnValueTest: {
             comparator,
             value: returnValueTest,
           },
-        }
+        })
       case 'rpc':
-        return {
+        return new Conditions.RpcCondition({
           chain: 'ethereum', // TODO: Get from web3 provider or from form input?
           method: rpcMethod,
           parameters: [parameterValue],
@@ -140,9 +141,9 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
             comparator,
             value: returnValueTest,
           },
-        }
+        })
       case 'evm':
-        return {
+        return new Conditions.ContractCondition({
           contractAddress,
           chain: 'ethereum', // TODO: Get from web3 provider or from form input?
           functionAbi: '', // TODO: Where do I get this from?
@@ -152,7 +153,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
             comparator,
             value: returnValueTest,
           },
-        }
+        })
       default:
         throw Error(`Unrecognized condition type ${conditionType}`)
     }
@@ -163,7 +164,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     // TODO: Condition set is already a list of stuff, how do I manage?
     const conditions = []
     if (enableOperator) {
-      conditions.push({ operator: logicalOperator })
+      conditions.push(new Operator(logicalOperator))
     }
     conditions.push(makeConditonForType(conditionType))
     addConditions(conditions)
