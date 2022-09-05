@@ -8,9 +8,9 @@ import {
   tDecDecrypter,
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
-import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
 import type { ConditionSet } from '@nucypher/nucypher-ts'
+import { ethers } from 'ethers'
 
 import { FetchTDecConfig } from './FetchConfig'
 import { EnricoEncrypts } from './EnricoEncrypts'
@@ -34,7 +34,8 @@ export const AliceGrants = () => {
 
   // Network config vars
   const initialNetworkConfig = {
-    porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    // porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    porterUri: 'http://127.0.0.1:80',
   }
 
   const initialTDecConfig = {
@@ -65,16 +66,16 @@ export const AliceGrants = () => {
   useEffect(() => {
     // Try setting default config based on currently selected network
     if (chainId) {
-      const config = { ...networkConfig, ...defaultConfiguration(chainId) }
+      const config = {
+        ...networkConfig,
+        // ...defaultConfiguration(chainId)
+        ...initialNetworkConfig, // TODO: Remove this
+      }
       setNetworkConfig(config)
     }
   }, [chainId])
 
-  const tDecDemo = async (provider?: Web3Provider) => {
-    if (!provider) {
-      return
-    }
-
+  const tDecDemo = async () => {
     const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
@@ -86,22 +87,27 @@ export const AliceGrants = () => {
     setDecryptionEnabled(true)
   }
 
-  const encryptMessage = (plaintext: string, conditions?: ConditionSet) => {
-    if (!encrypter) {
+  const encryptMessage = (plaintext: string) => {
+    if (!encrypter || !conditions) {
       return
     }
     encrypter.conditions = conditions
+    console.log({ conditions: conditions.toJson() })
     const encryptedMessage = encrypter.encryptMessage(plaintext)
+    console.log('encryptedMessage', encryptedMessage)
+    console.log('encryptedMessage.toBytes()', encryptedMessage.toBytes())
 
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
   }
 
-  const decryptMessage = async (cyphertext: MessageKit) => {
-    if (!decrypter) {
+  const decryptMessage = async (ciphertext: MessageKit) => {
+    if (!decrypter || !library || !conditions) {
       return
     }
-    const retrievedMessage = await decrypter.retrieveAndDecrypt([cyphertext])
+    const web3Provider = new ethers.providers.Web3Provider(library.provider)
+    const conditionContext = conditions.buildContext(web3Provider)
+    const retrievedMessage = await decrypter.retrieveAndDecrypt([ciphertext], conditionContext)
     const dec = new TextDecoder()
 
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
@@ -114,17 +120,12 @@ export const AliceGrants = () => {
         enabled={policyFormEnabled}
         tDecParams={tDecParams}
         settDecParams={setTDecParams}
-        tDecDemo={() => tDecDemo(library)}
+        tDecDemo={() => tDecDemo()}
       />
       <ConditionList conditions={conditions} setConditions={setConditions} />
       {conditions && (
         <>
-          <EnricoEncrypts
-            enabled={encryptionEnabled}
-            encrypt={encryptMessage}
-            encryptedMessage={encryptedMessage}
-            conditions={conditions}
-          />
+          <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
           <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
         </>
       )}

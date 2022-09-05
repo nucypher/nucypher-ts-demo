@@ -13,12 +13,12 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const { LOGICAL_OPERATORS } = Conditions.Operator
   const CONDITION_TYPES = [
     Conditions.TimelockCondition.CONDITION_TYPE,
-    Conditions.ContractCondition.CONDITION_TYPE,
+    Conditions.EvmCondition.CONDITION_TYPE,
     Conditions.RpcCondition.CONDITION_TYPE,
   ]
   const { COMPARATOR_OPERATORS } = Conditions.Condition
   const { RPC_METHODS } = Conditions.RpcCondition
-  const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.ContractCondition
+  const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
   const [conditionType, setConditionType] = useState(CONDITION_TYPES[0])
@@ -28,7 +28,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [contractMethod, setContractMethod] = useState(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
   const [contractMethodParameters, setContractMethodParameters] = useState(PARAMETERS_PER_METHOD[contractMethod][0])
   const [returnValueTest, setReturnValueTest] = useState(0)
-  const [parameterValue, setParameterValue] = useState('')
+  const [parameterValue, setParameterValue] = useState()
   const [contractAddress, setContractAddress] = useState('')
 
   const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
@@ -143,7 +143,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
           },
         })
       case 'evm':
-        return new Conditions.ContractCondition({
+        return new Conditions.EvmCondition({
           contractAddress,
           chain: 'ethereum', // TODO: Get from web3 provider or from form input?
           functionAbi: '', // TODO: Where do I get this from?

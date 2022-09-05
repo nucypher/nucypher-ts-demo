@@ -12,7 +12,7 @@ export const FormRow = styled.div`
 
 interface Props {
   enabled: boolean
-  decrypt: (cyphertext: MessageKit) => void
+  decrypt: (ciphertext: MessageKit) => void
   decryptedMessage: string
 }
 
@@ -21,10 +21,10 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
     return <></>
   }
 
-  const [cyphertext, setCyphertext] = useState('')
+  const [ciphertext, setCiphertext] = useState('')
 
-  const onClick = () => {
-    const b64decoded = Buffer.from(cyphertext, 'base64')
+  const onDecrypt = () => {
+    const b64decoded = Buffer.from(ciphertext, 'base64')
     decrypt(MessageKit.fromBytes(b64decoded))
   }
 
@@ -45,14 +45,13 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
         <InputRow>
           <Input
             id={'decryptionInput'}
-            type="Uint8Array"
-            value={cyphertext}
+            value={ciphertext}
             placeholder="Enter encrypted message"
-            onChange={(e) => setCyphertext(e.currentTarget.value)}
+            onChange={(e) => setCiphertext(e.currentTarget.value)}
           />
         </InputRow>
         <FormRow>
-          <SmallButton onClick={onClick}>Decrypt</SmallButton>
+          <SmallButton onClick={onDecrypt}>Decrypt</SmallButton>
         </FormRow>
         {plaintextContent}
       </ContentBlock>
