@@ -1,5 +1,5 @@
 import { Conditions } from '@nucypher/nucypher-ts'
-import { Operator } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { Operator, Condition } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
@@ -12,14 +12,14 @@ interface Props {
 export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const { LOGICAL_OPERATORS } = Conditions.Operator
   const PREBUILT_CONDITIONS: Record<string, unknown> = {
-    'ERC721Ownership': new Conditions.ERC721Ownership()
+    ERC721Ownership: new Conditions.ERC721Ownership(),
   }
   const CONDITION_TYPES = [
     Conditions.TimelockCondition.CONDITION_TYPE,
     Conditions.EvmCondition.CONDITION_TYPE,
     Conditions.RpcCondition.CONDITION_TYPE,
   ]
-  const { COMPARATOR_OPERATORS } = Conditions.Condition
+  const { COMPARATOR_OPERATORS } = Condition
   const { RPC_METHODS } = Conditions.RpcCondition
   const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
 
@@ -181,7 +181,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     }
   }
 
-  const addConditionAndMaybeOperator = (condition: Record<string, any> | Conditions.Condition) => {
+  const addConditionAndMaybeOperator = (condition: Record<string, any> | Condition) => {
     // TODO: Condition set is already a list of stuff, how do I manage?
     const conditionAndMaybeOperator = []
     if (enableOperator) {
@@ -193,7 +193,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
 
   const onAddPrebuiltCondition = (e: any) => {
     e.preventDefault()
-    const prebuilt = PREBUILT_CONDITIONS[prebuiltCondition]
+    const prebuilt = PREBUILT_CONDITIONS[prebuiltCondition] as Condition
     addConditionAndMaybeOperator(prebuilt)
   }
 

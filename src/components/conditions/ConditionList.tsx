@@ -42,7 +42,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
     <></>
   )
 
-  if(!enabled) {
+  if (!enabled) {
     return <></>
   }
 
