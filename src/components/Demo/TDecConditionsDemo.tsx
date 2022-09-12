@@ -78,10 +78,7 @@ export const AliceGrants = () => {
       return
     }
     encrypter.conditions = conditions
-    console.log({ conditions: conditions.toJson() })
     const encryptedMessage = encrypter.encryptMessage(plaintext)
-    console.log('encryptedMessage', encryptedMessage)
-    console.log('encryptedMessage.toBytes()', encryptedMessage.toBytes())
 
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
