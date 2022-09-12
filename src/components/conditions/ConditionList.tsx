@@ -18,6 +18,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
     const existingConditions = conditions ? conditions.conditions : []
     const updatedConditions = [...existingConditions, ...newConditions] as any // TODO: Fix this type cast
     const updatedContitionSet = new ConditionSet(updatedConditions)
+    console.log({ updatedContitionSet: updatedContitionSet.toJson() })
     setConditions(updatedContitionSet)
   }
 
