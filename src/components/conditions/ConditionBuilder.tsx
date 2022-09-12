@@ -1,5 +1,5 @@
-import { Conditions } from '@nucypher/nucypher-ts'
-import { Operator, Condition } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { Operator, Conditions } from '@nucypher/nucypher-ts'
+import { Condition } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
