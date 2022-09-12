@@ -55,7 +55,7 @@ export const Input = styled.input`
 `
 
 export const CellTitle = styled(TextBold)`
-  font-size: 18px;
+  font-size: 24px;
 `
 
 export const InputRow = styled.div`
@@ -67,7 +67,6 @@ export const InputRow = styled.div`
   border-radius: ${BorderRad.m};
   overflow: hidden;
 `
-
 
 export const InputBox = styled.div`
   display: flex;

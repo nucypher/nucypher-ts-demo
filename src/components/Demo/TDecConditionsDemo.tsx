@@ -3,29 +3,27 @@ import {
   makeTDecDecrypter,
   makeTDecEncrypter,
   Enrico,
-  PublicKey,
-  EnactedPolicy,
   MessageKit,
   defaultConfiguration,
   tDecDecrypter,
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
-import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
+import type { ConditionSet } from '@nucypher/nucypher-ts'
+import { ethers } from 'ethers'
 
-import { AliceCreatesPolicy } from './fetchConfig'
-// import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
+import { FetchTDecConfig } from './FetchConfig'
 import { EnricoEncrypts } from './EnricoEncrypts'
 import { BobDecrypts } from './BobDecrypts'
 import { NetworkConfig } from './NetworkConfig'
-import type { ConditionSet } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { ConditionList } from '../conditions/ConditionList'
 
 export interface INetworkConfig {
   porterUri: string
 }
 
 export interface ItDecConfig {
-  label: string,
+  label: string
 }
 
 export const getRandomLabel = () => `label-${new Date().getTime()}`
@@ -36,26 +34,26 @@ export const AliceGrants = () => {
 
   // Network config vars
   const initialNetworkConfig = {
-    porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    // porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    porterUri: 'http://127.0.0.1:80',
   }
 
   const initialTDecConfig = {
-    label: "2-of-4-ibex",
+    label: '2-of-4-ibex',
   }
 
+  // Initial config vars
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
-  const [tDecParams, settDecParams] = useState<ItDecConfig>(initialTDecConfig)
+  const [tDecParams, setTDecParams] = useState<ItDecConfig>(initialTDecConfig)
 
-
-  // // Create policy vars
-  // const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
-  // const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
-  // const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
+  // Create policy vars
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
-  // // tDec Entities
+  // tDec Entities
   const [encrypter, setEncrypter] = useState(undefined as Enrico | undefined)
   const [decrypter, setDecrypter] = useState(undefined as tDecDecrypter | undefined)
+
+  const [conditions, setConditions] = useState(undefined as ConditionSet | undefined)
 
   // // Encrypt message vars
   const [encryptionEnabled, setEncryptionEnabled] = useState(false)
@@ -68,16 +66,16 @@ export const AliceGrants = () => {
   useEffect(() => {
     // Try setting default config based on currently selected network
     if (chainId) {
-      const config = { ...networkConfig, ...defaultConfiguration(chainId) }
+      const config = {
+        ...networkConfig,
+        // ...defaultConfiguration(chainId)
+        ...initialNetworkConfig, // TODO: Remove this
+      }
       setNetworkConfig(config)
     }
   }, [chainId])
 
-  const tDecDemo = async (provider?: Web3Provider) => {
-    if (!provider) {
-      return
-    }
-
+  const tDecDemo = async () => {
     const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
@@ -89,24 +87,27 @@ export const AliceGrants = () => {
     setDecryptionEnabled(true)
   }
 
-  const encryptMessage = (plaintext: string, conditions?: ConditionSet) => {
-    if (!encrypter) {
+  const encryptMessage = (plaintext: string) => {
+    if (!encrypter || !conditions) {
       return
     }
     encrypter.conditions = conditions
+    console.log({ conditions: conditions.toJson() })
     const encryptedMessage = encrypter.encryptMessage(plaintext)
+    console.log('encryptedMessage', encryptedMessage)
+    console.log('encryptedMessage.toBytes()', encryptedMessage.toBytes())
 
     setEncryptedMessage(encryptedMessage)
     setDecryptionEnabled(true)
   }
 
-  const decryptMessage = async (cyphertext: MessageKit) => {
-    if (!decrypter) {
+  const decryptMessage = async (ciphertext: MessageKit) => {
+    if (!decrypter || !library || !conditions) {
       return
     }
-    const retrievedMessage = await decrypter.retrieveAndDecrypt(
-      [cyphertext]
-    )
+    const web3Provider = new ethers.providers.Web3Provider(library.provider)
+    const conditionContext = conditions.buildContext(web3Provider)
+    const retrievedMessage = await decrypter.retrieveAndDecrypt([ciphertext], conditionContext)
     const dec = new TextDecoder()
 
     setDecryptedMessage(dec.decode(retrievedMessage[0]))
@@ -115,14 +116,19 @@ export const AliceGrants = () => {
   return (
     <div style={{ display: 'grid', padding: '5px' }}>
       <NetworkConfig networkConfig={networkConfig} setNetworkConfig={setNetworkConfig} />
-      <AliceCreatesPolicy
+      <FetchTDecConfig
         enabled={policyFormEnabled}
         tDecParams={tDecParams}
-        settDecParams={settDecParams}
-        tDecDemo={() => tDecDemo(library)}
+        settDecParams={setTDecParams}
+        tDecDemo={() => tDecDemo()}
       />
-      <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
-      <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+      <ConditionList conditions={conditions} setConditions={setConditions} />
+      {conditions && (
+        <>
+          <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
+          <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+        </>
+      )}
     </div>
   )
 }

@@ -1,11 +1,9 @@
 import React from 'react'
-import { ethers } from 'ethers'
 
 import { ContentBlock } from '../base/base'
-import { EditableList } from '../base/EditableList'
 import { Label, Input, CellTitle, TitleRow } from '../form/form'
-import { FormRow } from './fetchConfig'
-import type { INetworkConfig } from './tDecConditionsDemo'
+import { FormRow } from './FetchConfig'
+import type { INetworkConfig } from './TDecConditionsDemo'
 interface Props {
   networkConfig: INetworkConfig
   setNetworkConfig: (value: INetworkConfig) => void
@@ -13,8 +11,6 @@ interface Props {
 
 export const NetworkConfig = ({ networkConfig, setNetworkConfig }: Props) => {
   const setPorterUri = (porterUri: string) => setNetworkConfig({ ...networkConfig, porterUri })
-
-  const validateAddress = (maybeAddress: string) => ethers.utils.isAddress(maybeAddress)
 
   return (
     <ContentBlock>

@@ -1,11 +1,11 @@
-import type { MessageKit } from '@nucypher/nucypher-ts/build/main/src/core'
-import { ConditionSet } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import type { MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
+
 import styled from 'styled-components'
 import { ContentBlock } from '../base/base'
 import { Button } from '../base/Button'
-import { InputBox, InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
-
+import { CopyButton } from '../base/CopyButton'
+import { CellTitle, Input, InputRow, TitleRow } from '../form/form'
 
 export const FormRow = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ export const FormRow = styled.div`
 interface Props {
   enabled: boolean
   encryptedMessage?: MessageKit
-  encrypt: (value: string, conditions: ConditionSet) => void
+  encrypt: (value: string) => void
 }
 
 export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) => {
@@ -25,18 +25,24 @@ export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) =>
   }
 
   const [plaintext, setPlaintext] = useState('plaintext')
-  const [conditions, setConditions] = useState('conditions json')
 
-  const onClick = () => encrypt(plaintext, ConditionSet.fromJSON(conditions))
+  const onClick = () => encrypt(plaintext)
 
-  const ciphertextContent = encryptedMessage ? (
-    <div style={{ paddingTop: '5px', width: '720px'}}>
-      <h3>Encrypted message: </h3>
-      <pre className="encryptedMessage">{Buffer.from(encryptedMessage.toBytes()).toString('base64')}</pre>
-    </div>
-  ) : (
-    ''
-  )
+  const CiphertextContent = () => {
+    if (!encryptedMessage) {
+      return <></>
+    }
+
+    const encodedEncryptedMessage = Buffer.from(encryptedMessage.toBytes()).toString('base64')
+    return (
+      <div style={{ paddingTop: '5px', width: '720px' }}>
+        <h3>
+          Encrypted message: <CopyButton data={encodedEncryptedMessage} />{' '}
+        </h3>
+        <pre className="encryptedMessage">{encodedEncryptedMessage}</pre>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -52,18 +58,10 @@ export const EnricoEncrypts = ({ encrypt, encryptedMessage, enabled }: Props) =>
             onChange={(e) => setPlaintext(e.currentTarget.value)}
           />
         </InputRow>
-        <InputBox>
-          <Input
-            id={'conditionsInput'}
-            type="string"
-            value={conditions}
-            onChange={(e) => setConditions(e.currentTarget.value)}
-          />
-        </InputBox>
         <FormRow>
           <Button onClick={onClick}>Encrypt</Button>
         </FormRow>
-        {ciphertextContent}
+        {CiphertextContent()}
       </ContentBlock>
     </div>
   )
