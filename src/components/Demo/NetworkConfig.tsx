@@ -1,12 +1,12 @@
+import type { Configuration } from '@nucypher/nucypher-ts'
 import React from 'react'
 
 import { ContentBlock } from '../base/base'
 import { Label, Input, CellTitle, TitleRow } from '../form/form'
 import { FormRow } from './FetchConfig'
-import type { INetworkConfig } from './TDecConditionsDemo'
 interface Props {
-  networkConfig: INetworkConfig
-  setNetworkConfig: (value: INetworkConfig) => void
+  networkConfig: Configuration
+  setNetworkConfig: (value: Configuration) => void
 }
 
 export const NetworkConfig = ({ networkConfig, setNetworkConfig }: Props) => {

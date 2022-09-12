@@ -8,9 +8,10 @@ import { ConditionBuilder } from './ConditionBuilder'
 interface Props {
   conditions?: ConditionSet
   setConditions: (value: ConditionSet) => void
+  enabled: boolean
 }
 
-export const ConditionList = ({ conditions, setConditions }: Props) => {
+export const ConditionList = ({ conditions, setConditions, enabled }: Props) => {
   const enableOperator = (conditions && conditions.conditions.length > 0) || false
 
   const addConditions = (newConditions: Array<Record<string, string>>) => {
@@ -40,6 +41,10 @@ export const ConditionList = ({ conditions, setConditions }: Props) => {
   ) : (
     <></>
   )
+
+  if (!enabled) {
+    return <></>
+  }
 
   return (
     <ContentBlock>
