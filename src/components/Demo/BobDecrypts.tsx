@@ -1,6 +1,7 @@
 import { MessageKit } from '@nucypher/nucypher-ts/build/main/src/core'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+
 import { ContentBlock } from '../base/base'
 import { InputRow, Input, SmallButton, TitleRow, CellTitle } from '../form/form'
 

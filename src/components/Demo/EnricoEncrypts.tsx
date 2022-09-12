@@ -1,7 +1,7 @@
 import type { MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
-
 import styled from 'styled-components'
+
 import { ContentBlock } from '../base/base'
 import { Button } from '../base/Button'
 import { CopyButton } from '../base/CopyButton'
