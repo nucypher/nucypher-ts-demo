@@ -6,9 +6,10 @@ import {
   MessageKit,
   defaultConfiguration,
   tDecDecrypter,
+  Configuration,
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
-import { ChainId, useEthers } from '@usedapp/core'
+import { useEthers } from '@usedapp/core'
 import type { ConditionSet } from '@nucypher/nucypher-ts'
 import { ethers } from 'ethers'
 
@@ -18,11 +19,7 @@ import { BobDecrypts } from './BobDecrypts'
 import { NetworkConfig } from './NetworkConfig'
 import { ConditionList } from '../conditions/ConditionList'
 
-export interface INetworkConfig {
-  porterUri: string
-}
-
-export interface ItDecConfig {
+export interface TDecConfig {
   label: string
 }
 
@@ -32,19 +29,9 @@ export const AliceGrants = () => {
   // Ethers-js is our web3 provider
   const { library, chainId } = useEthers()
 
-  // Network config vars
-  const initialNetworkConfig = {
-    // porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
-    porterUri: 'http://127.0.0.1:80',
-  }
-
-  const initialTDecConfig = {
-    label: '2-of-4-ibex',
-  }
-
   // Initial config vars
-  const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
-  const [tDecParams, setTDecParams] = useState<ItDecConfig>(initialTDecConfig)
+  const [config, setConfig] = useState<Configuration>(undefined as unknown as Configuration)
+  const [tDecParams, setTDecParams] = useState<TDecConfig>({ label: '2-of-4-ibex' })
 
   // Create policy vars
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
@@ -67,16 +54,16 @@ export const AliceGrants = () => {
     // Try setting default config based on currently selected network
     if (chainId) {
       const config = {
-        ...networkConfig,
-        // ...defaultConfiguration(chainId)
-        ...initialNetworkConfig, // TODO: Remove this
+        ...defaultConfiguration(chainId),
+        // For local development, uncomment the following line:
+        // porterUri: 'http://127.0.0.1:80',
       }
-      setNetworkConfig(config)
+      setConfig(config)
     }
   }, [chainId])
 
-  const tDecDemo = async () => {
-    const decrypter = await makeTDecDecrypter(tDecParams.label, networkConfig.porterUri)
+  const fetchTDecConfig = async () => {
+    const decrypter = await makeTDecDecrypter(tDecParams.label, config.porterUri)
     const encrypter = await makeTDecEncrypter(tDecParams.label)
 
     setEncrypter(encrypter)
@@ -84,7 +71,6 @@ export const AliceGrants = () => {
 
     setPolicyFormEnabled(true)
     setEncryptionEnabled(true)
-    setDecryptionEnabled(true)
   }
 
   const encryptMessage = (plaintext: string) => {
@@ -108,21 +94,24 @@ export const AliceGrants = () => {
     const web3Provider = new ethers.providers.Web3Provider(library.provider)
     const conditionContext = conditions.buildContext(web3Provider)
     const retrievedMessage = await decrypter.retrieveAndDecrypt([ciphertext], conditionContext)
-    const dec = new TextDecoder()
 
-    setDecryptedMessage(dec.decode(retrievedMessage[0]))
+    setDecryptedMessage(new TextDecoder().decode(retrievedMessage[0]))
+  }
+
+  if (!config) {
+    return <h1>Loading ...</h1>
   }
 
   return (
     <div style={{ display: 'grid', padding: '5px' }}>
-      <NetworkConfig networkConfig={networkConfig} setNetworkConfig={setNetworkConfig} />
+      <NetworkConfig networkConfig={config} setNetworkConfig={setConfig} />
       <FetchTDecConfig
         enabled={policyFormEnabled}
         tDecParams={tDecParams}
-        settDecParams={setTDecParams}
-        tDecDemo={() => tDecDemo()}
+        setDecParams={setTDecParams}
+        fetchTDecConfig={fetchTDecConfig}
       />
-      <ConditionList conditions={conditions} setConditions={setConditions} />
+      <ConditionList enabled={encryptionEnabled} conditions={conditions} setConditions={setConditions} />
       {conditions && (
         <>
           <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />

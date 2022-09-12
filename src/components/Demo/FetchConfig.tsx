@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Button } from '../base/Button'
 import { ContentBlock } from '../base/base'
 import { Input, Label, TitleRow, CellTitle } from '../form/form'
-import type { ItDecConfig } from './TDecConditionsDemo'
+import type { TDecConfig } from './TDecConditionsDemo'
 
 export const FormRow = styled.div`
   display: flex;
@@ -14,13 +14,13 @@ export const FormRow = styled.div`
 
 interface Props {
   enabled: boolean
-  tDecParams: ItDecConfig
-  settDecParams: (value: ItDecConfig) => void
-  tDecDemo: () => void
+  tDecParams: TDecConfig
+  setDecParams: (value: TDecConfig) => void
+  fetchTDecConfig: () => void
 }
 
-export const FetchTDecConfig = ({ enabled, tDecParams, settDecParams, tDecDemo }: Props) => {
-  const setLabel = (label: string) => settDecParams({ ...tDecParams, label })
+export const FetchTDecConfig = ({ enabled, tDecParams, setDecParams, fetchTDecConfig }: Props) => {
+  const setLabel = (label: string) => setDecParams({ ...tDecParams, label })
 
   const content = enabled ? (
     <div style={{ display: 'grid' }}>
@@ -34,7 +34,7 @@ export const FetchTDecConfig = ({ enabled, tDecParams, settDecParams, tDecDemo }
         />
       </FormRow>
       <FormRow>
-        <Button onClick={tDecDemo}>Fetch Config</Button>
+        <Button onClick={fetchTDecConfig}>Fetch tDec Config</Button>
       </FormRow>
     </div>
   ) : (
