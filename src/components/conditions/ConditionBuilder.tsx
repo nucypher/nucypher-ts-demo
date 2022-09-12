@@ -213,13 +213,13 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
         </>
       )}
 
-      <div style={{ display: 'grid' }}>
+      {/* <div style={{ display: 'grid' }}>
         <h2>Select Prebuilt Condition</h2>
         {PrebuiltConditionDropdown}
         <br />
 
         <Button onClick={onAddPrebuiltCondition}>Add Prebuilt</Button>
-      </div>
+      </div> */}
 
       <div style={{ display: 'grid' }}>
         <h2>Build New Condition</h2>
