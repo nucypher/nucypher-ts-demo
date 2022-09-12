@@ -1,5 +1,5 @@
 import { Conditions } from '@nucypher/nucypher-ts'
-import { Operator } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { Condition, Operator } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
@@ -11,6 +11,9 @@ interface Props {
 
 export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const { LOGICAL_OPERATORS } = Conditions.Operator
+  const PREBUILT_CONDITIONS: Record<string, unknown> = {
+    'ERC721Ownership': new Conditions.ERC721Ownership()
+  }
   const CONDITION_TYPES = [
     Conditions.TimelockCondition.CONDITION_TYPE,
     Conditions.EvmCondition.CONDITION_TYPE,
@@ -21,6 +24,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
+  const [prebuiltCondition, setPrebuiltCondition] = useState(Object.keys(PREBUILT_CONDITIONS)[0])
   const [conditionType, setConditionType] = useState(CONDITION_TYPES[0])
   const [comparator, setComparator] = useState(COMPARATOR_OPERATORS[0])
   const [rpcMethod, setRpcMethod] = useState(RPC_METHODS[0])
@@ -28,7 +32,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [contractMethod, setContractMethod] = useState(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
   const [contractMethodParameters, setContractMethodParameters] = useState(PARAMETERS_PER_METHOD[contractMethod][0])
   const [returnValueTest, setReturnValueTest] = useState(0)
-  const [parameterValue, setParameterValue] = useState()
+  const [parameterValue, setParameterValue] = useState(undefined as string | undefined)
   const [contractAddress, setContractAddress] = useState('')
 
   const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
@@ -39,13 +43,31 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     ))
     return <select onChange={(e) => onChange(e.target.value)}>{optionItems}</select>
   }
+  const onSetContractMethod = (method: string) => {
+    setContractMethod(method)
+    // TODO: Do this once we actually have methods to select from
+    // const contextParams = Conditions.EvmCondition.CONTEXT_PARAMETERS_PER_METHOD[method]
+    // if (contextParams) {
+    //   setParameterValue(contextParams[0])
+    // }
+  }
+
+  const onSetRpcMethod = (method: string) => {
+    setRpcMethod(method)
+    // TODO: Do this once we actually have methods to select from
+    // const contextParams = Conditions.RpcCondition.CONTEXT_PARAMETERS_PER_METHOD[method]
+    // if (contextParams) {
+    //   setParameterValue(contextParams[0])
+    // }
+  }
 
   const LogicalOperatorDropdown = makeDropdown(LOGICAL_OPERATORS, setLogicalOperator)
+  const PrebuiltConditionDropdown = makeDropdown(Object.keys(PREBUILT_CONDITIONS), setPrebuiltCondition)
   const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, setConditionType)
   const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
-  const RpcMethodDropdown = makeDropdown(RPC_METHODS, setRpcMethod)
+  const RpcMethodDropdown = makeDropdown(RPC_METHODS, onSetRpcMethod)
   const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, setStandardContractType)
-  const ContractMethodDropdown = makeDropdown(METHODS_PER_CONTRACT_TYPE[standardContractType], setContractMethod)
+  const ContractMethodDropdown = makeDropdown(METHODS_PER_CONTRACT_TYPE[standardContractType], onSetContractMethod)
   const ContractMethodParametersDropdown = makeDropdown(
     PARAMETERS_PER_METHOD[contractMethod],
     setContractMethodParameters
@@ -159,35 +181,56 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     }
   }
 
-  const onSubmit = (e: any) => {
-    e.preventDefault()
+  const addConditionAndMaybeOperator = (condition: Record<string, any> | Conditions.Condition) => {
     // TODO: Condition set is already a list of stuff, how do I manage?
-    const conditions = []
+    const conditionAndMaybeOperator = []
     if (enableOperator) {
-      conditions.push(new Operator(logicalOperator))
+      conditionAndMaybeOperator.push(new Operator(logicalOperator))
     }
-    conditions.push(makeConditonForType(conditionType))
-    addConditions(conditions)
+    conditionAndMaybeOperator.push(condition)
+    addConditions(conditionAndMaybeOperator)
+  }
+
+  const onAddPrebuiltCondition = (e: any) => {
+    e.preventDefault()
+    const prebuilt = PREBUILT_CONDITIONS[prebuiltCondition]
+    addConditionAndMaybeOperator(prebuilt)
+  }
+
+  const onAddNewCondition = (e: any) => {
+    e.preventDefault()
+    const condition = makeConditonForType(conditionType)
+    addConditionAndMaybeOperator(condition)
   }
 
   return (
     <form>
       {enableOperator && (
         <>
+          <h2>Select Logical Operator</h2>
           {LogicalOperatorDropdown}
-          <p>LogicalOperator: {logicalOperator}</p>
           <br />
         </>
       )}
 
-      {ConditionTypeDropdown}
-      <p>ConditionType: {conditionType}</p>
-      <br />
+      <div style={{ display: 'grid' }}>
+        <h2>Select Prebuilt Condition</h2>
+        {PrebuiltConditionDropdown}
+        <br />
 
-      {ComponentForConditionType(conditionType)}
-      <br />
+        <Button onClick={onAddPrebuiltCondition}>Add Prebuilt</Button>
+      </div>
 
-      <Button onClick={onSubmit}>Add Condition</Button>
+      <div style={{ display: 'grid' }}>
+        <h2>Build New Condition</h2>
+        {ConditionTypeDropdown}
+        <br />
+
+        {ComponentForConditionType(conditionType)}
+        <br />
+
+        <Button onClick={onAddNewCondition}>Add New</Button>
+      </div>
     </form>
   )
 }
