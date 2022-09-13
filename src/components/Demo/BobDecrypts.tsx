@@ -1,4 +1,4 @@
-import { MessageKit } from '@nucypher/nucypher-ts/build/main/src/core'
+import { MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
