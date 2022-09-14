@@ -1,5 +1,6 @@
 import { ConditionSet, Conditions } from '@nucypher/nucypher-ts'
-import React from 'react'
+import React, { useState } from 'react'
+
 
 import { ContentBlock } from '../base/base'
 import { TitleRow, CellTitle } from '../form/form'
@@ -13,6 +14,18 @@ interface Props {
 
 export const ConditionList = ({ conditions, setConditions, enabled }: Props) => {
   const enableOperator = (conditions && conditions.conditions.length > 0) || false
+  const [showHackZone, setHackZone] = useState(false)
+  const [error, setError] = useState(false)
+  const [hackContents, setHackContents] = useState('')
+
+  const saveHack = (value: string) => {
+    try {
+      const conditionSetFromJson = ConditionSet.fromJSON(value)
+      setConditions(conditionSetFromJson)
+    } catch {
+      setError(true)
+    }
+  }
 
   const addConditions = (newConditions: Array<Record<string, string>>) => {
     const existingConditions = conditions ? conditions.conditions : []
@@ -20,6 +33,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
     const updatedContitionSet = new ConditionSet(updatedConditions)
     console.log({ updatedContitionSet: updatedContitionSet.toJson() })
     setConditions(updatedContitionSet)
+    setHackContents(updatedContitionSet.toJson())
   }
 
   // TODO: Use proper types instead of `unknown` once namespaces in `nucypher-ts` are fixed
@@ -37,6 +51,11 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
           <div key={index}>{Condition(condition)}</div>
         ))}
       </pre>
+
+      <h4 onClick={e => { setHackZone(!showHackZone) }}>toggle hacking</h4>
+      {showHackZone ? <div><textarea defaultValue={hackContents} onChange={e => { saveHack(e.currentTarget.value) }} style={{ width: 100 + '%', height: 300 + 'px', border: `1px solid ${error ? 'red' : 'black'}` }} >
+      </textarea>
+      </div> : <></>}
     </div>
   ) : (
     <></>
