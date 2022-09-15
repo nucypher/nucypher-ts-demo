@@ -1032,10 +1032,10 @@
   resolved "https://registry.yarnpkg.com/@nucypher/nucypher-core/-/nucypher-core-0.4.0-alpha.0.tgz#d43e6e69d27b3921b0ddb9572cae918fe2c0f460"
   integrity sha512-f+7wPWtwu6AWpN+jt6tHA413lOhJfh2yuirV+mhSlA7nnvj1MCyRNRlK73k8LX61Qx21PNwK4c6RTzclN7xh1A==
 
-"@nucypher/nucypher-ts@@nucypher/nucypher-ts@0.7.9-alpha.11":
-  version "0.7.9-alpha.11"
-  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-ts/-/nucypher-ts-0.7.9-alpha.11.tgz#6b6b6917f7179a43bb864e3bccb228b9a11e1786"
-  integrity sha512-SbdIyH71B6sW5uL8hrpEVgNN3w8IOSM434oyVP74Sfhs/QarQ0Y0/zKzKTxebBF3+cHGk8wZ8hOnr/CWmchcZA==
+"@nucypher/nucypher-ts@@nucypher/nucypher-ts@0.7.9-alpha.12":
+  version "0.7.9-alpha.12"
+  resolved "https://registry.yarnpkg.com/@nucypher/nucypher-ts/-/nucypher-ts-0.7.9-alpha.12.tgz#b257abfe52021ff283d9c14472711992ea308065"
+  integrity sha512-um1vDDN3dkP/8OCcCoR+JAqJOyQHuMXm7jAY7PjZjwIvedqQq7Cqai6wLhe/ERfI6CtKTy8AwrvCCpaNXUr7gA==
   dependencies:
     "@nucypher/nucypher-core" "^0.4.0-alpha.0"
     axios "^0.21.1"
