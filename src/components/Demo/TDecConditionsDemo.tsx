@@ -54,7 +54,9 @@ export const AliceGrants = () => {
     // Try setting default config based on currently selected network
     if (chainId) {
       const config = {
-        ...defaultConfiguration(chainId),
+        // TODO: Add default config for Ethereum
+        // ...defaultConfiguration(chainId),
+        porterUri: 'https://porter-ibex.nucypher.community/retrieve_cfrags',
         // For local development, uncomment the following line:
         // porterUri: 'http://127.0.0.1:80',
       }
