@@ -4,7 +4,6 @@ import {
   makeTDecEncrypter,
   Enrico,
   MessageKit,
-  defaultConfiguration,
   tDecDecrypter,
   Configuration,
 } from '@nucypher/nucypher-ts'
@@ -56,9 +55,9 @@ export const AliceGrants = () => {
       const config = {
         // TODO: Add default config for Ethereum
         // ...defaultConfiguration(chainId),
-        porterUri: 'https://porter-ibex.nucypher.community/retrieve_cfrags',
+        // porterUri: 'https://porter-ibex.nucypher.community/retrieve_cfrags',
         // For local development, uncomment the following line:
-        // porterUri: 'http://127.0.0.1:80',
+        porterUri: 'http://127.0.0.1:80',
       }
       setConfig(config)
     }

@@ -1,5 +1,6 @@
 import { Operator, Conditions } from '@nucypher/nucypher-ts'
 import { Condition } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { useEthers } from '@usedapp/core'
 import React, { useState } from 'react'
 
 import { Button } from '../base/Button'
@@ -10,6 +11,11 @@ interface Props {
 }
 
 export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
+  const { library } = useEthers()
+  if (!library) {
+    return null
+  }
+
   const { LOGICAL_OPERATORS } = Conditions.Operator
   const PREBUILT_CONDITIONS: Record<string, unknown> = {
     ERC721Ownership: new Conditions.ERC721Ownership(),
@@ -146,6 +152,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   }
 
   const makeConditonForType = (type: string): Record<string, any> => {
+    const chain = library.network.name
     switch (type) {
       case 'timelock':
         return new Conditions.TimelockCondition({
@@ -156,7 +163,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
         })
       case 'rpc':
         return new Conditions.RpcCondition({
-          chain: 'ethereum', // TODO: Get from web3 provider or from form input?
+          chain,
           method: rpcMethod,
           parameters: [parameterValue],
           returnValueTest: {
@@ -167,8 +174,9 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
       case 'evm':
         return new Conditions.EvmCondition({
           contractAddress,
-          chain: 'ethereum', // TODO: Get from web3 provider or from form input?
-          functionAbi: '', // TODO: Where do I get this from?
+          chain,
+          // functionAbi: '', // TODO: Where do I get this from?
+          standardContractType,
           method: contractMethod,
           parameters: [parameterValue],
           returnValueTest: {

@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Config as DappProviderConfig, DAppProvider, Mumbai, Polygon, Mainnet } from '@usedapp/core'
+import { Config as DappProviderConfig, DAppProvider } from '@usedapp/core'
 import { App } from './App'
 
 const config: DappProviderConfig = {
-  networks: [
-    Mumbai,
-    Polygon,
-    Mainnet, // TODO: Remove
-  ],
+  // TODO: Set supported networks  
+  // networks: [
+  // Mumbai,
+  // Polygon,
+  // ],
 }
 
 ReactDOM.render(
