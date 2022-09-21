@@ -152,7 +152,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   }
 
   const makeConditonForType = (type: string): Record<string, any> => {
-    // TODO: Capitalizing is required 
+    // TODO: Capitalizing is required
     const capitalizeFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
     const chain = capitalizeFirstLetter(library.network.name)
     switch (type) {

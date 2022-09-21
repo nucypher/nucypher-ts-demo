@@ -4,7 +4,7 @@ import { Config as DappProviderConfig, DAppProvider } from '@usedapp/core'
 import { App } from './App'
 
 const config: DappProviderConfig = {
-  // TODO: Set supported networks  
+  // TODO: Set supported networks
   // networks: [
   // Mumbai,
   // Polygon,
