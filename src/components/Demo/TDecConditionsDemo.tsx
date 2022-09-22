@@ -92,23 +92,32 @@ export const AliceGrants = () => {
     }
     const web3Provider = new ethers.providers.Web3Provider(library.provider)
     const conditionContext = conditions.buildContext(web3Provider)
-    const retrievedMessage = await decrypter.retrieve([ciphertext], conditionContext)
 
-    // This is lifted straight out of `nucypher-ts`
-    retrievedMessage.forEach((mk: PolicyMessageKit) => {
-      if (!mk.isDecryptableByReceiver()) {
-        const errorMsg = `Not enough cFrags retrieved to open capsule ${mk.capsule}.`
-        if (Object.values(mk.errors).length > 0) {
-          const ursulasWithErrors = Object.entries(mk.errors).map(([address, error]) => `${address} - ${error}`)
-          alert(`${errorMsg} Some Ursulas have failed with errors:\n${ursulasWithErrors.join('\n')}`)
-        } else {
-          alert(errorMsg)
-        }
+    // Simplified flow with automated error handling
+    // const decryptedMessages = await decrypter.retrieveAndDecrypt(
+    //   [ciphertext],
+    //   conditionContext
+    // );
+
+    // More extensive flow with manual error handling
+    const retrievedMessages = await decrypter.retrieve([ciphertext], conditionContext)
+    const decryptedMessages = retrievedMessages.map((mk: PolicyMessageKit) => {
+      if (mk.isDecryptableByReceiver()) {
+        return decrypter.decrypt(mk)
       }
+      
+      // If we are unable to decrypt, we may inspect the errors and handle them
+      const errorMsg = `Not enough cFrags retrieved to open capsule ${mk.capsule}.`
+      if (Object.values(mk.errors).length > 0) {
+        const ursulasWithErrors = Object.entries(mk.errors).map(([address, error]) => `${address} - ${error}`)
+        alert(`${errorMsg} Some Ursulas have failed with errors:\n${ursulasWithErrors.join('\n')}`)
+      } else {
+        alert(errorMsg)
+      }
+      return new Uint8Array();
     })
-    const decryptedMessage = decrypter.decrypt(retrievedMessage[0])
-
-    setDecryptedMessage(new TextDecoder().decode(decryptedMessage))
+    
+    setDecryptedMessage(new TextDecoder().decode(decryptedMessages[0]))
   }
 
   if (!config) {
