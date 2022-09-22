@@ -6,6 +6,7 @@ import {
   MessageKit,
   tDecDecrypter,
   Configuration,
+  PolicyMessageKit,
 } from '@nucypher/nucypher-ts'
 import React, { useEffect, useState } from 'react'
 import { useEthers } from '@usedapp/core'
@@ -91,9 +92,23 @@ export const AliceGrants = () => {
     }
     const web3Provider = new ethers.providers.Web3Provider(library.provider)
     const conditionContext = conditions.buildContext(web3Provider)
-    const retrievedMessage = await decrypter.retrieveAndDecrypt([ciphertext], conditionContext)
+    const retrievedMessage = await decrypter.retrieve([ciphertext], conditionContext)
 
-    setDecryptedMessage(new TextDecoder().decode(retrievedMessage[0]))
+    // This is lifted straight out of `nucypher-ts`
+    retrievedMessage.forEach((mk: PolicyMessageKit) => {
+      if (!mk.isDecryptableByReceiver()) {
+        const errorMsg = `Not enough cFrags retrieved to open capsule ${mk.capsule}.`
+        if (Object.values(mk.errors).length > 0) {
+          const ursulasWithErrors = Object.entries(mk.errors).map(([address, error]) => `${address} - ${error}`)
+          alert(`${errorMsg} Some Ursulas have failed with errors:\n${ursulasWithErrors.join('\n')}`)
+        } else {
+          alert(errorMsg)
+        }
+      }
+    })
+    const decryptedMessage = decrypter.decrypt(retrievedMessage[0])
+
+    setDecryptedMessage(new TextDecoder().decode(decryptedMessage))
   }
 
   if (!config) {
