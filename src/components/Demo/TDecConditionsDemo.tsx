@@ -105,7 +105,7 @@ export const AliceGrants = () => {
       if (mk.isDecryptableByReceiver()) {
         return decrypter.decrypt(mk)
       }
-      
+
       // If we are unable to decrypt, we may inspect the errors and handle them
       const errorMsg = `Not enough cFrags retrieved to open capsule ${mk.capsule}.`
       if (Object.values(mk.errors).length > 0) {
@@ -114,9 +114,9 @@ export const AliceGrants = () => {
       } else {
         alert(errorMsg)
       }
-      return new Uint8Array();
+      return new Uint8Array()
     })
-    
+
     setDecryptedMessage(new TextDecoder().decode(decryptedMessages[0]))
   }
 
