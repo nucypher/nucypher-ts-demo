@@ -49,6 +49,7 @@ export const AliceGrants = () => {
   // // Decrypt message vars
   const [decryptionEnabled, setDecryptionEnabled] = useState(false)
   const [decryptedMessage, setDecryptedMessage] = useState('')
+  const [decryptionErrors, setDecryptionErrors] = useState([] as string[])
 
   useEffect(() => {
     // Try setting default config based on currently selected network
@@ -93,12 +94,6 @@ export const AliceGrants = () => {
     const web3Provider = new ethers.providers.Web3Provider(library.provider)
     const conditionContext = conditions.buildContext(web3Provider)
 
-    // Simplified flow with automated error handling
-    // const decryptedMessages = await decrypter.retrieveAndDecrypt(
-    //   [ciphertext],
-    //   conditionContext
-    // );
-
     // More extensive flow with manual error handling
     const retrievedMessages = await decrypter.retrieve([ciphertext], conditionContext)
     const decryptedMessages = retrievedMessages.map((mk: PolicyMessageKit) => {
@@ -107,12 +102,11 @@ export const AliceGrants = () => {
       }
 
       // If we are unable to decrypt, we may inspect the errors and handle them
-      const errorMsg = `Not enough cFrags retrieved to open capsule ${mk.capsule}.`
       if (Object.values(mk.errors).length > 0) {
-        const ursulasWithErrors = Object.entries(mk.errors).map(([address, error]) => `${address} - ${error}`)
-        alert(`${errorMsg} Some Ursulas have failed with errors:\n${ursulasWithErrors.join('\n')}`)
+        const ursulasWithErrors: string[] = Object.entries(mk.errors).map(([address, error]) => `${address} - ${error}`)
+        setDecryptionErrors(ursulasWithErrors)
       } else {
-        alert(errorMsg)
+        setDecryptionErrors([])
       }
       return new Uint8Array()
     })
@@ -137,7 +131,7 @@ export const AliceGrants = () => {
       {conditions && (
         <>
           <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
-          <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
+          <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} decryptionErrors={decryptionErrors} />
         </>
       )}
     </div>

@@ -30,11 +30,8 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
     const existingConditions = conditions ? conditions.conditions : []
     const updatedConditions = [...existingConditions, ...newConditions] as any // TODO: Fix this type cast
     const updatedContitionSet = new ConditionSet(updatedConditions)
-    console.log({ updatedContitionSet: updatedContitionSet.toJson() })
     setConditions(updatedContitionSet)
     setHackContents(updatedContitionSet.toJson())
-    console.log({newConditions})
-    console.log({json: updatedContitionSet.toJson()})
   }
 
   // TODO: Use proper types instead of `unknown` once namespaces in `nucypher-ts` are fixed

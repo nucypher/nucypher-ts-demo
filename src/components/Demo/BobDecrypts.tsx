@@ -15,14 +15,16 @@ interface Props {
   enabled: boolean
   decrypt: (ciphertext: MessageKit) => void
   decryptedMessage: string
+  decryptionErrors: string[]
 }
 
-export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
+export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErrors }: Props) => {
   if (!enabled) {
     return <></>
   }
 
   const [ciphertext, setCiphertext] = useState('')
+  const [hasSignature, setHasSignature] = useState(Object.keys(localStorage).filter((key) => key.includes('wallet-signature')).length > 0)
 
   const onDecrypt = () => {
     const b64decoded = Buffer.from(ciphertext, 'base64')
@@ -31,11 +33,47 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
 
   const plaintextContent = decryptedMessage ? (
     <div style={{ paddingTop: '5px' }}>
-      <h3>Plaintext: {decryptedMessage}</h3>
+      <h2>Plaintext: {decryptedMessage}</h2>
     </div>
   ) : (
     ''
   )
+
+  const ClearSignature = () => {
+    if (!hasSignature) {
+      return null
+    }
+
+    const onClearSignature = () => {
+      Object.keys(localStorage)
+        .filter((key) => key.includes('wallet-signature'))
+        .forEach((key) => localStorage.removeItem(key))
+      setHasSignature(false)
+    }
+
+    return (
+        <SmallButton onClick={onClearSignature}>Clear Signature</SmallButton>
+    )
+  }
+
+  const DecryptionErrors = () => {
+    if (decryptionErrors.length === 0) {
+      return null
+    }
+
+    return (
+      <div>
+        <h2>Decryption Errors</h2>
+        <p>Not enough cFrags retrieved to open capsule.</p>
+        <p>Some Ursulas have failed with errors:</p>
+        <ul>
+          {decryptionErrors.map((error, index) => (
+            <li key={index}>{error}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -54,7 +92,11 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled }: Props) => {
         <FormRow>
           <SmallButton onClick={onDecrypt}>Decrypt</SmallButton>
         </FormRow>
+        <FormRow>
+          {ClearSignature()}
+        </FormRow>
         {plaintextContent}
+        {DecryptionErrors()}
       </ContentBlock>
     </div>
   )
