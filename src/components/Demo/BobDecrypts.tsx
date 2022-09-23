@@ -24,7 +24,9 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErro
   }
 
   const [ciphertext, setCiphertext] = useState('')
-  const [hasSignature, setHasSignature] = useState(Object.keys(localStorage).filter((key) => key.includes('wallet-signature')).length > 0)
+  const [hasSignature, setHasSignature] = useState(
+    Object.keys(localStorage).filter((key) => key.includes('wallet-signature')).length > 0
+  )
 
   const onDecrypt = () => {
     const b64decoded = Buffer.from(ciphertext, 'base64')
@@ -51,9 +53,7 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErro
       setHasSignature(false)
     }
 
-    return (
-        <SmallButton onClick={onClearSignature}>Clear Signature</SmallButton>
-    )
+    return <SmallButton onClick={onClearSignature}>Clear Signature</SmallButton>
   }
 
   const DecryptionErrors = () => {
@@ -92,9 +92,7 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErro
         <FormRow>
           <SmallButton onClick={onDecrypt}>Decrypt</SmallButton>
         </FormRow>
-        <FormRow>
-          {ClearSignature()}
-        </FormRow>
+        <FormRow>{ClearSignature()}</FormRow>
         {plaintextContent}
         {DecryptionErrors()}
       </ContentBlock>

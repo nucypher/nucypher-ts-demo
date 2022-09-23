@@ -131,7 +131,12 @@ export const AliceGrants = () => {
       {conditions && (
         <>
           <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
-          <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} decryptionErrors={decryptionErrors} />
+          <BobDecrypts
+            enabled={decryptionEnabled}
+            decrypt={decryptMessage}
+            decryptedMessage={decryptedMessage}
+            decryptionErrors={decryptionErrors}
+          />
         </>
       )}
     </div>
