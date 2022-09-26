@@ -89,6 +89,7 @@ export const AliceGrants = () => {
 
   const decryptMessage = async (ciphertext: MessageKit) => {
     setDecryptedMessage('')
+    setDecryptionErrors([])
 
     if (!decrypter || !library || !conditions) {
       return
@@ -114,7 +115,6 @@ export const AliceGrants = () => {
     })
 
     setDecryptedMessage(new TextDecoder().decode(decryptedMessages[0]))
-    setDecryptionErrors([])
   }
 
   if (!config) {
