@@ -26,8 +26,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   ]
   const { COMPARATOR_OPERATORS } = Condition
   const { RPC_METHODS } = Conditions.RpcCondition
-  const { METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
-  const STANDARD_CONTRACT_TYPES = ['ERC20', 'ERC721'] // TODO: Get from nucypher-ts once EIP1155 is supported
+  const { METHODS_PER_CONTRACT_TYPE, STANDARD_CONTRACT_TYPES, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
   // const [prebuiltCondition, setPrebuiltCondition] = useState(Object.keys(PREBUILT_CONDITIONS)[0])
