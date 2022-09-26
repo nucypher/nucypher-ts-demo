@@ -180,13 +180,16 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
           },
         })
       case 'evm':
+        // TODO: Remove this workaround after introducing proper parsing in EvmCondition
+        // eslint-disable-next-line no-case-declarations
+        const parameters = contractMethod === 'ownerOf' ? [parseInt(parameterValue)] : [parameterValue]
         return new Conditions.EvmCondition({
           contractAddress,
           chain,
           // functionAbi: '', // TODO: Support user-provided `functionAbi`
           standardContractType,
           method: contractMethod,
-          parameters: [parameterValue],
+          parameters,
           returnValueTest: {
             comparator,
             value: returnValueTest,
