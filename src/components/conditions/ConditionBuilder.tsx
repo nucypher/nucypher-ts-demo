@@ -1,5 +1,4 @@
-import { Operator, Conditions } from '@nucypher/nucypher-ts'
-import { Condition } from '@nucypher/nucypher-ts/build/main/src/policies/conditions'
+import { Operator, Conditions, Condition } from '@nucypher/nucypher-ts'
 import { useEthers } from '@usedapp/core'
 import React, { useState } from 'react'
 
@@ -37,8 +36,8 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [standardContractType, setStandardContractType] = useState(STANDARD_CONTRACT_TYPES[0])
   const [contractMethod, setContractMethod] = useState(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
   const [contractMethodParameters, setContractMethodParameters] = useState(PARAMETERS_PER_METHOD[contractMethod][0])
-  const [returnValueTest, setReturnValueTest] = useState(0)
-  const [parameterValue, setParameterValue] = useState(undefined as string | undefined)
+  const [returnValueTest, setReturnValueTest] = useState('')
+  const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
 
   const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
@@ -56,6 +55,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     // if (contextParams) {
     //   setParameterValue(contextParams[0])
     // }
+    setContractMethodParameters(PARAMETERS_PER_METHOD[method][0])
   }
 
   const onSetRpcMethod = (method: string) => {
@@ -67,12 +67,18 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     // }
   }
 
+  const onSetStandardContractType = (type: string) => {
+    setStandardContractType(type)
+    setContractMethod(METHODS_PER_CONTRACT_TYPE[type][0])
+    setContractMethodParameters(PARAMETERS_PER_METHOD[METHODS_PER_CONTRACT_TYPE[type][0]][0])
+  }
+
   const LogicalOperatorDropdown = makeDropdown(LOGICAL_OPERATORS, setLogicalOperator)
   const PrebuiltConditionDropdown = makeDropdown(Object.keys(PREBUILT_CONDITIONS), setPrebuiltCondition)
   const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, setConditionType)
   const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
   const RpcMethodDropdown = makeDropdown(RPC_METHODS, onSetRpcMethod)
-  const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, setStandardContractType)
+  const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, onSetStandardContractType)
   const ContractMethodDropdown = makeDropdown(METHODS_PER_CONTRACT_TYPE[standardContractType], onSetContractMethod)
   const ContractMethodParametersDropdown = makeDropdown(
     PARAMETERS_PER_METHOD[contractMethod],
@@ -83,7 +89,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     <input type={type} onChange={(e: any) => onChange(e.target.value)} />
   )
 
-  const ReturnValueTestInput = makeInput('number', setReturnValueTest)
+  const ReturnValueTestInput = makeInput('text', setReturnValueTest)
   const ParametersValueInput = makeInput('text', setParameterValue)
   const ContractAddressInput = makeInput('text', setContractAddress)
 
