@@ -112,6 +112,7 @@ export const AliceGrants = () => {
     })
 
     setDecryptedMessage(new TextDecoder().decode(decryptedMessages[0]))
+    setDecryptionErrors([])
   }
 
   if (!config) {
