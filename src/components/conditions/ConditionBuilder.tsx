@@ -16,9 +16,9 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   }
 
   const { LOGICAL_OPERATORS } = Conditions.Operator
-  const PREBUILT_CONDITIONS: Record<string, unknown> = {
-    ERC721Ownership: new Conditions.ERC721Ownership(),
-  }
+  // const PREBUILT_CONDITIONS: Record<string, unknown> = {
+  //   ERC721Ownership: new Conditions.ERC721Ownership(),
+  // }
   const CONDITION_TYPES = [
     Conditions.TimelockCondition.CONDITION_TYPE,
     Conditions.EvmCondition.CONDITION_TYPE,
@@ -26,10 +26,11 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   ]
   const { COMPARATOR_OPERATORS } = Condition
   const { RPC_METHODS } = Conditions.RpcCondition
-  const { STANDARD_CONTRACT_TYPES, METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
+  const { METHODS_PER_CONTRACT_TYPE, PARAMETERS_PER_METHOD } = Conditions.EvmCondition
+  const STANDARD_CONTRACT_TYPES = ['ERC20', 'ERC721'] // TODO: Get from nucypher-ts once EIP1155 is supported
 
   const [logicalOperator, setLogicalOperator] = useState(LOGICAL_OPERATORS[0])
-  const [prebuiltCondition, setPrebuiltCondition] = useState(Object.keys(PREBUILT_CONDITIONS)[0])
+  // const [prebuiltCondition, setPrebuiltCondition] = useState(Object.keys(PREBUILT_CONDITIONS)[0])
   const [conditionType, setConditionType] = useState(CONDITION_TYPES[0])
   const [comparator, setComparator] = useState(COMPARATOR_OPERATORS[0])
   const [rpcMethod, setRpcMethod] = useState(RPC_METHODS[0])
@@ -74,7 +75,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   }
 
   const LogicalOperatorDropdown = makeDropdown(LOGICAL_OPERATORS, setLogicalOperator)
-  const PrebuiltConditionDropdown = makeDropdown(Object.keys(PREBUILT_CONDITIONS), setPrebuiltCondition)
+  // const PrebuiltConditionDropdown = makeDropdown(Object.keys(PREBUILT_CONDITIONS), setPrebuiltCondition)
   const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, setConditionType)
   const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
   const RpcMethodDropdown = makeDropdown(RPC_METHODS, onSetRpcMethod)
@@ -183,7 +184,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
         return new Conditions.EvmCondition({
           contractAddress,
           chain,
-          // functionAbi: '', // TODO: Where do I get this from?
+          // functionAbi: '', // TODO: Support user-provided `functionAbi`
           standardContractType,
           method: contractMethod,
           parameters: [parameterValue],
@@ -207,11 +208,11 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     addConditions(conditionAndMaybeOperator)
   }
 
-  const onAddPrebuiltCondition = (e: any) => {
-    e.preventDefault()
-    const prebuilt = PREBUILT_CONDITIONS[prebuiltCondition] as Condition
-    addConditionAndMaybeOperator(prebuilt)
-  }
+  // const onAddPrebuiltCondition = (e: any) => {
+  //   e.preventDefault()
+  //   const prebuilt = PREBUILT_CONDITIONS[prebuiltCondition] as Condition
+  //   addConditionAndMaybeOperator(prebuilt)
+  // }
 
   const onAddNewCondition = (e: any) => {
     e.preventDefault()
