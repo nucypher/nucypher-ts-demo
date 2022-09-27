@@ -51,7 +51,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
       </pre>
 
       <h4
-        onClick={(e) => {
+        onClick={() => {
           setHackZone(!showHackZone)
         }}
       >

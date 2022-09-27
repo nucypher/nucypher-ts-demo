@@ -40,6 +40,20 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
 
+  const setBuilderDefaults = () => {
+    setLogicalOperator(LOGICAL_OPERATORS[0])
+    // setPrebuiltCondition(Object.keys(PREBUILT_CONDITIONS)[0])
+    setConditionType(CONDITION_TYPES[0])
+    setComparator(COMPARATOR_OPERATORS[0])
+    setRpcMethod(RPC_METHODS[0])
+    setStandardContractType(STANDARD_CONTRACT_TYPES[0])
+    setContractMethod(METHODS_PER_CONTRACT_TYPE[standardContractType][0])
+    setContractMethodParameters(PARAMETERS_PER_METHOD[contractMethod][0])
+    setReturnValueTest('')
+    setParameterValue('')
+    setContractAddress('')
+  }
+
   const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
     const optionItems = items.map((elem, index) => (
       <option key={index} value={elem}>
@@ -48,6 +62,12 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     ))
     return <select onChange={(e) => onChange(e.target.value)}>{optionItems}</select>
   }
+
+  const onSetConditionType = (conditionType: string) => {
+    setBuilderDefaults()
+    setConditionType(conditionType)
+  }
+
   const onSetContractMethod = (method: string) => {
     setContractMethod(method)
     // TODO: Do this once we actually have methods to select from
@@ -75,7 +95,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
 
   const LogicalOperatorDropdown = makeDropdown(LOGICAL_OPERATORS, setLogicalOperator)
   // const PrebuiltConditionDropdown = makeDropdown(Object.keys(PREBUILT_CONDITIONS), setPrebuiltCondition)
-  const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, setConditionType)
+  const ConditionTypeDropdown = makeDropdown(CONDITION_TYPES, onSetConditionType)
   const ComparatorDropdown = makeDropdown(COMPARATOR_OPERATORS, setComparator)
   const RpcMethodDropdown = makeDropdown(RPC_METHODS, onSetRpcMethod)
   const StandardContractTypeDropdown = makeDropdown(STANDARD_CONTRACT_TYPES, onSetStandardContractType)
@@ -208,6 +228,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     }
     conditionAndMaybeOperator.push(condition)
     addConditions(conditionAndMaybeOperator)
+    setBuilderDefaults()
   }
 
   // const onAddPrebuiltCondition = (e: any) => {
