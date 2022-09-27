@@ -11,14 +11,14 @@ export function TopBar() {
         <HeaderNav>
           <ToMain href="/">
             <span>nucypher-ts</span>
-            <ToMainBottom>
+            {/* <ToMainBottom>
               Porter<Handshaking>🤝</Handshaking>Browser
-            </ToMainBottom>
+            </ToMainBottom> */}
           </ToMain>
           <HeaderNavLinks>
             <HeaderLink activeClassName="active-page" to="/alice-grants">
               {' '}
-              Alice Grants{' '}
+              Conditional Decryption{' '}
             </HeaderLink>
           </HeaderNavLinks>
         </HeaderNav>

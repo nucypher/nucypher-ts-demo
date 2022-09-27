@@ -80,7 +80,7 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErro
     <div>
       <ContentBlock>
         <TitleRow>
-          <CellTitle>Step 3 - Bob decrypts encrypted message</CellTitle>
+          <CellTitle>Step 3 - Decrypt encrypted message</CellTitle>
         </TitleRow>
         <InputRow>
           <Input
