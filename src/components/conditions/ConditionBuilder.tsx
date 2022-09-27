@@ -41,7 +41,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [contractAddress, setContractAddress] = useState('')
 
   const setBuilderDefaults = () => {
-    setLogicalOperator(LOGICAL_OPERATORS[0])
+    // setLogicalOperator(LOGICAL_OPERATORS[0])
     // setPrebuiltCondition(Object.keys(PREBUILT_CONDITIONS)[0])
     setConditionType(CONDITION_TYPES[0])
     setComparator(COMPARATOR_OPERATORS[0])
