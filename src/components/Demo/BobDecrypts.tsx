@@ -13,7 +13,7 @@ export const FormRow = styled.div`
 
 interface Props {
   enabled: boolean
-  decrypt: (ciphertext: MessageKit) => void
+  decrypt: (ciphertext: MessageKit) => Promise<void>
   decryptedMessage: string
   decryptionErrors: string[]
 }
@@ -23,14 +23,15 @@ export const BobDecrypts = ({ decrypt, decryptedMessage, enabled, decryptionErro
     return <></>
   }
 
-  const [ciphertext, setCiphertext] = useState('')
-  const [hasSignature, setHasSignature] = useState(
-    Object.keys(localStorage).filter((key) => key.includes('wallet-signature')).length > 0
-  )
+  const isSingatureSet = () => Object.keys(localStorage).filter((key) => key.includes('wallet-signature')).length > 0
 
-  const onDecrypt = () => {
+  const [ciphertext, setCiphertext] = useState('')
+  const [hasSignature, setHasSignature] = useState(isSingatureSet())
+
+  const onDecrypt = async () => {
     const b64decoded = Buffer.from(ciphertext, 'base64')
-    decrypt(MessageKit.fromBytes(b64decoded))
+    await decrypt(MessageKit.fromBytes(b64decoded))
+    setHasSignature(isSingatureSet())
   }
 
   const plaintextContent = decryptedMessage ? (

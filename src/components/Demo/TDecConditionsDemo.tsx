@@ -94,6 +94,7 @@ export const AliceGrants = () => {
     if (!decrypter || !library || !conditions) {
       return
     }
+
     const web3Provider = new ethers.providers.Web3Provider(library.provider)
     const conditionContext = conditions.buildContext(web3Provider)
 
