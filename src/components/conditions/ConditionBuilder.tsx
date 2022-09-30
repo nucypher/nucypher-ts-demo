@@ -5,11 +5,11 @@ import React, { useState } from 'react'
 import { Button } from '../base/Button'
 
 interface Props {
-  addConditions: (conditions: Array<Record<string, string>>) => void
+  addCondition: (condition: Condition, operator?: { operator: string }) => void
   enableOperator: boolean
 }
 
-export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
+export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   const { library } = useEthers()
   if (!library) {
     return null
@@ -39,6 +39,8 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const [returnValueTest, setReturnValueTest] = useState('')
   const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
+  
+  const [builderError, setBuilderError] = useState('')
 
   const setBuilderDefaults = () => {
     // setLogicalOperator(LOGICAL_OPERATORS[0])
@@ -52,6 +54,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     setReturnValueTest('')
     setParameterValue('')
     setContractAddress('')
+    setBuilderError('')
   }
 
   const makeDropdown = (items: readonly string[], onChange = (e: any) => console.log(e)) => {
@@ -177,7 +180,7 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     }
   }
 
-  const makeConditonForType = (type: string): Record<string, any> => {
+  const makeConditonForType = (type: string): Condition => {
     // TODO: Capitalizing is required
     const capitalizeFirstLetter = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
     const chain = capitalizeFirstLetter(library.network.name)
@@ -220,14 +223,9 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
     }
   }
 
-  const addConditionAndMaybeOperator = (condition: Record<string, any> | Condition) => {
-    // TODO: Condition set is already a list of stuff, how do I manage?
-    const conditionAndMaybeOperator = []
-    if (enableOperator) {
-      conditionAndMaybeOperator.push(new Operator(logicalOperator))
-    }
-    conditionAndMaybeOperator.push(condition)
-    addConditions(conditionAndMaybeOperator)
+  const addConditionAndMaybeOperator = (condition: Condition) => {
+    const maybeOperator = enableOperator ? new Operator(logicalOperator) : undefined
+    addCondition(condition, maybeOperator)
     setBuilderDefaults()
   }
 
@@ -240,7 +238,20 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
   const onAddNewCondition = (e: any) => {
     e.preventDefault()
     const condition = makeConditonForType(conditionType)
+    const { error } = condition.validate()
+    console.log({ condition })
+    if (error) {
+      setBuilderError(error.message)
+      return
+    }
     addConditionAndMaybeOperator(condition)
+  }
+
+  const BuilderError = () => {
+   if(builderError) {
+      return <div style={{ color: 'red' }}>{builderError}</div>
+   }
+    return <></>
   }
 
   return (
@@ -270,6 +281,10 @@ export const ConditionBuilder = ({ addConditions, enableOperator }: Props) => {
         <br />
 
         <Button onClick={onAddNewCondition}>Add New</Button>
+        <br />
+
+        {BuilderError()}
+
       </div>
     </form>
   )

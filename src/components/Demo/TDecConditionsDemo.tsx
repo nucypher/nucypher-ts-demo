@@ -39,14 +39,13 @@ export const AliceGrants = () => {
   // tDec Entities
   const [encrypter, setEncrypter] = useState(undefined as Enrico | undefined)
   const [decrypter, setDecrypter] = useState(undefined as tDecDecrypter | undefined)
-
   const [conditions, setConditions] = useState(undefined as ConditionSet | undefined)
 
-  // // Encrypt message vars
+  // Encrypt message vars
   const [encryptionEnabled, setEncryptionEnabled] = useState(false)
   const [encryptedMessage, setEncryptedMessage] = useState(undefined as MessageKit | undefined)
 
-  // // Decrypt message vars
+  // Decrypt message vars
   const [decryptionEnabled, setDecryptionEnabled] = useState(false)
   const [decryptedMessage, setDecryptedMessage] = useState('')
   const [decryptionErrors, setDecryptionErrors] = useState([] as string[])
