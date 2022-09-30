@@ -39,7 +39,7 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   const [returnValueTest, setReturnValueTest] = useState('')
   const [parameterValue, setParameterValue] = useState('')
   const [contractAddress, setContractAddress] = useState('')
-  
+
   const [builderError, setBuilderError] = useState('')
 
   const setBuilderDefaults = () => {
@@ -248,9 +248,9 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
   }
 
   const BuilderError = () => {
-   if(builderError) {
+    if (builderError) {
       return <div style={{ color: 'red' }}>{builderError}</div>
-   }
+    }
     return <></>
   }
 
@@ -284,7 +284,6 @@ export const ConditionBuilder = ({ addCondition, enableOperator }: Props) => {
         <br />
 
         {BuilderError()}
-
       </div>
     </form>
   )
