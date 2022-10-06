@@ -1,4 +1,4 @@
-import { ConditionSet, Conditions } from '@nucypher/nucypher-ts'
+import { ConditionSet, Conditions, Condition } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 
 import { ContentBlock } from '../base/base'
@@ -26,7 +26,8 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
     }
   }
 
-  const addConditions = (newConditions: Array<Record<string, string>>) => {
+  const addCondition = (condition: Condition, operator?: { operator: string }) => {
+    const newConditions = operator ? [condition, operator] : [condition]
     const existingConditions = conditions ? conditions.conditions : []
     const updatedConditions = [...existingConditions, ...newConditions] as any // TODO: Fix this type cast
     const updatedContitionSet = new ConditionSet(updatedConditions)
@@ -37,7 +38,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
   // TODO: Use proper types instead of `unknown` once namespaces in `nucypher-ts` are fixed
   const Condition = (cond: unknown) => {
     if (cond instanceof Conditions.Condition) {
-      return JSON.stringify(cond.value, null, 2)
+      return JSON.stringify(cond.toObj(), null, 2)
     }
     return JSON.stringify(cond, null, 2)
   }
@@ -85,7 +86,7 @@ export const ConditionList = ({ conditions, setConditions, enabled }: Props) => 
         <CellTitle>Policy Conditions</CellTitle>
       </TitleRow>
       <div>
-        <ConditionBuilder addConditions={addConditions} enableOperator={enableOperator} />
+        <ConditionBuilder addCondition={addCondition} enableOperator={enableOperator} />
         {ConditionList}
       </div>
     </ContentBlock>

@@ -11,9 +11,6 @@ export function TopBar() {
         <HeaderNav>
           <ToMain href="/">
             <span>nucypher-ts</span>
-            {/* <ToMainBottom>
-              Porter<Handshaking>🤝</Handshaking>Browser
-            </ToMainBottom> */}
           </ToMain>
           <HeaderNavLinks>
             <HeaderLink activeClassName="active-page" to="/alice-grants">
@@ -58,21 +55,6 @@ const ToMain = styled.a`
   &:hover {
     color: ${Colors.Yellow[500]};
   }
-`
-
-const ToMainBottom = styled.span`
-  display: grid;
-  grid-auto-flow: column;
-  grid-column-gap: 4px;
-  align-items: center;
-  width: fit-content;
-  font-size: 10px;
-  line-height: 14px;
-  font-weight: 500;
-`
-
-const Handshaking = styled.span`
-  letter-spacing: -0.3em;
 `
 
 const HeaderNavLinks = styled.div`
