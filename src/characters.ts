@@ -1,4 +1,4 @@
-import { Alice, Bob, RemoteBob, SecretKey } from '@nucypher/nucypher-ts'
+import {Alice, Bob, RemoteBob, SecretKey } from '@nucypher/nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
 export const makeAlice = (provider: Web3Provider, porterUri: string): Alice => {

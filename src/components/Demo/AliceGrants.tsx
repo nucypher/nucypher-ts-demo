@@ -55,10 +55,10 @@ export const AliceGrants = () => {
   }
 
   // Create policy vars
-  const [policyParams, setPolicyParams] = useState(intialParams)
+  const [policyParams, setPolicyParams] = useState(initialPolicyParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
   const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
-  const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
+  const [aliceVerifyingKey, setAliceVerifyingKey] = useState(undefined as PublicKey | undefined)
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
   // Encrypt message vars
@@ -91,7 +91,7 @@ export const AliceGrants = () => {
     const { includeUrsulas, excludeUrsulas } = networkConfig
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
-    setAliceVeryfingKey(alice.verifyingKey)
+    setAliceVerifyingKey(alice.verifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
     setPolicyFormEnabled(true)
