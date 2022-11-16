@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from 'nucypher-ts'
+import { BlockchainPolicyParameters, Enrico, PublicKey, EnactedPolicy, MessageKit } from '@nucypher/nucypher-ts'
 import React, { useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { useEthers } from '@usedapp/core'
@@ -15,15 +15,15 @@ export const AliceGrants = () => {
   const label = `fake-data-label-${new Date().getTime()}` // Combination of `label` and `bob` must be unique
   const threshold = 1
   const shares = 1
-  const paymentPeriods = 3
-  const rate = 50000000000000 // TODO: Make this an optional and call `getMinFeeRate` for each ursula when creating a policy
-  const intialParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, paymentPeriods, rate }
+  const startDate = new Date()
+  const endDate = new Date(startDate.setDate(startDate.getDate() + 14))
+  const initialPolicyParams: BlockchainPolicyParameters = { bob: remoteBob, label, threshold, shares, startDate, endDate }
 
   // Create policy vars
-  const [policyParams, setPolicyParams] = useState(intialParams)
+  const [policyParams, setPolicyParams] = useState(initialPolicyParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
   const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
-  const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
+  const [aliceVerifyingKey, setAliceVerifyingKey] = useState(undefined as PublicKey | undefined)
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
   // Encrypt message vars
@@ -45,7 +45,7 @@ export const AliceGrants = () => {
     const excludeUrsulas: string[] = []
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
-    setAliceVeryfingKey(alice.verifyingKey)
+    setAliceVerifyingKey(alice.verifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
     setPolicyFormEnabled(true)

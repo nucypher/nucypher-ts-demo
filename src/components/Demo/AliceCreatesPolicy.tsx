@@ -1,4 +1,4 @@
-import type { BlockchainPolicyParameters } from 'nucypher-ts'
+import type { BlockchainPolicyParameters } from '@nucypher/nucypher-ts'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -23,7 +23,6 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
   const setLabel = (label: string) => setPolicyParams({ ...policyParams, label })
   const setShares = (shares: number) => setPolicyParams({ ...policyParams, shares })
   const setThreshold = (threshold: number) => setPolicyParams({ ...policyParams, threshold })
-  const setPaymentPeriods = (paymentPeriods: number) => setPolicyParams({ ...policyParams, paymentPeriods })
 
   const content = enabled ? (
     <div style={{ display: 'grid' }}>
@@ -52,15 +51,6 @@ export const AliceCreatesPolicy = ({ enabled, policyParams, setPolicyParams, gra
           type="number"
           value={policyParams.threshold}
           onChange={(e) => setThreshold(parseInt(e.currentTarget.value))}
-        />
-      </FormRow>
-      <FormRow>
-        <Label htmlFor={'paymentPeriods'}>Payment periods</Label>
-        <Input
-          id={'paymentPeriods'}
-          type="number"
-          value={policyParams.paymentPeriods}
-          onChange={(e) => setPaymentPeriods(parseInt(e.currentTarget.value))}
         />
       </FormRow>
       <FormRow>
