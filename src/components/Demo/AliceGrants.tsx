@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
+import { ethers } from 'ethers'
 
 import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
@@ -27,14 +28,19 @@ export interface INetworkConfig {
 export const getRandomLabel = () => `label-${new Date().getTime()}`
 
 export const AliceGrants = () => {
-  // Ethers-js is our web3 provider
-  const { library, chainId } = useEthers()
+  if (!window.ethereum) {
+    return <div>Connect to MetaMask to use this demo</div>
+  }
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const { chainId } = useEthers()
 
   // Network config vars
   const initialNetworkConfig = {
     includeUrsulas: [] as string[],
     excludeUrsulas: [] as string[],
-    porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    porterUri: 'https://porter-tapir.nucypher.community',
+    // TODO: Enable after nucypher-ts@0.9.0 release
+    // ...defaultConfiguration(chainId)
   }
 
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
@@ -58,7 +64,7 @@ export const AliceGrants = () => {
   const [policyParams, setPolicyParams] = useState(intialParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
   const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
-  const [aliceVerifyingKey, setAliceVeryfingKey] = useState(undefined as PublicKey | undefined)
+  const [aliceVerifyingKey, setAliceVerifyingKey] = useState(undefined as PublicKey | undefined)
   const [policyFormEnabled, setPolicyFormEnabled] = useState(true)
 
   // Encrypt message vars
@@ -76,7 +82,12 @@ export const AliceGrants = () => {
   useEffect(() => {
     // Try setting default config based on currently selected network
     if (chainId) {
-      const config = { ...networkConfig, ...defaultConfiguration(chainId) }
+      const config = {
+        ...networkConfig,
+        porterUri: 'https://porter-tapir.nucypher.community',
+        // TODO: Enable after nucypher-ts@0.9.0 release
+        // ...defaultConfiguration(chainId)
+      }
       setNetworkConfig(config)
     }
   }, [chainId])
@@ -91,7 +102,7 @@ export const AliceGrants = () => {
     const { includeUrsulas, excludeUrsulas } = networkConfig
     const policy = await alice.grant(policyParams, includeUrsulas, excludeUrsulas)
 
-    setAliceVeryfingKey(alice.verifyingKey)
+    setAliceVerifyingKey(alice.verifyingKey)
     setPolicyEncryptingKey(policy.policyKey)
     setPolicy(policy)
     setPolicyFormEnabled(true)
@@ -157,7 +168,7 @@ export const AliceGrants = () => {
         enabled={policyFormEnabled}
         policyParams={policyParams}
         setPolicyParams={setPolicyParams}
-        grantToBob={() => grantToBob(library)}
+        grantToBob={() => grantToBob(provider)}
       />
       <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />
