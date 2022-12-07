@@ -1,7 +1,6 @@
 import { Alice, Bob, RemoteBob, SecretKey } from '@nucypher/nucypher-ts'
 import type { Web3Provider } from '@ethersproject/providers'
 
-
 export const makeAlice = (provider: Web3Provider, porterUri: string): Alice => {
   const secretKey = SecretKey.fromBytes(Buffer.from('fake-secret-key-32-bytes-alice-x'))
   return Alice.fromSecretKey({ porterUri }, secretKey, provider)

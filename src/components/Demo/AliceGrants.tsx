@@ -32,15 +32,15 @@ export const AliceGrants = () => {
     return <div>Connect to MetaMask to use this demo</div>
   }
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-  // Ethers-js is our web3 provider
-  const { library, chainId } = useEthers()
+  const { chainId } = useEthers()
 
   // Network config vars
   const initialNetworkConfig = {
     includeUrsulas: [] as string[],
     excludeUrsulas: [] as string[],
-    porterUri: defaultConfiguration(ChainId.Mumbai).porterUri,
+    porterUri: 'https://porter-tapir.nucypher.community',
+    // TODO: Enable after nucypher-ts@0.9.0 release
+    // ...defaultConfiguration(chainId)
   }
 
   const [networkConfig, setNetworkConfig] = useState<INetworkConfig>(initialNetworkConfig)
@@ -61,7 +61,7 @@ export const AliceGrants = () => {
   }
 
   // Create policy vars
-  const [policyParams, setPolicyParams] = useState(initialPolicyParams)
+  const [policyParams, setPolicyParams] = useState(intialParams)
   const [policyEncryptingKey, setPolicyEncryptingKey] = useState(undefined as PublicKey | undefined)
   const [policy, setPolicy] = useState(undefined as EnactedPolicy | undefined)
   const [aliceVerifyingKey, setAliceVerifyingKey] = useState(undefined as PublicKey | undefined)
@@ -82,7 +82,12 @@ export const AliceGrants = () => {
   useEffect(() => {
     // Try setting default config based on currently selected network
     if (chainId) {
-      const config = { ...networkConfig, ...defaultConfiguration(chainId) }
+      const config = {
+        ...networkConfig,
+        porterUri: 'https://porter-tapir.nucypher.community',
+        // TODO: Enable after nucypher-ts@0.9.0 release
+        // ...defaultConfiguration(chainId)
+      }
       setNetworkConfig(config)
     }
   }, [chainId])
