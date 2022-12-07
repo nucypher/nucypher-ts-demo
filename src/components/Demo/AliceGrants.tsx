@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import type { Web3Provider } from '@ethersproject/providers'
 import { ChainId, useEthers } from '@usedapp/core'
+import { ethers } from 'ethers'
 
 import { AliceCreatesPolicy as AliceCreatesPolicy } from './AliceCreatesPolicy'
 import { makeRemoteBob, makeAlice, makeBob } from '../../characters'
@@ -27,6 +28,11 @@ export interface INetworkConfig {
 export const getRandomLabel = () => `label-${new Date().getTime()}`
 
 export const AliceGrants = () => {
+  if (!window.ethereum) {
+    return <div>Connect to MetaMask to use this demo</div>
+  }
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
   // Ethers-js is our web3 provider
   const { library, chainId } = useEthers()
 
@@ -157,7 +163,7 @@ export const AliceGrants = () => {
         enabled={policyFormEnabled}
         policyParams={policyParams}
         setPolicyParams={setPolicyParams}
-        grantToBob={() => grantToBob(library)}
+        grantToBob={() => grantToBob(provider)}
       />
       <EnricoEncrypts enabled={encryptionEnabled} encrypt={encryptMessage} encryptedMessage={encryptedMessage} />
       <BobDecrypts enabled={decryptionEnabled} decrypt={decryptMessage} decryptedMessage={decryptedMessage} />

@@ -15,20 +15,20 @@ yarn start
 
 ## Usage
 
-In order to run this demo will need a MetaMask with an account funded with enough $MATIC to fund Policy creation.
+To run this demo will need a MetaMask with an account funded with enough Ethereum to fund Policy contract creation.
 
-It is also recommended to change `secretKey` values for Alice and Bob characters. See `./src/characters.ts` for details.
+It is also recommended to change `secretKey` values for Alice and Bob's characters. See `./src/characters.ts` for details.
 
-In order to connect with the network, the demo uses a public instances of [Porter](https://docs.nucypher.com/en/latest/application_development/web_development.html#running-porter).
+### Mainnet (Polygon)
 
-### Polygon
+`nucypher-ts` is in early release. We recommend **not** using it in production _just yet_.
 
-`nucypher-ts` is in an early release. We recommend **not** using it in production _just yet_.
+### Tapir (Matic Mumbai)
 
-### Ibex - Mumbai Testnet
+`nucypher-ts-demo` is configured to work on the Tapir network out-of-the-box. It uses a public Porter instance by default. See `./src/characters.ts` for details.
 
-The current release of `nucypher-ts` supports Ursulas working on Ibex network and contracts deployed on Mumbai testnet.
+This is a recommended way to use `nucypher-ts` on a testnet.
 
 ## References
 
-This dApp is based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example).
+This dApp is based on [`useDapp` example](https://github.com/EthWorks/useDapp/tree/master/packages/example). See `README.old.md` for details.
