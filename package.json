@@ -13,11 +13,11 @@
     "lint:prettier": "yarn prettier './{src, test}/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "@nucypher/nucypher-ts": "^0.10.0",
     "@types/styled-components": "^5.1.7",
     "@usedapp/core": "^1.2.2",
     "file-loader": "^6.2.0",
     "framer-motion": "^4.1.5",
-    "@nucypher/nucypher-ts": "^0.9.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.2.0",
